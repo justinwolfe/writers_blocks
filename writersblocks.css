@@ -1,0 +1,456 @@
+/* YUI 3.8.1 (build 5795) Copyright 2013 Yahoo! Inc. http://yuilibrary.com/license/ */
+html{color:#000;background:#FFF}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:text-top}sub{vertical-align:text-bottom}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit}input,textarea,select{*font-size:100%}legend{color:#000}#yui3-css-stamp.cssreset{display:none}
+
+html { 
+	font-size: 1em;
+}
+
+iframe {
+   overflow: hidden;
+}
+
+.block {
+	color: white;
+	background-color: white;
+	display: inline-block;
+}
+
+.visibleBlock {
+	color: black;
+	background-color: white;
+	display: inline-block;
+}
+
+.space{
+	color: white;
+	opacity: 0;
+	display: inline-block;
+}
+
+.break{
+}
+
+input[type=text]:focus, textarea:focus {
+    outline: none;
+}
+
+div {
+	position: relative;
+	}
+	
+#displaySpace{
+	background-color: transparent;
+	font-size: 2em;
+	font-family: monospace;
+	color: black;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	resize: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: moz-none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: default;
+}	
+
+#splash{
+	background-color: transparent;
+	font-family: monospace;
+	color: white;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	resize: none;
+	position: absolute;
+}
+
+#splashTitle{
+	font-size: 9em;
+	text-align: center;
+	top: 35%;
+}
+#splashInfo{
+	font-size: 2em;
+	text-align: center;
+	top: 37%;
+}
+
+#innerSplashTitle{
+	display: inline-block;
+}
+#innerSplashInfo{
+	display: inline-block;
+}
+
+#underlay{
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+}
+
+#menuDisplay {
+	position: fixed; 
+	width: 100%; 
+	height: 100%; 
+	top: 0%; 
+	left: 0%;
+	background-color: white; 
+	color: black;
+	font-size: 3em;
+	font-family: monospace;
+	opacity: 1; 
+	cursor: default;
+	z-index: 999999999999; 
+}
+
+#titleContainer{
+	font-size: 1em;
+	text-align: center;
+	padding-top: 5%;
+}
+
+#hotKeysContainer {
+	padding-top: 3%;
+	padding-bottom: 3%;
+	font-size: .7em;
+	border: 1px solid black;
+}
+
+#hotKeysLeft{
+}
+#hotKeysRight{
+}
+
+#wordTargetContainer {
+	font-size: .7em;
+}
+#wordTargetColorContainer {
+	font-size: .7em;
+}
+#wordTargetSoundContainer {
+	font-size: .7em;
+}
+
+
+#obliqueStrategyDisplay {
+	position: fixed; 
+	text-align: center;
+	width: 50%; 
+	height: 100%; 
+	top: 45%; 
+	left: 23%;
+	background-color: white; 
+	color: black;
+	font-size: 3em;
+	font-family: monospace;
+	opacity: 1; 
+	cursor: default; 
+	z-index: 999999999999; 
+}
+
+#sonnetDisplay {
+	position: fixed; 
+	text-align: center;
+	width: 50%; 
+	height: 100%; 
+	top: 45%; 
+	left: 23%;
+	background-color: white; 
+	color: black;
+	font-size: 3em;
+	font-family: monospace;
+	opacity: 1; 
+	cursor: default; 
+	z-index: 999999999999; 
+}
+
+#dictionaryDisplay {
+	position: fixed; 
+	text-align: center;
+	width: 50%; 
+	height: 100%; 
+	top: 40%; 
+	left: 23%;
+	background-color: white; 
+	color: black;
+	font-size: 3em;
+	font-family: monospace;
+	opacity: 1; 
+	cursor: default; 
+	z-index: 999999999999; 
+}
+
+#definitionDisplay {
+	font-size: .5em;
+}
+
+#forwardButton {
+	position: fixed;
+	width: auto;
+	height: auto;
+	right: 15%;
+	top: 46%;
+	opacity: .5;
+}
+
+#backButton {
+	position: fixed;
+	width: auto;
+	height: auto;
+	left: 12%;
+	top: 46%;
+	opacity: .5;
+}
+
+#timerDisplay{
+	position: fixed; 
+	width: 100%; 
+	height: 100%; 
+	top: 40%; 
+	left: 0%;
+	background-color: white; 
+	color: black;
+	font-size: 3em;
+	font-family: monospace;
+	opacity: 1; 
+	cursor: default;
+	resize: none;	
+	z-index: 999999999999; 
+}
+
+#timerContainer{
+	padding-top: .5%;
+	padding-bottom: 1%;
+	width: 100%;
+	text-align: center;
+}
+
+#timerShow{
+	resize: none;
+	background-color: black;
+	color: white;
+	border-style: none; 
+	display: inline-block;
+}
+
+#timerStartButtonContainer{
+	width: 100%;
+	text-align: center;
+}
+
+#timerStartButton{
+	display: inline-block;
+	border: 2px solid black;
+	text-align: center;
+	padding-left: .3%;
+	padding-right: .3%;
+	font-size: .75em;
+	cursor: pointer;
+}
+
+#timerStartButton:hover{
+	background-color: black;
+	color: white;
+}
+
+#timerInput{
+	resize: none;
+	background-color: black;
+	color: white;
+	border-style: none; 
+}
+
+#menuDisplay {
+}
+
+#youtubeDisplay {
+	top: 30%;
+	left: 30%;
+}
+
+#imageDisplay {
+	position: fixed; 
+	width: 100%; 
+	height: 100%; 
+	top: 45%; 
+	left: 25%;
+	background-color: white; 
+	color: black;
+	font-size: 3em;
+	font-family: monospace;
+	opacity: 1; 
+	cursor: default; 
+	z-index: 999999999999; 
+}
+
+#emailDisplay {
+	position: fixed; 
+	width: 100%; 
+	height: 100%; 
+	top: 40%; 
+	left: 0%;
+	background-color: white; 
+	color: black;
+	font-size: 3em;
+	font-family: monospace;
+	opacity: 1; 
+	cursor: default;
+	resize: none;	
+	z-index: 999999999999; 
+}
+
+#processEmailTitle{
+	resize: none;
+	background-color: black;
+	color: white;
+	border-style: none; 
+}
+
+#processEmailAddress{
+	resize: none;
+	background-color: black;
+	color: white;
+	border-style: none; 
+}
+
+#titleDisplay{
+	width: 100%;
+	text-align: center;
+}
+#addressDisplay{
+	padding-top: .5%;
+	padding-bottom: 1%;
+	width: 100%;
+	text-align: center;
+}
+
+#sendDisplay{
+	width: 100%;
+	text-align: center;
+}
+
+#copyDisplay{
+	width: 100%;
+	text-align: center;
+	padding-top: 1%;
+}
+
+#messageDisplay{
+	width: 100%;
+	text-align: center;
+	padding-top: 1%;
+}
+
+#message{
+	display: inline-block;
+	text-align: center;
+	font-size: .45em;
+}
+
+#invisibleTextHolder{
+	display: none;
+}
+
+#innerTitle{
+	display: inline-block;
+}
+#innerAddress{
+	display: inline-block;
+}
+
+#sendButton{
+	display: inline-block;
+	border: 2px solid black;
+	text-align: center;
+	padding-left: .3%;
+	padding-right: .3%;
+	font-size: .75em;
+	cursor: pointer;
+}
+
+#sendButton:hover{ 
+	background-color: black;
+	color: white;
+}
+
+#copyButton{
+	display: inline-block;
+	border: 2px solid black;
+	text-align: center;
+	padding-left: .3%;
+	padding-right: .3%;
+	font-size: .75em;
+}
+
+#copyButton:link, #copyButton.link{ 
+	background-color: white;
+	color: black;
+}
+
+#copyButton:hover, #copyButton.hover{ 
+	background-color: black;
+	color: white;
+}
+
+#obliqueContainer {
+	display: none; 
+	position: fixed; 
+	width: 100%; 
+	height: 100%; 
+	top: 0; 
+	left: 0; 
+	background-color: white; 
+	color: black;
+	opacity: 1; 
+	cursor: default; 
+	z-index: 99999999999; 
+}
+	
+#bg {
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	padding: 0;
+	margin: 0;
+	}
+	
+#gradientDiv {
+	width: 100%;
+	height: 100%;
+	background-color: LightSkyBlue;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	display: block;
+	}	
+	
+#processorDisplay {
+	position: fixed;
+	overflow: hidden;
+	top: 6%;
+	left: 7%;
+	width: 84.5%;
+	height: 88%;
+	}	
+	
+#menuDiv {
+	display: none; 
+	position: fixed; 
+	width: 100%; 
+	height: 100%; 
+	top: 0; 
+	left: 0; 
+	background-color: white; 
+	color: black;
+	opacity: 1; 
+	cursor: default; 
+	z-index: 99999999999; 
+}	
+	

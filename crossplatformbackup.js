@@ -1,0 +1,410 @@
+// writer's blocks -- by (and for) justin wolfe
+var spacesTyped = 0;
+var textDisplayed = false;
+var menuDisplayed = false;
+var obliqueString = "Abandon normal instruments,Accept advice,Accretion,A line has two sides,Allow an easement (an easement is the abandonment of a stricture),Always first steps,Are there sections?  Consider transitions,Ask people to work against their better judgement,Ask your body,Assemble some of the elements in a group and treat the group,Balance the consistency principle with the inconsistency principle,Be dirty,Be extravagant,Be less critical more often,Breathe more deeply,Bridges -build -burn,Cascades,Change instrument roles,Change nothing and continue with immaculate consistency,Children -speaking -singing,Cluster analysis,Consider different fading systems,Consult other sources -promising -unpromising,Courage!,Cut a vital connection,Decorate,Define an area as 'safe' and use it as an anchor,Destroy -nothing -the most important thing,Discard an axiom,Disciplined self-indulgence,Disconnect from desire,Discover the recipes you are using and abandon them,Distorting time,Do nothing for as long as possible,Don't be afraid of things because they're easy to do,Don't be frightened of cliches,Don't be frightened to display your talents,Don't break the silence,Don't stress one thing more than another,Do something boring,Do the words need changing?,Do we need holes?,Emphasise differences,Emphasise repetitions,Emphasise the flaws,Fill every beat with something,From nothing to more than nothing,Ghost echoes,Give the game away,Give way to your worst impulse,Go outside. Shut the door.,Go slowly all the way round the outside,Go to an extreme,Move back to a more comfortable place,Honor thy error as a hidden intention,How would you have done it?,Humanise something free of error,Idiot glee (?),Imagine the piece as a set of disconnected events,Infinitesimal gradations,Intentions -nobility of -humility of -credibility of,In total darkness,In a very large room,Very quietly,Into the impossible,Is it finished?,Is the intonation correct?,Is there something missing?,It is quite possible (after all),Just carry on,Listen to the quiet voice,Look at the order in which you do things,Look closely at the most embarrassing details and amplify them,Lost in useless territory,Lowest common denominator,Make a blank valuable by putting it in an exquisite frame,Make an exhaustive list of everything you might do and do the last thing on the list,Make a sudden destructive unpredictable action; incorporate,Mechanicalise something idiosyncratic,Mute and continue,Not building a wall but making a brick,Once the search is in progress something will be found,Only a part not the whole,Only one element of each kind,(Organic) machinery,Overtly resist change,Question the heroic approach,Remember those quiet evenings,Remove ambiguities and convert to specifics,Remove specifics and convert to ambiguities,Repetition is a form of change,Retrace your steps,Revaluation (a warm feeling),Reverse,Short circuit (example; a man eating peas with the idea that they will improve his virility shovels them straight into his lap),Simple subtraction,Simply a matter of work,State the problem in words as clearly as possible,Take a break,Take away the elements in order of apparent non-importance,The inconsistency principle,The most important thing is the thing most easily forgotten,The tape is now the music,Think of the radio,Tidy up,Towards the insignificant,Trust in the you of now,Turn it upside down,Use an old idea,Use an unacceptable colour,Use fewer notes,Use filters,Use 'unqualified' people,Water,What are the sections sections of? Imagine a caterpillar moving,What are you really thinking about just now?,What is the reality of the situation?,What mistakes did you make last time?,What wouldn't you do?,What would your closest friend do?,Work at a different speed,Would anybody want it?,You are an engineer,You can only make one dot at a time,You don't have to be ashamed of using your own ideas"
+var obliqueArray = new Array();
+var randomWords = new Array();
+var randomDefinitions = new Array();
+var randomWordCounter = 0;
+var randomDefinitionsCounter = 0;
+var gradientMode = true;
+var wordTarget = 600;
+var wordTargetPercentage;
+var outputString = "";
+var charString;
+var timerStarted = false;
+var mins;
+var secs; 
+var currentSeconds; 
+var currentMinutes; 
+var ctrlPressed = false;
+
+ $(document).ready(function() {
+	//setup
+	prepareOblique();
+	getRandomWords();
+	loadSettings();
+	$("#processSpace").focus();
+	$("#processSpace").click(function(){
+		var html = $("#processSpace").val();
+		$("#processSpace").val("").val(html);	
+	});
+	//textarea keypress listeners for entering text
+	$("#processSpace").keypress(function(event){
+		var charCode = event.which || event.keyCode;
+		if (charCode != 32 && charCode != 13 && ctrlPressed == false){
+			charStr = String.fromCharCode(charCode);
+			if (textDisplayed == false){
+				$("#displaySpace").append("<span class='block'>" + charStr + "</span>");
+			} else {
+				$("#displaySpace").append("<span class='visibleBlock'>" + charStr + "</span>");
+			};
+		};
+	});
+	//textarea keydown listeners for text operations (space/backspace/return)
+	$("#processSpace").keydown(function(event){
+		var scrollWindow = $("#displaySpace");
+		scrollWindow.scrollTop(scrollWindow[0].scrollHeight);
+		var keyPressed = event.keyCode;
+		if (keyPressed == 32){
+			//event.preventDefault();
+			spacesTyped = spacesTyped + 1;
+			$("#displaySpace").append("<span class='space'>&nbsp;</span>");
+			wordTargetPercentage = spacesTyped / wordTarget;
+			if (gradientMode == true){
+				$("#gradientDiv").css('opacity', wordTargetPercentage);
+			};	
+		} else if (keyPressed == 8){
+			$("#displaySpace :last-child").remove();
+		} else if (keyPressed == 13){
+			$("#displaySpace").append("<br class='break'>");
+			var scrollWindow = $("#displaySpace");
+			scrollWindow.scrollTop(scrollWindow[0].scrollHeight);
+		}
+	});	
+	//document keydown listeners for function keys
+	$(document).keydown(function(event){	
+		var keyPressed = event.keyCode;
+		if (keyPressed == 17){
+			ctrlPressed = true;
+		};
+		if (keyPressed == 49 && ctrlPressed == true){
+			event.preventDefault();
+			if (menuDisplayed == false){
+				$("#menuDiv").append("\
+					<div id='menuDisplay'>\
+						<div id='titleContainer'><b>writer's_blocks</b>: a drafting tool by justin wolfe</div>\
+						<div id='hotKeysContainer'><b>f1</b>: about/settings (you are here), <b>f2/f3</b>: make blocks larger/smaller, <b>f4</b>: reveal text, <b>f5</b>: random Vine, <b>f6</b>: random word/definition (via Wordnik), <b>f7</b>: random line from Shakespeare sonnet (sonnets json-ified by Sam Dutton), <b>f8</b>: random oblique strategy, <b>f9</b>: send text to email or copy text (uses zClip and requires Flash), <b>f10</b>: timer, <b>f11</b>: fullscreen</div>\
+						<div id='wordTargetContainer'>target word count: <input type='text' id='wordTargetInput'></input></div>\
+						<div id='wordTargetColorContainer'>change screen background-color towards a new color as you progress towards target word count? INITIAL COLOR / NEW COLOR</div>\
+						<div id='wordTargetSoundContainer'>play chime sounds to inform you of reaching 25%, 50%, 75%, and 100% of target word count?</div>\
+						<div id='localStorageSaveContainer>save settings in localstorage in this browser in this computer for future use?</div>\
+					</div>");
+				$("#menuDiv").fadeIn(250, function(){});
+				menuDisplayed = true;	
+			} else {
+				clearMenu();		
+			};
+		} else if (keyPressed == 50 && ctrlPressed == true){
+			var fontSize = $('#displaySpace').css('font-size');
+			fontSize = parseFloat(fontSize);
+			fontSize = fontSize - 1;
+			$('#displaySpace').css('font-size', fontSize);	
+			$('#processSpace').css('font-size', fontSize);	
+		} else if (keyPressed == 51 && ctrlPressed == true){
+			event.preventDefault();
+			var fontSize = $('#displaySpace').css('font-size');
+			fontSize = parseFloat(fontSize);
+			fontSize = fontSize + 1;
+			$('#displaySpace').css('font-size', fontSize);
+			$('#processSpace').css('font-size', fontSize);
+		} else if (keyPressed == 52 && ctrlPressed == true){
+			event.preventDefault();
+			if (textDisplayed == false){
+				$(".block").addClass("visibleBlock").removeClass("block");
+				textDisplayed = true;
+			} else {
+				$(".visibleBlock").addClass("block").removeClass("visibleBlock");
+				textDisplayed = false;
+			}
+		} else if (keyPressed == 53 && ctrlPressed == true){
+			event.preventDefault();
+			if (menuDisplayed == false){
+				$.getJSON('http://search.twitter.com/search.json?callback=?&include_entities=true&q=vine.co',function(data){
+					console.log(data);
+					var vineUrl = data.results[0].entities.urls[0].expanded_url;
+					console.log(vineUrl);				
+					$("#menuDiv").fadeIn(250, function(){});
+					$("#menuDiv").append('<div id="vineDisplay"><div id="vineContainer"><iframe src="' + vineUrl + '" width="320" height="480" top="20%" scrolling="no" frameborder="0"></iframe></div></div>');
+					menuDisplayed = true;	
+				});			
+			} else {
+				clearMenu();		
+			};
+		} else if (keyPressed == 54 && ctrlPressed == true){
+			event.preventDefault();
+			if (menuDisplayed == false){
+				var randomWord = randomWords[randomWordCounter];
+				randomWordCounter = randomWordCounter + 1;
+				var randomDefinition;
+				$.getJSON("http://api.wordnik.com/v4/word.json/" + randomWord + "/definitions?limit=50&includeRelated=true&useCanonical=true&sourceDictionaries=all&includeTags=false&api_key=cea8ccbca1550ff63300d059f3607d1f0e1a742c20749a271", function (data){
+					console.log(data);
+					//create array of definitions
+					for (var i=0; i < data.length; i++){
+						randomDefinitions[i] = data[i].text;
+					};
+					console.log(randomDefinitions);
+					$("#menuDiv").append("\
+						<div id='dictionaryDisplay'>\
+							<div id='wordDisplay'></div>\
+							<div id='definitionDisplay'></div>\
+							<div id='backButton'><</div>\
+							<div id='forwardButton'>></div>\
+						</div>");
+					$("#wordDisplay").text(randomWord);
+					$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
+					//set up if it's more than 0, the buttons display and if not they don't
+					if (randomDefinitions.length > 1){
+					$("#forwardButton").css('display', 'block');
+					$("#backButton").css('display', 'block');
+						$("#forwardButton").click(function(){
+							if (randomDefinitionsCounter <= randomDefinitions.length - 1){
+								randomDefinitionsCounter++;
+								$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
+							} else {
+								randomDefinitionsCounter = 0;
+								$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
+							};
+						});
+						$("#backButton").click(function(){
+							if (randomDefinitionsCounter == 0){
+								randomDefinitionsCounter = randomDefinitions.length;
+								$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
+							} else {
+								randomDefinitionsCounter = randomDefinitionsCounter - 1;
+								$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
+							};
+						});	
+					} else {
+						$("#forwardButton").css('display', 'none');
+						$("#backButton").css('display', 'none');
+					};	
+					$("#menuDiv").fadeIn(250, function(){});
+					menuDisplayed = true;
+					if (randomWordCounter == 95){
+						getRandomWords();
+						randomWordCounter = 0;
+					};
+				});
+			} else {
+				randomDefinitions.length = 0;
+				randomDefinitionsCounter = 0;
+				clearMenu();
+			}
+		} else if (keyPressed == 55 && ctrlPressed == true){	
+			event.preventDefault();
+			if (menuDisplayed == false){
+				$.getJSON('sonnets.json', function(data) {
+					console.log(data);
+					var randomSonnet = Math.floor((Math.random()*data.length)+0);
+					var randomLine = Math.floor((Math.random()*13)+0);
+					var sonnetLine = data[randomSonnet].lines[randomLine];
+					$("#menuDiv").append("<div id='sonnetDisplay'></div>");
+					$("#sonnetDisplay").text(sonnetLine);					
+				}); 				
+				$("#menuDiv").fadeIn(250, function(){});
+				menuDisplayed = true;
+			} else {
+				clearMenu();
+			};				
+		} else if (keyPressed == 56 && ctrlPressed == true){
+			if (menuDisplayed == false){
+				var randomOblique = Math.floor((Math.random()*obliqueArray.length)+0);
+				$("#menuDiv").append("<div id='obliqueStrategyDisplay'></div>");
+				$("#obliqueStrategyDisplay").text(obliqueArray[randomOblique]); 				
+				$("#menuDiv").fadeIn(250, function(){});
+				menuDisplayed = true;
+			} else {
+				clearMenu();
+			};			
+		} else if (keyPressed == 57 && ctrlPressed == true){
+			if (menuDisplayed == false){
+				parseHTMLtoString();
+				$("#menuDiv").append("\
+					<div id='emailDisplay'>\
+						<div id='titleDisplay'><div id='innerTitle'>title: <input type='text' id='processEmailTitle'></input></div></div>\
+						<div id='addressDisplay'><div id='innerAddress'>email: <input type='text' id='processEmailAddress'></input></div></div>\
+						<div id='sendDisplay'><div id='sendButton'>email text</div></div>\
+						<div id='copyDisplay'><div id='copyButton'>copy text</div></div>\
+						<div id='messageDisplay'><div id='message'></div></div>\
+						<div id='invisibleTextHolder'></div>\
+					</div>");
+				$("#processEmailAddress").val("justin.wolfe@gmail.com");
+				$("#invisibleTextHolder").text(outputString);
+				$("#menuDiv").fadeIn(250, function(){});
+				menuDisplayed = true;
+				$('#copyButton').zclip({
+					path:'libraries/ZeroClipboard.swf',
+					copy: $('#invisibleTextHolder').text(),
+					afterCopy:function(){
+						$('#message').text("text copied. press f9 to return to editor");
+					}
+				});
+				$("#sendButton").click(function(){
+					emailTitle = $('#processEmailTitle').val();
+					emailAddress = $('#processEmailAddress').val();
+				//if there is a title and a valid email address in there
+					$.ajax({
+					   type: "POST",
+					   url: "email.php",
+					   dataType: 'text',
+					   data: { 
+							blockText : outputString,
+							blockEmail : emailAddress,
+							blockTitle : emailTitle
+					   },
+					   success: function(data) {
+						$("#message").text("text sent (hopefully, i think? always a good idea to backup your backup, though). press f9 to return to editor");
+						//setTimeout(function(){clearMenu()},1000);
+					   },
+					   error: function(msg) {
+						$("#message").text("something's not working. maybe my server is having problems? press f9 to return to editor");
+					    //setTimeout(function(){clearMenu()},5000);
+					   }
+					});	
+				});
+			} else {
+				clearMenu();
+			};	
+		} else if (keyPressed == 48 && ctrlPressed == true){
+			event.preventDefault();
+			if (menuDisplayed == false){
+				if (timerStarted == false){
+					$("#menuDiv").append("\
+					<div id='timerDisplay'>\
+						<div id='timerContainer'><input type='text' size='2' maxlength='2' id='timerInput'> minutes</div>\
+						<div id='timerStartButtonContainer'><div id='timerStartButton'>start</div></div>\
+					</div>");
+					$("#menuDiv").fadeIn(250, function(){});
+					menuDisplayed = true;
+					$("#timerStartButton").click(function(){
+						timerClick();
+					});
+				} else if (timerStarted == true){
+					$("#menuDiv").append("\
+					<div id='timerDisplay'>\
+						<div id='timerContainer'><div id='timerShow'></div></div>\
+						<div id='timerStartButtonContainer'><div id='timerStartButton'>restart</div></div>\
+					</div>");
+					$("#timerShow").text(currentMinutes + ":" + currentSeconds);  
+					$("#menuDiv").fadeIn(250, function(){});
+					menuDisplayed = true;	
+					$("#timerStartButton").click(function(){
+						timerClick();
+					});				
+				};
+			} else if (menuDisplayed == true){
+				clearMenu();
+			};			
+		};
+	});
+	$(document).keyup(function(event){
+		var keyPressed = event.keyCode;
+		if (keyPressed == 17){
+			ctrlPressed = false;
+		};
+	});
+});
+
+//functions
+function prepareOblique(){
+	obliqueArray = obliqueString.split(",");
+};
+
+function clearMenu(){
+	$("#menuDiv").html("");
+	$("#menuDiv").css('display', 'none');
+	menuDisplayed = false;
+	$("#processSpace").focus();
+};
+
+function check_email(email){  
+    var reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if(reg.test(email)){
+        return true; 
+    }else{  
+        return false;
+    }  
+} 
+
+function countDown() {
+	currentMinutes = Math.floor(secs / 60);
+	currentSeconds = secs % 60;
+	if (currentSeconds <= 9){
+		currentSeconds = "0" + currentSeconds;
+	};	
+	secs--;
+	$("#timerShow").text(currentMinutes + ":" + currentSeconds);       
+	if (secs !== -1){
+		setTimeout('countDown()',1000);
+	};
+	if (secs == -1 && timerStarted == true){
+		alert("finished!");
+		timerReset();
+	};
+};
+
+function timerReset(){
+	timerStarted = false;
+	mins = 0
+	secs = 0
+	currentMinutes = 0;
+	currentSeconds = 0;
+	$("#timerContainer").html("");
+	$("#timerContainer").append("<input type='text' size='2' maxlength='2' id='timerInput'> minutes");
+	$("#timerStartButton").text("start");
+};
+
+function timerClick(){
+	if (timerStarted == false){
+		mins = $("#timerInput").val();
+		if (mins != 0){
+			secs = mins * 60;
+			currentSeconds = 0;
+			currentMinutes = 0; 
+			$("#timerStartButton").text("restart");
+			$("#timerContainer").html("");
+			$("#timerContainer").append("<div id='timerShow'>" + mins + ":00</div>");
+			setTimeout('countDown()',1000);
+			timerStarted = true;
+			clearMenu();
+		};
+	} else {
+		timerReset();
+	};
+};
+
+function getRandomWords(){
+	var randomWordsProcess = new Array();
+	$.getJSON("http://api.wordnik.com/v4/words.json/randomWords?hasDictionaryDef=true&excludePartOfSpeech=proper-noun&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&limit=100&api_key=cea8ccbca1550ff63300d059f3607d1f0e1a742c20749a271", function (data){
+		for (var i=0; i < data.length; i++){
+			randomWordsProcess[i] = data[i].word;
+		};
+		randomWords = shuffle(randomWordsProcess);
+		console.log(randomWords);
+	});
+};
+
+//+ Jonas Raoni Soares Silva
+//@ http://jsfromhell.com/array/shuffle [v1.0]
+function shuffle(o){ //v1.0
+    for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+};
+
+function loadSettings(){
+};
+
+function parseHTMLtoString(){
+	outputString = "";
+	$('#displaySpace').children().each(function () {
+		var currentClass = $(this).attr("class"); 
+		switch(currentClass){
+			case 'block':
+				outputString = outputString + $(this).text();
+				break;
+			case 'visibleBlock':
+				outputString = outputString + $(this).text();
+				break;	
+			case 'space':
+				outputString = outputString + " ";
+				break;
+			case 'break':
+				outputString = outputString + "\r\n";
+				break;  
+			default:			
+		};
+	});
+	console.log(outputString);
+};
