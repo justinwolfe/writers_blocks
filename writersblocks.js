@@ -31,7 +31,7 @@ jQuery.fn.reverse = [].reverse;
 		var charCode = event.which || event.keyCode;
 		charStr = String.fromCharCode(charCode);
 		if (menuDisplayed == false){
-			if (charCode != 32 && charCode != 13 && ctrlPressed == false){
+			if (charCode != 32 && charCode != 13 && charCode != 8 && ctrlPressed == false){
 				if (textDisplayed == false){
 					$("#displaySpace").append("<span class='block'>" + charStr + "</span>");
 				} else {
