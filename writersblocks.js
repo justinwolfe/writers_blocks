@@ -100,9 +100,9 @@ jQuery.fn.reverse = [].reverse;
 				var fontSize = $('#displaySpace').css('font-size');
 				fontSize = parseFloat(fontSize);
 				if (keyPressed == 50){
-					fontSize-=1;
+					fontSize--;
 				} else if (keyPressed == 51){
-					fontSize+=1;
+					fontSize++;
 				}
 				$('#displaySpace').css('font-size', fontSize);
 				$('#processSpace').css('font-size', fontSize);
@@ -119,7 +119,7 @@ jQuery.fn.reverse = [].reverse;
 				event.preventDefault();
 				if (menuDisplayed == false){
 					var randomWord = randomWords[randomWordCounter];
-					randomWordCounter+=1;
+					randomWordCounter++;
 					var randomDefinition;
 					$.getJSON("http://api.wordnik.com/v4/word.json/" + randomWord + "/definitions?limit=50&includeRelated=true&useCanonical=true&sourceDictionaries=all&includeTags=false&api_key=cea8ccbca1550ff63300d059f3607d1f0e1a742c20749a271", function (data){
 						console.log(data);
@@ -155,7 +155,7 @@ jQuery.fn.reverse = [].reverse;
 									randomDefinitionsCounter = randomDefinitions.length;
 									$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
 								} else {
-									randomDefinitionsCounter = randomDefinitionsCounter - 1;
+									randomDefinitionsCounter--;
 									$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
 								};
 							});	
@@ -174,7 +174,7 @@ jQuery.fn.reverse = [].reverse;
 					randomDefinitions.length = 0;
 					randomDefinitionsCounter = 0;
 					clearMenu();
-				}
+				};
 			} else if (keyPressed == 54){	
 				event.preventDefault();
 				if (menuDisplayed == false){
