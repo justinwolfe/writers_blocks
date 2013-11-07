@@ -52,7 +52,7 @@ jQuery.fn.reverse = [].reverse;
 		var keyPressed = event.keyCode;
 		if (menuDisplayed == false){
 			if (keyPressed == 32){
-				spacesTyped = spacesTyped + 1;
+				spacesTyped+=1;
 				$("#displaySpace").append("<span class='space'>&nbsp;</span>");
 				wordTargetPercentage = spacesTyped / wordTarget;
 				if (gradientMode == true){
@@ -73,17 +73,6 @@ jQuery.fn.reverse = [].reverse;
 			ctrlPressed = true;
 		};
 		if (ctrlPressed == true){
-			/*if (keyPressed == 16){
-				if (textDisplayed == false){
-					$('#displaySpace span').reverse().each(function() {
-						console.log($(this).text());
-						if ($(this).hasClass('endpunct') == true){
-							return false;
-						} else {
-							$(this).addClass("visibleBlock").removeClass("block");
-						};
-					});
-				};*/
 			if (keyPressed == 49){
 				event.preventDefault();
 				if (menuDisplayed == false){
@@ -106,18 +95,15 @@ jQuery.fn.reverse = [].reverse;
 				} else {
 					clearMenu();		
 				};
-			} else if (keyPressed == 50){
+			} else if (keyPressed == 50 || keyPressed == 51){
 				event.preventDefault();
 				var fontSize = $('#displaySpace').css('font-size');
 				fontSize = parseFloat(fontSize);
-				fontSize = fontSize - 1;
-				$('#displaySpace').css('font-size', fontSize);	
-				$('#processSpace').css('font-size', fontSize);	
-			} else if (keyPressed == 51){
-				event.preventDefault();
-				var fontSize = $('#displaySpace').css('font-size');
-				fontSize = parseFloat(fontSize);
-				fontSize = fontSize + 1;
+				if (keyPressed == 50){
+					fontSize-=1;
+				} else if (keyPressed == 51){
+					fontSize+=1;
+				}
 				$('#displaySpace').css('font-size', fontSize);
 				$('#processSpace').css('font-size', fontSize);
 			} else if (keyPressed == 52){
@@ -133,7 +119,7 @@ jQuery.fn.reverse = [].reverse;
 				event.preventDefault();
 				if (menuDisplayed == false){
 					var randomWord = randomWords[randomWordCounter];
-					randomWordCounter = randomWordCounter + 1;
+					randomWordCounter+=1;
 					var randomDefinition;
 					$.getJSON("http://api.wordnik.com/v4/word.json/" + randomWord + "/definitions?limit=50&includeRelated=true&useCanonical=true&sourceDictionaries=all&includeTags=false&api_key=cea8ccbca1550ff63300d059f3607d1f0e1a742c20749a271", function (data){
 						console.log(data);
