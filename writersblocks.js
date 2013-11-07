@@ -289,7 +289,7 @@ function appendMenu(type){
 					<div id='hotKeysLeft'><p><b>ctrl+1</b>: about/settings (you are here)</p> <p><b>ctrl+2/3</b>: make blocks smaller/larger</p> <p><b>ctrl+4</b>: reveal all text(disabled by default)</p></div>\
 					<div id='hotKeysRight'><p><b>ctrl+5</b>: random word/definition (via Wordnik)</p> <p><b>ctrl+6</b>: random line from Shakespeare sonnet (sonnets json-ified by Sam Dutton)</p> <p><b>ctrl+7</b>: random oblique strategy (oblique strategies by Brian Eno from this page)</p> <p><b>ctrl+8</b>: timer</p> <p><b>ctrl+0</b>: send text to email or copy text (uses zClip and requires Flash)</p> <p><b>f11</b>: fullscreen</p></div>\
 				</div>\
-				<div id='settingsContainer'>settings</div>\
+				<div id='settingsContainer'>settings:</div>\
 				<div id='visibleTextContainer'>enable yourself to view all text by pressing ctrl+4?</div>\
 				<div id='wordTargetContainer'>target word count: <input type='text' id='wordTargetInput'></input></div>\
 				<div id='wordTargetColorContainer'>change screen background-color towards a new color as you progress towards target word count? INITIAL COLOR / NEW COLOR</div>\
