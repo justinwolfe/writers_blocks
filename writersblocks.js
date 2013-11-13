@@ -293,15 +293,13 @@ function appendMenu(type){
 				</div>\
 				<div id='settingsContainer'>\
 					<div id='settingsLabel'>settings</div>\
-					<div id='visibleTextContainer'>allow use of ctrl+4 to show text?<select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='typewriterContainer'>typewriter mode: disable backspace key? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='wordTargetContainer'>target word count for session: <input type='text' id='wordTargetInput'></input></div>\
-					<div id='blockColorContainer'><input id='blockColorPicker' class='color' value='66ff00'></input>block color</div>\
-					<div id='backgroundColorContainer'>background color</div>\
-					<div id='targetColorContainer'>target background color</div>\
-					<div id='wordTargetColorContainer'>shift background color towards a new color as you progress towards target word count?<select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='wordTargetSoundContainer'>play chime sound on reaching 25%, 50%, 75%, and 100% of target word count?<select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='wordTargetColorContainer'>deliver pop-up notification that you've reached target word count?<select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='visibleTextContainer' class='hotKey'>allow use of ctrl+4 to show text? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='typewriterContainer' class='hotKey'>typewriter mode: disable backspace key? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='wordTargetContainer' class='hotKey'>target word count for session <input type='text' id='wordTargetInput'></input></div>\
+					<div id='colorContainer' class='hotKey'>block color <input id='blockColorPicker' type='color' class='color' value='#ffffff'></input> background color <input id='blockColorPicker' type='color' class='color' value='#000000'></input> target background color <input id='blockColorPicker' type='color' class='color' value='#A1FFFF'></input></div>\
+					<div id='wordTargetColorContainer' class='hotKey'>shift background color towards a new color as you progress towards target word count? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='wordTargetSoundContainer' class='hotKey'>play chime sound on reaching 25%, 50%, 75%, and 100% of target word count? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='wordTargetColorContainer' class='hotKey'>deliver pop-up notification that you've reached target word count? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 				</div>\
 			</div>");
 		break;
