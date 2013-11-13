@@ -120,9 +120,43 @@ div {
 
 #hotKeysContainer {
 	font-size: .7em;
-	border: 1px solid black;
-	margin: 0px auto; 
-	width: 100%;
+	margin: 0px auto;
+	margin-top: 2.5%;
+	margin-bottom: 2.5%;
+	width: 80%;
+}
+
+.hotKey{
+	font-size: 24px;
+	margin: 5px;
+}
+.keyLabel{
+	background-color:black;
+	color: white;
+}
+
+#settingsContainer{
+	margin: 0px auto;
+	margin-top: 2.5%;
+	margin-bottom: 2.5%;
+	width: 80%;
+	background-color: white;
+	color: black;
+	font-size: 24px;
+}
+
+#settingsLabel{
+	background-color: white;
+	color: black;
+	font-weight: bold;
+	font-size: 30px;
+}
+
+#hotKeysLabel{
+	background-color: white;
+	color: black;
+	font-weight: bold;
+	font-size: 30px;
 }
 
 #hotKeysLeft{
@@ -136,14 +170,19 @@ div {
 	width: 50%;
 }
 
+
+#wordTargetInput{
+	width: 7%;
+}
+
 #wordTargetContainer {
-	font-size: .7em;
+
 }
 #wordTargetColorContainer {
-	font-size: .7em;
+
 }
 #wordTargetSoundContainer {
-	font-size: .7em;
+
 }
 
 

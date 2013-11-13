@@ -286,16 +286,23 @@ function appendMenu(type){
 			<div id='menuDisplay'>\
 				<div id='titleContainer'><b>writer's_blocks</b>: a drafting tool by justin wolfe</div>\
 				<div id='hotKeysContainer'>\
-					<div id='hotKeysLeft'><p><b>ctrl+1</b>: about/settings (you are here)</p> <p><b>ctrl+2/3</b>: make blocks smaller/larger</p> <p><b>ctrl+4</b>: reveal all text(disabled by default)</p><p><b>ctrl+5</b>: random word/definition (via Wordnik)</p> </div>\
-					<div id='hotKeysRight'><p><b>ctrl+6</b>: random line from Shakespeare sonnet (sonnets json-ified by Sam Dutton)</p> <p><b>ctrl+7</b>: random oblique strategy (oblique strategies by Brian Eno from this page)</p> <p><b>ctrl+8</b>: timer</p> <p><b>ctrl+0</b>: send text to email or copy text (uses zClip and requires Flash)</p> <p><b>f11</b>: fullscreen</p></div>\
+					<div id='hotKeysLabel'>shortcuts</div>\
+					<div id='hotKeysLeft'><p class='hotKey'><span class='keyLabel'>ctrl+1</span>: about/settings (you are here)</p> <p class='hotKey'><span class='keyLabel'>ctrl+2</span>: make blocks smaller</p> <p class='hotKey'><span class='keyLabel'>ctrl+3</span>: make blocks larger</p> <p class='hotKey'><span class='keyLabel'>ctrl+4</span>: reveal text (disabled by default)</p><p class='hotKey'><span class='keyLabel'>ctrl+5</span>: random word/definition (via Wordnik)</p>  </div>\
+					<div id='hotKeysRight'><p class='hotKey'><span class='keyLabel'>ctrl+6</span>: random Shakespeare couplet</p><p class='hotKey'><span class='keyLabel'>ctrl+7</span>: suggestions for your next sentence</p> <p class='hotKey'><span class='keyLabel'>ctrl+8</span>: timer</p> <p class='hotKey'><span class='keyLabel'>ctrl+0</span>: email/copy text</p> <p class='hotKey'><span class='keyLabel'>f11</span>: fullscreen</p></div>\
 					<br class='clear' />\
 				</div>\
-				<div id='settingsContainer'>settings:</div>\
-				<div id='visibleTextContainer'>enable yourself to view all text by pressing ctrl+4?</div>\
-				<div id='wordTargetContainer'>target word count: <input type='text' id='wordTargetInput'></input></div>\
-				<div id='wordTargetColorContainer'>change screen background-color towards a new color as you progress towards target word count? INITIAL COLOR / NEW COLOR</div>\
-				<div id='wordTargetSoundContainer'>play chime sounds to inform you of reaching 25%, 50%, 75%, and 100% of target word count?</div>\
-				<div id='localStorageSaveContainer>save settings in localstorage in this browser in this computer for future use?</div>\
+				<div id='settingsContainer'>\
+					<div id='settingsLabel'>settings</div>\
+					<div id='visibleTextContainer'>allow use of ctrl+4 to show text?<select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='typewriterContainer'>typewriter mode: disable backspace key? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='wordTargetContainer'>target word count for session: <input type='text' id='wordTargetInput'></input></div>\
+					<div id='blockColorContainer'>block color</div>\
+					<div id='backgroundColorContainer'>background color</div>\
+					<div id='targetColorContainer'>target background color</div>\
+					<div id='wordTargetColorContainer'>shift background color towards a new color as you progress towards target word count?<select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='wordTargetSoundContainer'>play chime sound on reaching 25%, 50%, 75%, and 100% of target word count?<select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='wordTargetColorContainer'>deliver pop-up notification that you've reached target word count?<select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+				</div>\
 			</div>");
 		break;
 		case "wordnik":
