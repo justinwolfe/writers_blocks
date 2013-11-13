@@ -296,7 +296,7 @@ function appendMenu(type){
 					<div id='visibleTextContainer'>allow use of ctrl+4 to show text?<select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='typewriterContainer'>typewriter mode: disable backspace key? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='wordTargetContainer'>target word count for session: <input type='text' id='wordTargetInput'></input></div>\
-					<div id='blockColorContainer'>block color</div>\
+					<div id='blockColorContainer'><input id='blockColorPicker' class='color' value='66ff00'></input>block color</div>\
 					<div id='backgroundColorContainer'>background color</div>\
 					<div id='targetColorContainer'>target background color</div>\
 					<div id='wordTargetColorContainer'>shift background color towards a new color as you progress towards target word count?<select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
