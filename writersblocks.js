@@ -286,8 +286,9 @@ function appendMenu(type){
 			<div id='menuDisplay'>\
 				<div id='titleContainer'><b>writer's_blocks</b>: a drafting tool by justin wolfe</div>\
 				<div id='hotKeysContainer'>\
-					<div id='hotKeysLeft'><p><b>ctrl+1</b>: about/settings (you are here)</p> <p><b>ctrl+2/3</b>: make blocks smaller/larger</p> <p><b>ctrl+4</b>: reveal all text(disabled by default)</p></div>\
-					<div id='hotKeysRight'><p><b>ctrl+5</b>: random word/definition (via Wordnik)</p> <p><b>ctrl+6</b>: random line from Shakespeare sonnet (sonnets json-ified by Sam Dutton)</p> <p><b>ctrl+7</b>: random oblique strategy (oblique strategies by Brian Eno from this page)</p> <p><b>ctrl+8</b>: timer</p> <p><b>ctrl+0</b>: send text to email or copy text (uses zClip and requires Flash)</p> <p><b>f11</b>: fullscreen</p></div>\
+					<div id='hotKeysLeft'><p><b>ctrl+1</b>: about/settings (you are here)</p> <p><b>ctrl+2/3</b>: make blocks smaller/larger</p> <p><b>ctrl+4</b>: reveal all text(disabled by default)</p><p><b>ctrl+5</b>: random word/definition (via Wordnik)</p> </div>\
+					<div id='hotKeysRight'><p><b>ctrl+6</b>: random line from Shakespeare sonnet (sonnets json-ified by Sam Dutton)</p> <p><b>ctrl+7</b>: random oblique strategy (oblique strategies by Brian Eno from this page)</p> <p><b>ctrl+8</b>: timer</p> <p><b>ctrl+0</b>: send text to email or copy text (uses zClip and requires Flash)</p> <p><b>f11</b>: fullscreen</p></div>\
+					<br class='clear' />\
 				</div>\
 				<div id='settingsContainer'>settings:</div>\
 				<div id='visibleTextContainer'>enable yourself to view all text by pressing ctrl+4?</div>\
