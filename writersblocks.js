@@ -284,7 +284,7 @@ function appendMenu(type){
 		case "main_menu":
 			$("#menuDiv").append("\
 			<div id='menuDisplay'>\
-				<div id='titleContainer'><b>writer's_blocks</b>: a drafting tool by justin wolfe</div>\
+				<div id='titleContainer'><b>writer's_blocks</b>: a drafting tool</div>\
 				<div id='hotKeysContainer'>\
 					<div id='hotKeysLabel'>shortcuts</div>\
 					<div id='hotKeysLeft'><p class='hotKey'><span class='keyLabel'>ctrl+1</span>: about/settings (you are here)</p> <p class='hotKey'><span class='keyLabel'>ctrl+2</span>: make blocks smaller</p> <p class='hotKey'><span class='keyLabel'>ctrl+3</span>: make blocks larger</p> <p class='hotKey'><span class='keyLabel'>ctrl+4</span>: reveal text (disabled by default)</p><p class='hotKey'><span class='keyLabel'>ctrl+5</span>: random word/definition (via Wordnik)</p>  </div>\
@@ -293,13 +293,17 @@ function appendMenu(type){
 				</div>\
 				<div id='settingsContainer'>\
 					<div id='settingsLabel'>settings</div>\
-					<div id='visibleTextContainer' class='hotKey'>allow use of ctrl+4 to show text? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='typewriterContainer' class='hotKey'>typewriter mode: disable backspace key? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='visibleTextContainer' class='hotKey'>allow use of ctrl+4 to make text visible? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='typewriterContainer' class='hotKey'>disable backspace key (typewriter mode)? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='wordTargetContainer' class='hotKey'>target word count for session <input type='text' id='wordTargetInput'></input></div>\
-					<div id='colorContainer' class='hotKey'>block color <input id='blockColorPicker' type='color' class='color' value='#ffffff'></input> background color <input id='blockColorPicker' type='color' class='color' value='#000000'></input> target background color <input id='blockColorPicker' type='color' class='color' value='#A1FFFF'></input></div>\
+					<div id='colorContainer' class='hotKey'>block color <input id='blockColorPicker' type='color' class='color' value='#FFFFFF'></input> background color <input id='blockColorPicker' type='color' class='color' value='#000000'></input> target background color <input id='blockColorPicker' type='color' class='color' value='#A1FFFF'></input></div>\
 					<div id='wordTargetColorContainer' class='hotKey'>shift background color towards a new color as you progress towards target word count? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='wordTargetSoundContainer' class='hotKey'>play chime sound on reaching 25%, 50%, 75%, and 100% of target word count? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='wordTargetColorContainer' class='hotKey'>deliver pop-up notification that you've reached target word count? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+				</div>\
+				<div id='aboutContainer'>\
+					<div id='aboutLabel'>about</div>\
+					<div id='aboutText' class='hotKey'>made by <a href='mailto:justin.wolfe@gmail.com'>justin wolfe</a> using <a href='http://www.jquery.com/'>jQuery</a>, <a href='http://www.steamdev.com/zclip/'>zClip</a>, <a href='http://www.wordnik.com'>Wordnik</a>, <a href='https://samdutton.wordpress.com/2011/03/09/shakespeares-sonnets-in-json-format/'>JSON Sonnets</a>, and <a href='http://somedrafts.com/yournextsentence/'>your next sentence</a></div>\
 				</div>\
 			</div>");
 		break;

@@ -8,6 +8,12 @@ iframe {
    overflow: hidden;
 }
 
+a {
+	text-decoration: none;
+	color: black;
+	font-weight: bold;
+}
+
 .block {
 	color: white;
 	background-color: white;
@@ -138,6 +144,23 @@ div {
 	font-size: 24px;
 }
 
+#aboutContainer{
+	margin: 0px auto;
+	margin-top: 2.5%;
+	margin-bottom: 2.5%;
+	width: 80%;
+	background-color: white;
+	color: black;
+	font-size: 24px;
+}
+
+#aboutLabel{
+	background-color: white;
+	color: black;
+	font-weight: bold;
+	font-size: 30px;
+}
+
 #settingsLabel{
 	background-color: white;
 	color: black;
@@ -165,7 +188,7 @@ div {
 
 
 #wordTargetInput{
-	width: 65px;
+	width: 35px;
 }
 
 #wordTargetContainer {
