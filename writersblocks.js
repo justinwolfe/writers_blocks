@@ -284,11 +284,11 @@ function appendMenu(type){
 		case "main_menu":
 			$("#menuDiv").append("\
 			<div id='menuDisplay'>\
-				<div id='titleContainer'><b>writer's_blocks</b>: a drafting tool</div>\
+				<div id='titleContainer'><b>writer's blocks</b>: a drafting tool</div>\
 				<div id='hotKeysContainer'>\
 					<div id='hotKeysLabel'>shortcuts</div>\
 					<div id='hotKeysLeft'><p class='hotKey'><span class='keyLabel'>ctrl+1</span>: about/settings (you are here)</p> <p class='hotKey'><span class='keyLabel'>ctrl+2</span>: make blocks smaller</p> <p class='hotKey'><span class='keyLabel'>ctrl+3</span>: make blocks larger</p> <p class='hotKey'><span class='keyLabel'>ctrl+4</span>: reveal text (disabled by default)</p><p class='hotKey'><span class='keyLabel'>ctrl+5</span>: random word/definition (via Wordnik)</p>  </div>\
-					<div id='hotKeysRight'><p class='hotKey'><span class='keyLabel'>ctrl+6</span>: random Shakespeare couplet</p><p class='hotKey'><span class='keyLabel'>ctrl+7</span>: suggestions for your next sentence</p> <p class='hotKey'><span class='keyLabel'>ctrl+8</span>: timer</p> <p class='hotKey'><span class='keyLabel'>ctrl+0</span>: email/copy text</p> <p class='hotKey'><span class='keyLabel'>f11</span>: fullscreen</p></div>\
+					<div id='hotKeysRight'><p class='hotKey'><span class='keyLabel'>ctrl+6</span>: random Shakespeare couplet</p><p class='hotKey'><span class='keyLabel'>ctrl+7</span>: random oblique strategy</p> <p class='hotKey'><span class='keyLabel'>ctrl+8</span>: timer</p> <p class='hotKey'><span class='keyLabel'>ctrl+0</span>: email/copy text</p> <p class='hotKey'><span class='keyLabel'>f11</span>: fullscreen</p></div>\
 					<br class='clear' />\
 				</div>\
 				<div id='settingsContainer'>\
@@ -322,7 +322,8 @@ function appendMenu(type){
 				<div id='titleDisplay'><div id='innerTitle'>title: <input type='text' id='processEmailTitle'></input></div></div>\
 				<div id='addressDisplay'><div id='innerAddress'>email: <input type='text' id='processEmailAddress'></input></div></div>\
 				<div id='sendDisplay'><div id='sendButton'>email text</div></div>\
-				<div id='copyDisplay'><div id='copyButton'>copy text</div></div>\
+				<div id='copyDisplay'><div id='copyButton'>copy text (Flash)</div></div>\
+				<div id='saveDisplay'><div id='saveButton'>save text to file</div></div>\
 				<div id='messageDisplay'><div id='message'></div></div>\
 				<div id='invisibleTextHolder'></div>\
 			</div>");
