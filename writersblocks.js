@@ -20,6 +20,18 @@ var currentMinutes;
 var ctrlPressed = false;
 jQuery.fn.reverse = [].reverse;
 
+var WBsettings = {
+	visibleText: "no",
+	typewriterMode: "no",
+	blockColor: "#FFFFFF",
+	backgroundColor: "#000000",
+	targetBackgroundColor: "#A1FFFF",
+	progressColor: "no",
+	progressSound: "no",
+	progressPop: "no",
+	emailAddress: ""
+};
+
  $(document).ready(function() {
 	//setup
 	prepareOblique();
@@ -59,8 +71,12 @@ jQuery.fn.reverse = [].reverse;
 				};	
 			};
 			if (keyPressed == 8){
-				event.preventDefault();
-				$("#displaySpace :last-child").remove();
+				if (WBsettings.typewriterMode == "no"){
+					event.preventDefault();
+					$("#displaySpace :last-child").remove();
+				} else {
+					event.preventDefault();
+				}
 			};
 			if (keyPressed == 13){
 				$("#displaySpace").append("<br class='break'>");
@@ -76,6 +92,7 @@ jQuery.fn.reverse = [].reverse;
 				event.preventDefault();
 				if (menuDisplayed == false){
 					appendMenu("main_menu");
+					updateMenu("main_menu");
 					addMenuListeners();
 					$("#menuDiv").fadeIn(250, function(){});
 					menuDisplayed = true;	
@@ -308,18 +325,6 @@ function prepareOblique(){
 	obliqueArray = obliqueString.split(",");
 };
 
-var WBsettings = {
-	visibleText: "no",
-	typewriterMode: "no",
-	blockColor: "#FFFFFF",
-	backgroundColor: "#000000",
-	targetBackgroundColor: "#A1FFFF",
-	progressColor: "no",
-	progressSound: "no",
-	progressPop: "no",
-	emailAddress: ""
-};
-
 // could probably refactor this using a loop and "this" later if i feel like it
 function addMenuListeners(){
 	$("#visibleTextSelect").change(function() {
@@ -335,7 +340,7 @@ function addMenuListeners(){
 		WBsettings.blockColor = $("#blockColorPicker").val();
 	});
 	$("#backgroundColorPicker").change(function() {
-		WBsettings.backgroundColor = $("#backgroundColorPicker").val()
+		WBsettings.backgroundColor = $("#backgroundColorPicker").val();
 	});
 	$("#targetBackgroundColorPicker").change(function() {
 		WBsettings.targetBackgroundColor = $("#targetBackgroundColorPicker").val();
@@ -349,6 +354,25 @@ function addMenuListeners(){
 	$("#progressPopSelect").change(function() {
 		WBsettings.progressPop = $("#progressPopSelect").val();
 	});
+};
+
+function updateMenu(type){
+	switch(type)
+	{
+		case "main_menu":
+			$("#visibleTextSelect").val(WBsettings.visibleText);
+			$("#typewriterSelect").val(WBsettings.typewriterMode);
+			$("#wordTargetInput").val(wordTarget);
+			$("#blockColorPicker").val(WBsettings.blockColor);
+			$("#backgroundColorPicker").val(WBsettings.backgroundColor);
+			$("#targetBackgroundColorPicker").val(WBsettings.targetBackgroundColor);
+			$("#progressColorSelect").val(WBsettings.progressColor);
+			$("#progressSoundSelect").val(WBsettings.progressSound);
+			$("#progressPopSelect").val(WBsettings.progressPop);
+		break;
+		case "email":
+		break;
+	};	
 };
 
 function appendMenu(type){
@@ -368,7 +392,7 @@ function appendMenu(type){
 					<div id='settingsLabel'>settings</div>\
 					<div id='visibleTextContainer' class='hotKey'>allow use of ctrl+4 to make text visible? <select id='visibleTextSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='typewriterContainer' class='hotKey'>disable backspace key (typewriter mode)? <select id='typewriterSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='wordTargetContainer' class='hotKey'>target word count for session <input type='text' id='wordTargetInput'></input></div>\
+					<div id='wordTargetContainer' class='hotKey'>target word count for session <input type='text' id='wordTargetInput' value='600'></input></div>\
 					<div id='colorContainer' class='hotKey'>block color <input id='blockColorPicker' type='color' class='color' value='#FFFFFF'></input> background color <input id='backgroundColorPicker' type='color' class='color' value='#000000'></input> target background color <input id='targetBackgroundColorPicker' type='color' class='color' value='#A1FFFF'></input></div>\
 					<div id='wordTargetColorContainer' class='hotKey'>shift background color towards a new color as you progress towards target word count? <select id='progressColorSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='wordTargetSoundContainer' class='hotKey'>play chime sound on reaching 25%, 50%, 75%, and 100% of target word count? <select id='progressSoundSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
