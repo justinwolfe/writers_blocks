@@ -77,6 +77,7 @@ jQuery.fn.reverse = [].reverse;
 				event.preventDefault();
 				if (menuDisplayed == false){
 					appendMenu("main_menu");
+					addMenuListeners();
 					$("#menuDiv").fadeIn(250, function(){});
 					menuDisplayed = true;	
 				} else {
@@ -198,7 +199,7 @@ jQuery.fn.reverse = [].reverse;
 						path:'libraries/ZeroClipboard.swf',
 						copy: $('#invisibleTextHolder').text(),
 						afterCopy:function(){
-							$('#message').text("text copied. press ctrl+0 to return to editor");
+							$('#message').text("text copied. press ctrl+0 to go back to your blocks.");
 						}
 					});
 					$("#sendButton").click(function(){
@@ -215,11 +216,11 @@ jQuery.fn.reverse = [].reverse;
 								blockTitle : emailTitle
 						   },
 						   success: function(data) {
-							$("#message").text("text sent (always a good idea to backup your backup, though). press ctrl+0 to return to editor");
+							$("#message").text("text sent (always a good idea to backup your backup, though). press ctrl+0 to go back to your blocks.");
 							//setTimeout(function(){clearMenu()},1000);
 						   },
 						   error: function(msg) {
-							$("#message").text("text not sent. maybe my server is having problems? press ctrl+0 to return to editor");
+							$("#message").text("text not sent. maybe my server is having problems? press ctrl+0 to go back to your blocks.");
 							//setTimeout(function(){clearMenu()},5000);
 						   }
 						});	
@@ -243,13 +244,13 @@ jQuery.fn.reverse = [].reverse;
 									hours-=12;
 								};									
 								dlName = "WB-" + hours + "-" + d.getMinutes() + "__" + (d.getMonth()+1) + "-" + (d.getDate()) + "-" + (d.getFullYear()); 
-								dlMessage = "click <a href='storage/download2.php?name=" + outputName + "&dlName=" + dlName + "'>here</a> to download your file. file will be deleted from server after your download."
+								dlMessage = "click <a href='storage/download2.php?name=" + outputName + "&dlName=" + dlName + "'>here</a> to download your file. file will be deleted from the server after your download. press ctrl+0 to go back to your blocks."
 								console.log(dlMessage);
 								$("#message").html(dlMessage);
 							//setTimeout(function(){clearMenu()},1000);
 						   },
 						   error: function(msg) {
-							$("#message").text("link not created. maybe my server is having problems? press ctrl+0 to return to editor");
+							$("#message").text("link not created. maybe my server is having problems? press ctrl+0 to go back to your blocks.");
 							//setTimeout(function(){clearMenu()},5000);
 						   }
 						});	
@@ -308,6 +309,36 @@ function prepareOblique(){
 	obliqueArray = obliqueString.split(",");
 };
 
+function addMenuListeners(){
+	$("#visibleTextSelect").change(function() {
+		console.log($("#visibleTextSelect").val());
+	});
+	$("#typewriterSelect").change(function() {
+		console.log($("#typewriterSelect").val());
+	});
+	$("#wordTargetInput").change(function() {
+		console.log($("#wordTargetInput").val());
+	});
+	$("#blockColorPicker").change(function() {
+		console.log($("#blockColorPicker").val());
+	});
+	$("#backgroundColorPicker").change(function() {
+		console.log($("#backgroundColorPicker").val());
+	});
+	$("#targetBackgroundColorPicker").change(function() {
+		console.log($("#targetBackgroundColorPicker").val());
+	});
+	$("#progressColorSelect").change(function() {
+		console.log($("#progressColorSelect").val());
+	});
+	$("#progressSoundSelect").change(function() {
+		console.log($("#progressSoundSelect").val());
+	});
+	$("#progressPopSelect").change(function() {
+		console.log($("#progressPopSelect").val());
+	});
+};
+
 function appendMenu(type){
 	switch(type)
 	{
@@ -323,13 +354,13 @@ function appendMenu(type){
 				</div>\
 				<div id='settingsContainer'>\
 					<div id='settingsLabel'>settings</div>\
-					<div id='visibleTextContainer' class='hotKey'>allow use of ctrl+4 to make text visible? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='typewriterContainer' class='hotKey'>disable backspace key (typewriter mode)? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='visibleTextContainer' class='hotKey'>allow use of ctrl+4 to make text visible? <select id='visibleTextSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='typewriterContainer' class='hotKey'>disable backspace key (typewriter mode)? <select id='typewriterSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='wordTargetContainer' class='hotKey'>target word count for session <input type='text' id='wordTargetInput'></input></div>\
-					<div id='colorContainer' class='hotKey'>block color <input id='blockColorPicker' type='color' class='color' value='#FFFFFF'></input> background color <input id='blockColorPicker' type='color' class='color' value='#000000'></input> target background color <input id='blockColorPicker' type='color' class='color' value='#A1FFFF'></input></div>\
-					<div id='wordTargetColorContainer' class='hotKey'>shift background color towards a new color as you progress towards target word count? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='wordTargetSoundContainer' class='hotKey'>play chime sound on reaching 25%, 50%, 75%, and 100% of target word count? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='wordTargetColorContainer' class='hotKey'>deliver pop-up notification that you've reached target word count? <select><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='colorContainer' class='hotKey'>block color <input id='blockColorPicker' type='color' class='color' value='#FFFFFF'></input> background color <input id='backgroundColorPicker' type='color' class='color' value='#000000'></input> target background color <input id='targetBackgroundColorPicker' type='color' class='color' value='#A1FFFF'></input></div>\
+					<div id='wordTargetColorContainer' class='hotKey'>shift background color towards a new color as you progress towards target word count? <select id='progressColorSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='wordTargetSoundContainer' class='hotKey'>play chime sound on reaching 25%, 50%, 75%, and 100% of target word count? <select id='progressSoundSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='wordTargetPopContainer' class='hotKey'>deliver pop-up notification that you've reached target word count? <select id='progressPopSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 				</div>\
 				<div id='aboutContainer'>\
 					<div id='aboutLabel'>about</div>\
