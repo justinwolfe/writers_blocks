@@ -8,7 +8,6 @@ var randomWords = new Array();
 var randomDefinitions = new Array();
 var randomWordCounter = 0;
 var randomDefinitionsCounter = 0;
-var gradientMode = true;
 var wordTarget = 600;
 var wordTargetPercentage;
 var outputString = "";
@@ -55,7 +54,7 @@ jQuery.fn.reverse = [].reverse;
 				spacesTyped+=1;
 				$("#displaySpace").append("<span class='space'>&nbsp;</span>");
 				wordTargetPercentage = spacesTyped / wordTarget;
-				if (gradientMode == true){
+				if (WBsettings.progressColor = "yes"){
 					$("#gradientDiv").css('opacity', wordTargetPercentage);
 				};	
 			};
@@ -312,42 +311,43 @@ function prepareOblique(){
 var WBsettings = {
 	visibleText: "no",
 	typewriterMode: "no",
-	wordTarget: 800,
 	blockColor: "#FFFFFF",
 	backgroundColor: "#000000",
 	targetBackgroundColor: "#A1FFFF",
 	progressColor: "no",
 	progressSound: "no",
-	progressPop: "no"
+	progressPop: "no",
+	emailAddress: ""
 };
 
+// could probably refactor this using a loop and "this" later if i feel like it
 function addMenuListeners(){
 	$("#visibleTextSelect").change(function() {
-		console.log($("#visibleTextSelect").val());
+		WBsettings.visibleText = $("#visibleTextSelect").val();
 	});
 	$("#typewriterSelect").change(function() {
-		console.log($("#typewriterSelect").val());
+		WBsettings.typewriterMode = $("#typewriterSelect").val();
 	});
 	$("#wordTargetInput").change(function() {
-		console.log($("#wordTargetInput").val());
+		wordTarget = $("#wordTargetInput").val();
 	});
 	$("#blockColorPicker").change(function() {
-		console.log($("#blockColorPicker").val());
+		WBsettings.blockColor = $("#blockColorPicker").val();
 	});
 	$("#backgroundColorPicker").change(function() {
-		console.log($("#backgroundColorPicker").val());
+		WBsettings.backgroundColor = $("#backgroundColorPicker").val()
 	});
 	$("#targetBackgroundColorPicker").change(function() {
-		console.log($("#targetBackgroundColorPicker").val());
+		WBsettings.targetBackgroundColor = $("#targetBackgroundColorPicker").val();
 	});
 	$("#progressColorSelect").change(function() {
-		console.log($("#progressColorSelect").val());
+		WBsettings.progressColor = $("#progressColorSelect").val();
 	});
 	$("#progressSoundSelect").change(function() {
-		console.log($("#progressSoundSelect").val());
+		WBsettings.progressSound = $("#progressSoundSelect").val();
 	});
 	$("#progressPopSelect").change(function() {
-		console.log($("#progressPopSelect").val());
+		WBsettings.progressPop = $("#progressPopSelect").val();
 	});
 };
 
