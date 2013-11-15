@@ -242,7 +242,7 @@ jQuery.fn.reverse = [].reverse;
 								if (hours > 12){
 									hours-=12;
 								};									
-								dlName = "WB-" + hours + "-" + d.getMinutes() + "____" + (d.getMonth()+1) + "-" + (d.getDate()) + "-" + (d.getFullYear()); 
+								dlName = "WB-" + hours + "-" + d.getMinutes() + "__" + (d.getMonth()+1) + "-" + (d.getDate()) + "-" + (d.getFullYear()); 
 								dlMessage = "click <a href='storage/download2.php?name=" + outputName + "&dlName=" + dlName + "'>here</a> to download your file. file will be deleted from server after your download."
 								console.log(dlMessage);
 								$("#message").html(dlMessage);
