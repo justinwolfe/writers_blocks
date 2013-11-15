@@ -352,7 +352,7 @@ function appendMenu(type){
 				<div id='titleDisplay'><div id='innerTitle'>title: <input type='text' id='processEmailTitle'></input></div></div>\
 				<div id='addressDisplay'><div id='innerAddress'>email: <input type='text' id='processEmailAddress'></input></div></div>\
 				<div id='sendDisplay'><div id='sendButton'>email text</div></div>\
-				<div id='copyDisplay'><div id='copyButton'>copy text (Flash)</div></div>\
+				<div id='copyDisplay'><div id='copyButton'>copy text (flash)</div></div>\
 				<div id='viewDisplay'><div id='viewButton'>generate download link</div></div>\
 				<div id='messageDisplay'><div id='message'></div></div>\
 				<div id='invisibleTextHolder'></div>\
