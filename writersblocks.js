@@ -224,6 +224,36 @@ jQuery.fn.reverse = [].reverse;
 						   }
 						});	
 					});
+					$("#viewButton").click(function(){
+						outputName = rand(50) + ".txt";
+						console.log(outputName);
+						$.ajax({
+						   type: "POST",
+						   url: "storage/save2.php",
+						   dataType: 'text',
+						   data: { 
+								blockText : outputString,
+								blockName : outputName
+						   },
+						   success: function(data) {
+								console.log(data);
+								var d = new Date();
+								var hours = d.getHours();
+								if (hours > 12){
+									hours-=12;
+								};									
+								dlName = "WB-" + hours + "-" + d.getMinutes() + "____" + (d.getMonth()+1) + "-" + (d.getDate()) + "-" + (d.getFullYear()); 
+								dlMessage = "click <a href='storage/download2.php?name=" + outputName + "&dlName=" + dlName + "'>here</a> to download your file. file will be deleted from server after your download."
+								console.log(dlMessage);
+								$("#message").html(dlMessage);
+							//setTimeout(function(){clearMenu()},1000);
+						   },
+						   error: function(msg) {
+							$("#message").text("link not created. maybe my server is having problems? press ctrl+0 to return to editor");
+							//setTimeout(function(){clearMenu()},5000);
+						   }
+						});	
+					});
 				} else {
 					clearMenu();
 				};	
@@ -323,7 +353,7 @@ function appendMenu(type){
 				<div id='addressDisplay'><div id='innerAddress'>email: <input type='text' id='processEmailAddress'></input></div></div>\
 				<div id='sendDisplay'><div id='sendButton'>email text</div></div>\
 				<div id='copyDisplay'><div id='copyButton'>copy text (Flash)</div></div>\
-				<div id='saveDisplay'><div id='saveButton'>save text to file</div></div>\
+				<div id='viewDisplay'><div id='viewButton'>generate download link</div></div>\
 				<div id='messageDisplay'><div id='message'></div></div>\
 				<div id='invisibleTextHolder'></div>\
 			</div>");
@@ -437,3 +467,8 @@ function parseHTMLtoString(){
 	});
 	console.log(outputString);
 };
+
+function rand(length,current){
+ current = current ? current : '';
+ return length ? rand( --length , "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz".charAt( Math.floor( Math.random() * 60 ) ) + current ) : current;
+}

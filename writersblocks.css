@@ -409,7 +409,7 @@ div {
 	padding-top: 1%;
 }
 
-#saveDisplay{
+#viewDisplay{
 	width: 100%;
 	text-align: center;
 	padding-top: 1%;
@@ -472,21 +472,22 @@ div {
 	color: white;
 }
 
-#saveButton{
+#viewButton{
 	display: inline-block;
 	border: 2px solid black;
 	text-align: center;
 	padding-left: .3%;
 	padding-right: .3%;
 	font-size: .75em;
+	cursor: pointer;
 }
 
-#saveButton:link, #saveButton.link{ 
+#viewButton:link, #viewButton.link{ 
 	background-color: white;
 	color: black;
 }
 
-#saveButton:hover, #saveButton.hover{ 
+#viewButton:hover, #viewButton.hover{ 
 	background-color: black;
 	color: white;
 }

@@ -1,8 +1,7 @@
 <?php
 $blockText = $_POST['blockText'];
 $blockName = $_POST['blockName'];
-$fileName = "$blockName.txt";
-$fileHandler = fopen($fileName, 'w')
+$fileHandler = fopen($blockName, 'w');
 fwrite($fileHandler, $blockText);
 fclose($fileHandler);
 ?>
