@@ -309,6 +309,18 @@ function prepareOblique(){
 	obliqueArray = obliqueString.split(",");
 };
 
+var WBsettings = {
+	visibleText: "no",
+	typewriterMode: "no",
+	wordTarget: 800,
+	blockColor: "#FFFFFF",
+	backgroundColor: "#000000",
+	targetBackgroundColor: "#A1FFFF",
+	progressColor: "no",
+	progressSound: "no",
+	progressPop: "no"
+};
+
 function addMenuListeners(){
 	$("#visibleTextSelect").change(function() {
 		console.log($("#visibleTextSelect").val());
@@ -348,7 +360,7 @@ function appendMenu(type){
 				<div id='titleContainer'><b>writer's blocks</b>: a drafting tool</div>\
 				<div id='hotKeysContainer'>\
 					<div id='hotKeysLabel'>shortcuts</div>\
-					<div id='hotKeysLeft'><p class='hotKey'><span class='keyLabel'>ctrl+1</span>: about/settings (you are here)</p> <p class='hotKey'><span class='keyLabel'>ctrl+2</span>: make blocks smaller</p> <p class='hotKey'><span class='keyLabel'>ctrl+3</span>: make blocks larger</p> <p class='hotKey'><span class='keyLabel'>ctrl+4</span>: reveal text (disabled by default)</p><p class='hotKey'><span class='keyLabel'>ctrl+5</span>: random word/definition (via Wordnik)</p>  </div>\
+					<div id='hotKeysLeft'><p class='hotKey'><span class='keyLabel'>ctrl+1</span>: settings (you are here)</p> <p class='hotKey'><span class='keyLabel'>ctrl+2</span>: make blocks smaller</p> <p class='hotKey'><span class='keyLabel'>ctrl+3</span>: make blocks larger</p> <p class='hotKey'><span class='keyLabel'>ctrl+4</span>: reveal text (disabled by default)</p><p class='hotKey'><span class='keyLabel'>ctrl+5</span>: random word/definition (via Wordnik)</p>  </div>\
 					<div id='hotKeysRight'><p class='hotKey'><span class='keyLabel'>ctrl+6</span>: random Shakespeare couplet</p><p class='hotKey'><span class='keyLabel'>ctrl+7</span>: random oblique strategy</p> <p class='hotKey'><span class='keyLabel'>ctrl+8</span>: timer</p> <p class='hotKey'><span class='keyLabel'>ctrl+0</span>: email/copy text</p> <p class='hotKey'><span class='keyLabel'>f11</span>: fullscreen</p></div>\
 					<br class='clear' />\
 				</div>\
