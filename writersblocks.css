@@ -41,7 +41,19 @@ body {
 
 div {
 	position: relative;
-	}
+}
+
+input {
+	font-size: 24px;
+	background-color: black;
+	color: white;
+}
+
+select {
+	background-color: black;
+	color: white;
+	font-size: 18px;
+}
 	
 #displaySpace{
 	background-color: transparent;
@@ -192,7 +204,8 @@ div {
 
 
 #wordTargetInput{
-	width: 35px;
+	width: 60px;
+	font-size: 20px;
 }
 
 #wordTargetContainer {
@@ -203,6 +216,11 @@ div {
 }
 #wordTargetSoundContainer {
 
+}
+
+.colorPicker {
+	width: 120px;
+	font-size: 18px;
 }
 
 

@@ -207,7 +207,10 @@ var WBsettings = {
 				if (menuDisplayed == false){
 					parseHTMLtoString();
 					appendMenu("email");
-					$("#processEmailAddress").val("justin.wolfe@gmail.com");
+					$("#processEmailAddress").val(WBsettings.emailAddress);
+					$("#processEmailAddress").change(function(){
+						WBsettings.emailAddress = $("#processEmailAddress").val();
+					});
 					$("#invisibleTextHolder").text(outputString);
 					$("#menuDiv").fadeIn(250, function(){});
 					menuDisplayed = true;
@@ -393,7 +396,7 @@ function appendMenu(type){
 					<div id='visibleTextContainer' class='hotKey'>allow use of ctrl+4 to make text visible? <select id='visibleTextSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='typewriterContainer' class='hotKey'>disable backspace key (typewriter mode)? <select id='typewriterSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='wordTargetContainer' class='hotKey'>target word count for session <input type='text' id='wordTargetInput' value='600'></input></div>\
-					<div id='colorContainer' class='hotKey'>block color <input id='blockColorPicker' type='color' class='color' value='#FFFFFF'></input> background color <input id='backgroundColorPicker' type='color' class='color' value='#000000'></input> target background color <input id='targetBackgroundColorPicker' type='color' class='color' value='#A1FFFF'></input></div>\
+					<div id='colorContainer' class='hotKey'>block color <input id='blockColorPicker' type='color' class='colorPicker' value='#FFFFFF'></input> background color <input id='backgroundColorPicker' type='color' class='colorPicker' value='#000000'></input> target background color <input id='targetBackgroundColorPicker' type='color' class='colorPicker' value='#A1FFFF'></input></div>\
 					<div id='wordTargetColorContainer' class='hotKey'>shift background color towards a new color as you progress towards target word count? <select id='progressColorSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='wordTargetSoundContainer' class='hotKey'>play chime sound on reaching 25%, 50%, 75%, and 100% of target word count? <select id='progressSoundSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='wordTargetPopContainer' class='hotKey'>deliver pop-up notification that you've reached target word count? <select id='progressPopSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
