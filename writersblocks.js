@@ -126,41 +126,51 @@ var WBsettings = {
 				event.preventDefault();
 				if (menuDisplayed == false){
 					appendMenu("wordnik");
-				} else {
+				} else if (menuDisplayed == true && currentMenu == "wordnik"){
 					randomDefinitions.length = 0;
 					randomDefinitionsCounter = 0;
 					clearMenu();
+				} else if (menuDisplayed == true && currentMenu != "wordnik"){
+					appendMenu("wordnik");
 				};
 			} else if (keyPressed == 54){	
 				event.preventDefault();
 				if (menuDisplayed == false){
 					appendMenu("sonnet");
-				} else {
+				} else if (menuDisplayed == true && currentMenu == "sonnet"){
 					clearMenu();
+				} else if (menuDisplayed == true && currentMenu != "sonnet"){
+					appendMenu("sonnet");
 				};				
 			} else if (keyPressed == 55){
 				event.preventDefault();
 				if (menuDisplayed == false){
 					appendMenu("oblique");
-				} else {
+				} else if (menuDisplayed == true && currentMenu == "oblique"){
 					clearMenu();
-				};
+				} else if (menuDisplayed == true && currentMenu != "oblique"){
+					appendMenu("oblique");
+				};	
 			} else if (keyPressed == 57){
 				event.preventDefault();
 			} else if (keyPressed == 48){
 				event.preventDefault();
 				if (menuDisplayed == false){
 					appendMenu("email");
-				} else {
+				} else if (menuDisplayed == true && currentMenu == "email"){
 					clearMenu();
 					outputViewed = false;
+				} else if (menuDisplayed == true && currentMenu != "email"){
+					appendMenu("email");
 				};	
 			} else if (keyPressed == 56){
 				event.preventDefault();
 				if (menuDisplayed == false){
 					appendMenu("timer");
-				} else if (menuDisplayed == true){
+				} else if (menuDisplayed == true && currentMenu == "timer"){
 					clearMenu();
+				} else if (menuDisplayed == true && currentMenu != "timer"){
+					appendMenu("timer");
 				};			
 			};
 		};	
