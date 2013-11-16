@@ -20,6 +20,7 @@ var secs;
 var currentSeconds; 
 var currentMinutes; 
 var ctrlPressed = false;
+var shiftPressed = false;
 jQuery.fn.reverse = [].reverse;
 
 var WBsettings = {
@@ -44,8 +45,9 @@ var WBsettings = {
 	$(document).keypress(function(event){
 		var charCode = event.which || event.keyCode;
 		charStr = String.fromCharCode(charCode);
+		console.log("charCode:" + charStr + "=" + charCode);
 		if (menuDisplayed == false){
-			if (charCode != 32 && charCode != 13 && charCode != 8 && ctrlPressed == false){
+			if (charCode != 32 && charCode != 13 && charCode != 8 && charCode != 47 && charCode!= 39 && ctrlPressed == false){
 				if (textDisplayed == false){
 					$("#displaySpace").append("<span class='block' style='color:" + WBsettings.blockColor + ";background-color:" + WBsettings.blockColor + "'>" + charStr + "</span>");
 				} else {
@@ -64,6 +66,7 @@ var WBsettings = {
 		var scrollWindow = $("#displaySpace");
 		scrollWindow.scrollTop(scrollWindow[0].scrollHeight);
 		var keyPressed = event.keyCode;
+		console.log("keyCode:" + keyPressed);
 		if (menuDisplayed == false){
 			if (keyPressed == 32){
 				spacesTyped+=1;
@@ -86,9 +89,41 @@ var WBsettings = {
 				var scrollWindow = $("#displaySpace");
 				scrollWindow.scrollTop(scrollWindow[0].scrollHeight);
 			};
+			// added listeners for ' and / keys in order to override stupid firefox keyboard shortcuts
+			if (keyPressed == 191){
+				event.preventDefault();
+				var fuckFirefox;
+				if (shiftPressed == false){
+					fuckFirefox = "/";
+				} else {
+					fuckFirefox = "?";
+				};
+				if (textDisplayed == false){
+					$("#displaySpace").append("<span class='block' style='color:" + WBsettings.blockColor + ";background-color:" + WBsettings.blockColor + "'>" + fuckFirefox + "</span>");
+				} else {
+					$("#displaySpace").append("<span class='visibleBlock' style='color:" + WBsettings.textColor + ";background-color:" + WBsettings.blockColor + "'>" + fuckFirefox + "</span>");
+				};
+			};
+			if (keyPressed == 222){
+				event.preventDefault();
+				var fuckFirefox;
+				if (shiftPressed == false){
+					fuckFirefox = "'";
+				} else {
+					fuckFirefox = '"';
+				};
+				if (textDisplayed == false){
+					$("#displaySpace").append("<span class='block' style='color:" + WBsettings.blockColor + ";background-color:" + WBsettings.blockColor + "'>" + fuckFirefox + "</span>");
+				} else {
+					$("#displaySpace").append("<span class='visibleBlock' style='color:" + WBsettings.textColor + ";background-color:" + WBsettings.blockColor + "'>" + fuckFirefox + "</span>");
+				};
+			};			
 		};	
 		if (keyPressed == 17){
 			ctrlPressed = true;
+		};
+		if (keyPressed == 16){
+			shiftPressed = true;
 		};
 		if (ctrlPressed == true){
 			if (keyPressed == 49){
@@ -180,11 +215,8 @@ var WBsettings = {
 		if (keyPressed == 17){
 			ctrlPressed = false;
 		};
-		//CHECK THIS LISTENER
 		if (keyPressed == 16){
-			if (textDisplayed == false){
-				$(".visibleBlock").addClass("block").removeClass("visibleBlock");
-			};
+			shiftPressed = false;
 		};
 	});
 });
@@ -379,25 +411,28 @@ function appendMenu(type){
 			$("#sendButton").click(function(){
 				emailTitle = $('#processEmailTitle').val();
 				emailAddress = $('#processEmailAddress').val();
-			//if there is a title and a valid email address in there
-				$.ajax({
-				   type: "POST",
-				   url: "email.php",
-				   dataType: 'text',
-				   data: { 
-						blockText : outputString,
-						blockEmail : emailAddress,
-						blockTitle : emailTitle
-				   },
-				   success: function(data) {
-					$("#message").text("text sent (always a good idea to backup your backup, though). press ctrl+0 to go back to your blocks.");
-					//setTimeout(function(){clearMenu()},1000);
-				   },
-				   error: function(msg) {
-					$("#message").text("text not sent. maybe my server is having problems? press ctrl+0 to go back to your blocks.");
-					//setTimeout(function(){clearMenu()},5000);
-				   }
-				});	
+				if (check_email(emailAddress) == false){
+					$("#message").text("please enter a valid email address.");
+				} else {
+					$.ajax({
+					   type: "POST",
+					   url: "email.php",
+					   dataType: 'text',
+					   data: { 
+							blockText : outputString,
+							blockEmail : emailAddress,
+							blockTitle : emailTitle
+					   },
+					   success: function(data) {
+						$("#message").text("text sent (always a good idea to backup your backup, though). press ctrl+0 to go back to your blocks.");
+						//setTimeout(function(){clearMenu()},1000);
+					   },
+					   error: function(msg) {
+						$("#message").text("text not sent. maybe my host is having problems? press ctrl+0 to go back to your blocks.");
+						//setTimeout(function(){clearMenu()},5000);
+					   }
+					});	
+				};
 			});
 			$("#saveButton").click(function(){
 				outputName = rand(50) + ".txt";
@@ -424,7 +459,7 @@ function appendMenu(type){
 					//setTimeout(function(){clearMenu()},1000);
 				   },
 				   error: function(msg) {
-					$("#message").text("link not created. maybe my server is having problems? press ctrl+0 to go back to your blocks.");
+					$("#message").text("link not created. maybe my host is having problems? press ctrl+0 to go back to your blocks.");
 					//setTimeout(function(){clearMenu()},5000);
 				   }
 				});	
