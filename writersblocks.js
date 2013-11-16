@@ -10,6 +10,7 @@ var randomWordCounter = 0;
 var randomDefinitionsCounter = 0;
 var wordTarget = 600;
 var wordTargetPercentage;
+var outputViewed = false;
 var outputString = "";
 var charString;
 var timerStarted = false;
@@ -244,7 +245,7 @@ var WBsettings = {
 						   }
 						});	
 					});
-					$("#viewButton").click(function(){
+					$("#saveButton").click(function(){
 						outputName = rand(50) + ".txt";
 						console.log(outputName);
 						$.ajax({
@@ -274,8 +275,22 @@ var WBsettings = {
 						   }
 						});	
 					});
+					$("#viewButton").click(function(){
+						if (outputViewed == false){
+							$("#menuDiv").append("<div id='viewText'></div>");
+							var HTMLOutputString = outputString.replace(/\n/g,'<br/>');
+							$("#viewText").html(HTMLOutputString);
+							$("#message").text("click 'view text' again to close text.  press ctrl+0 to go back to your blocks.");
+							outputViewed = true;
+						} else {
+							$("#viewText").remove();
+							$("#message").text("");
+							outputViewed = false;
+						};
+					});
 				} else {
 					clearMenu();
+					outputViewed = false;
 				};	
 			} else if (keyPressed == 56){
 				event.preventDefault();
@@ -423,7 +438,8 @@ function appendMenu(type){
 				<div id='addressDisplay'><div id='innerAddress'>email: <input type='text' id='processEmailAddress'></input></div></div>\
 				<div id='sendDisplay'><div id='sendButton'>email text</div></div>\
 				<div id='copyDisplay'><div id='copyButton'>copy text (flash)</div></div>\
-				<div id='viewDisplay'><div id='viewButton'>generate download link</div></div>\
+				<div id='viewDisplay'><div id='viewButton'>view text</div>\
+				<div id='saveDisplay'><div id='saveButton'>generate download link</div></div>\
 				<div id='messageDisplay'><div id='message'></div></div>\
 				<div id='invisibleTextHolder'></div>\
 			</div>");

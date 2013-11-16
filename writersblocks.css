@@ -433,6 +433,12 @@ select {
 	padding-top: 1%;
 }
 
+#saveDisplay{
+	width: 100%;
+	text-align: center;
+	padding-top: 1%;
+}
+
 #messageDisplay{
 	width: 100%;
 	text-align: center;
@@ -497,7 +503,6 @@ select {
 	padding-left: .3%;
 	padding-right: .3%;
 	font-size: .75em;
-	cursor: pointer;
 }
 
 #viewButton:link, #viewButton.link{ 
@@ -506,6 +511,25 @@ select {
 }
 
 #viewButton:hover, #viewButton.hover{ 
+	background-color: black;
+	color: white;
+}
+
+#saveButton{
+	display: inline-block;
+	border: 2px solid black;
+	text-align: center;
+	padding-left: .3%;
+	padding-right: .3%;
+	font-size: .75em;
+}
+
+#saveButton:link, #saveButton.link{ 
+	background-color: white;
+	color: black;
+}
+
+#saveButton:hover, #saveButton.hover{ 
 	background-color: black;
 	color: white;
 }
@@ -563,5 +587,28 @@ select {
 	opacity: 1; 
 	cursor: default; 
 	z-index: 99999999999; 
+	-webkit-user-select: none; /* Chrome/Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+	-o-user-select: none;
+	user-select: none;
 }	
+
+#viewText{
+	background-color: black;
+	color: white;
+	width: 50%;
+	font-size: 24px;
+	left: 25%;
+	height: 40%;
+	top: 10%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	z-index: 999999999999;
+		-webkit-user-select: text; /* Chrome/Safari */        
+	-moz-user-select: text; /* Firefox */
+	-ms-user-select: text; /* IE10+ */
+	-o-user-select: text;
+	user-select: text;
+}
 	
