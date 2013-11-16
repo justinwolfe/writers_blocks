@@ -448,10 +448,17 @@ function appendMenu(type){
 			$.getJSON('sonnets.json', function(data) {
 				console.log(data);
 				var randomSonnet = Math.floor((Math.random()*data.length)+0);
-				var randomLine = Math.floor((Math.random()*13)+0);
+				var randomLine = Math.floor((Math.random()*12)+0);
 				var sonnetLine = data[randomSonnet].lines[randomLine];
-				$("#menuDiv").append("<div id='sonnetDisplay'></div>");
-				$("#sonnetDisplay").text(sonnetLine);					
+				var sonnetLine2 = data[randomSonnet].lines[randomLine + 1];
+				console.log(sonnetLine);
+				console.log(sonnetLine2);
+				$("#menuDiv").append("<div id='sonnetDisplay'>\
+					<div id='line1'></div>\
+					<div id='line2'></div>\
+				</div>");
+				$("#line1").text(sonnetLine);	
+				$("#line2").text(sonnetLine2);
 			}); 				
 			$("#menuDiv").fadeIn(250, function(){});
 			menuDisplayed = true;
