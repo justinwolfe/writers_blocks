@@ -94,10 +94,6 @@ var WBsettings = {
 				event.preventDefault();
 				if (menuDisplayed == false){
 					appendMenu("main_menu");
-					updateMenu("main_menu");
-					addMenuListeners();
-					$("#menuDiv").fadeIn(250, function(){});
-					menuDisplayed = true;	
 				} else {
 					clearMenu();		
 				};
@@ -126,52 +122,7 @@ var WBsettings = {
 			} else if (keyPressed == 53){
 				event.preventDefault();
 				if (menuDisplayed == false){
-					var randomWord = randomWords[randomWordCounter];
-					randomWordCounter++;
-					var randomDefinition;
-					$.getJSON("http://api.wordnik.com/v4/word.json/" + randomWord + "/definitions?limit=50&includeRelated=true&useCanonical=true&sourceDictionaries=all&includeTags=false&api_key=cea8ccbca1550ff63300d059f3607d1f0e1a742c20749a271", function (data){
-						console.log(data);
-						//create array of definitions
-						for (var i=0; i < data.length; i++){
-							randomDefinitions[i] = data[i].text;
-						};
-						console.log(randomDefinitions);
-						appendMenu("wordnik");
-						$("#wordDisplay").text(randomWord);
-						$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
-						//set up if it's more than 0, the buttons display and if not they don't
-						if (randomDefinitions.length > 1){
-						$("#forwardButton").css('display', 'block');
-						$("#backButton").css('display', 'block');
-							$("#forwardButton").click(function(){
-								if (randomDefinitionsCounter <= randomDefinitions.length - 1){
-									randomDefinitionsCounter++;
-									$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
-								} else {
-									randomDefinitionsCounter = 0;
-									$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
-								};
-							});
-							$("#backButton").click(function(){
-								if (randomDefinitionsCounter == 0){
-									randomDefinitionsCounter = randomDefinitions.length;
-									$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
-								} else {
-									randomDefinitionsCounter--;
-									$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
-								};
-							});	
-						} else {
-							$("#forwardButton").css('display', 'none');
-							$("#backButton").css('display', 'none');
-						};	
-						$("#menuDiv").fadeIn(250, function(){});
-						menuDisplayed = true;
-						if (randomWordCounter == 95){
-							getRandomWords();
-							randomWordCounter = 0;
-						};
-					});
+					appendMenu("wordnik");
 				} else {
 					randomDefinitions.length = 0;
 					randomDefinitionsCounter = 0;
@@ -180,27 +131,14 @@ var WBsettings = {
 			} else if (keyPressed == 54){	
 				event.preventDefault();
 				if (menuDisplayed == false){
-					$.getJSON('sonnets.json', function(data) {
-						console.log(data);
-						var randomSonnet = Math.floor((Math.random()*data.length)+0);
-						var randomLine = Math.floor((Math.random()*13)+0);
-						var sonnetLine = data[randomSonnet].lines[randomLine];
-						$("#menuDiv").append("<div id='sonnetDisplay'></div>");
-						$("#sonnetDisplay").text(sonnetLine);					
-					}); 				
-					$("#menuDiv").fadeIn(250, function(){});
-					menuDisplayed = true;
+					appendMenu("sonnet");
 				} else {
 					clearMenu();
 				};				
 			} else if (keyPressed == 55){
 				event.preventDefault();
 				if (menuDisplayed == false){
-					var randomOblique = Math.floor((Math.random()*obliqueArray.length)+0);
-					$("#menuDiv").append("<div id='obliqueStrategyDisplay'></div>");
-					$("#obliqueStrategyDisplay").text(obliqueArray[randomOblique]); 				
-					$("#menuDiv").fadeIn(250, function(){});
-					menuDisplayed = true;
+					appendMenu("oblique");
 				} else {
 					clearMenu();
 				};
@@ -209,88 +147,7 @@ var WBsettings = {
 			} else if (keyPressed == 48){
 				event.preventDefault();
 				if (menuDisplayed == false){
-					parseHTMLtoString();
 					appendMenu("email");
-					$("#processEmailAddress").val(WBsettings.emailAddress);
-					$("#processEmailAddress").change(function(){
-						WBsettings.emailAddress = $("#processEmailAddress").val();
-					});
-					$("#invisibleTextHolder").text(outputString);
-					$("#menuDiv").fadeIn(250, function(){});
-					menuDisplayed = true;
-					$('#copyButton').zclip({
-						path:'libraries/ZeroClipboard.swf',
-						copy: $('#invisibleTextHolder').text(),
-						afterCopy:function(){
-							$('#message').text("text copied. press ctrl+0 to go back to your blocks.");
-						}
-					});
-					$("#sendButton").click(function(){
-						emailTitle = $('#processEmailTitle').val();
-						emailAddress = $('#processEmailAddress').val();
-					//if there is a title and a valid email address in there
-						$.ajax({
-						   type: "POST",
-						   url: "email.php",
-						   dataType: 'text',
-						   data: { 
-								blockText : outputString,
-								blockEmail : emailAddress,
-								blockTitle : emailTitle
-						   },
-						   success: function(data) {
-							$("#message").text("text sent (always a good idea to backup your backup, though). press ctrl+0 to go back to your blocks.");
-							//setTimeout(function(){clearMenu()},1000);
-						   },
-						   error: function(msg) {
-							$("#message").text("text not sent. maybe my server is having problems? press ctrl+0 to go back to your blocks.");
-							//setTimeout(function(){clearMenu()},5000);
-						   }
-						});	
-					});
-					$("#saveButton").click(function(){
-						outputName = rand(50) + ".txt";
-						console.log(outputName);
-						$.ajax({
-						   type: "POST",
-						   url: "storage/save2.php",
-						   dataType: 'text',
-						   data: { 
-								blockText : outputString,
-								blockName : outputName
-						   },
-						   success: function(data) {
-								console.log(data);
-								var d = new Date();
-								var hours = d.getHours();
-								if (hours > 12){
-									hours-=12;
-								};									
-								dlName = "WB-" + hours + "-" + d.getMinutes() + "__" + (d.getMonth()+1) + "-" + (d.getDate()) + "-" + (d.getFullYear()); 
-								dlMessage = "click <a href='storage/download2.php?name=" + outputName + "&dlName=" + dlName + "'>here</a> to download your file. file will be deleted from the server after your download. press ctrl+0 to go back to your blocks."
-								console.log(dlMessage);
-								$("#message").html(dlMessage);
-							//setTimeout(function(){clearMenu()},1000);
-						   },
-						   error: function(msg) {
-							$("#message").text("link not created. maybe my server is having problems? press ctrl+0 to go back to your blocks.");
-							//setTimeout(function(){clearMenu()},5000);
-						   }
-						});	
-					});
-					$("#viewButton").click(function(){
-						if (outputViewed == false){
-							$("#menuDiv").append("<div id='viewText'></div>");
-							var HTMLOutputString = outputString.replace(/\n/g,'<br/>');
-							$("#viewText").html(HTMLOutputString);
-							$("#message").text("click 'view text' again to close text.  press ctrl+0 to go back to your blocks.");
-							outputViewed = true;
-						} else {
-							$("#viewText").remove();
-							$("#message").text("");
-							outputViewed = false;
-						};
-					});
 				} else {
 					clearMenu();
 					outputViewed = false;
@@ -298,30 +155,7 @@ var WBsettings = {
 			} else if (keyPressed == 56){
 				event.preventDefault();
 				if (menuDisplayed == false){
-					if (timerStarted == false){
-						$("#menuDiv").append("\
-						<div id='timerDisplay'>\
-							<div id='timerContainer'><input type='text' size='2' maxlength='2' id='timerInput'> minutes</div>\
-							<div id='timerStartButtonContainer'><div id='timerStartButton'>start</div></div>\
-						</div>");
-						$("#menuDiv").fadeIn(250, function(){});
-						menuDisplayed = true;
-						$("#timerStartButton").click(function(){
-							timerClick();
-						});
-					} else if (timerStarted == true){
-						$("#menuDiv").append("\
-						<div id='timerDisplay'>\
-							<div id='timerContainer'><div id='timerShow'></div></div>\
-							<div id='timerStartButtonContainer'><div id='timerStartButton'>restart</div></div>\
-						</div>");
-						$("#timerShow").text(currentMinutes + ":" + currentSeconds);  
-						$("#menuDiv").fadeIn(250, function(){});
-						menuDisplayed = true;	
-						$("#timerStartButton").click(function(){
-							timerClick();
-						});				
-					};
+					appendMenu("timer");
 				} else if (menuDisplayed == true){
 					clearMenu();
 				};			
@@ -333,6 +167,7 @@ var WBsettings = {
 		if (keyPressed == 17){
 			ctrlPressed = false;
 		};
+		//CHECK THIS LISTENER
 		if (keyPressed == 16){
 			if (textDisplayed == false){
 				$(".visibleBlock").addClass("block").removeClass("visibleBlock");
@@ -437,6 +272,10 @@ function appendMenu(type){
 					<div id='aboutText' class='hotKey'>made by <a href='mailto:justin.wolfe@gmail.com'>justin wolfe</a> using <a href='http://www.jquery.com/'>jQuery</a>, <a href='http://www.steamdev.com/zclip/'>zClip</a>, <a href='http://www.wordnik.com'>Wordnik</a>, <a href='https://samdutton.wordpress.com/2011/03/09/shakespeares-sonnets-in-json-format/'>JSON Sonnets</a>, and <a href='http://somedrafts.com/yournextsentence/'>your next sentence</a></div>\
 				</div>\
 			</div>");
+			updateMenu("main_menu");
+			addMenuListeners();
+			$("#menuDiv").fadeIn(250, function(){});
+			menuDisplayed = true;	
 		break;
 		case "wordnik":
 			$("#menuDiv").append("\
@@ -446,8 +285,54 @@ function appendMenu(type){
 				<div id='backButton'><</div>\
 				<div id='forwardButton'>></div>\
 			</div>");
+			var randomWord = randomWords[randomWordCounter];
+			randomWordCounter++;
+			var randomDefinition;
+			$.getJSON("http://api.wordnik.com/v4/word.json/" + randomWord + "/definitions?limit=50&includeRelated=true&useCanonical=true&sourceDictionaries=all&includeTags=false&api_key=cea8ccbca1550ff63300d059f3607d1f0e1a742c20749a271", function (data){
+				console.log(data);
+				//create array of definitions
+				for (var i=0; i < data.length; i++){
+					randomDefinitions[i] = data[i].text;
+				};
+				console.log(randomDefinitions);
+				$("#wordDisplay").text(randomWord);
+				$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
+				//set up if it's more than 0, the buttons display and if not they don't
+				if (randomDefinitions.length > 1){
+				$("#forwardButton").css('display', 'block');
+				$("#backButton").css('display', 'block');
+					$("#forwardButton").click(function(){
+						if (randomDefinitionsCounter <= randomDefinitions.length - 1){
+							randomDefinitionsCounter++;
+							$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
+						} else {
+							randomDefinitionsCounter = 0;
+							$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
+						};
+					});
+					$("#backButton").click(function(){
+						if (randomDefinitionsCounter == 0){
+							randomDefinitionsCounter = randomDefinitions.length;
+							$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
+						} else {
+							randomDefinitionsCounter--;
+							$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
+						};
+					});	
+				} else {
+					$("#forwardButton").css('display', 'none');
+					$("#backButton").css('display', 'none');
+				};	
+				$("#menuDiv").fadeIn(250, function(){});
+				menuDisplayed = true;
+				if (randomWordCounter == 95){
+					getRandomWords();
+					randomWordCounter = 0;
+				};
+			});
 		break;	
 		case "email":
+			parseHTMLtoString();
 			$("#menuDiv").append("\
 			<div id='emailDisplay'>\
 				<div id='titleDisplay'><div id='innerTitle'>title: <input type='text' id='processEmailTitle'></input></div></div>\
@@ -459,8 +344,136 @@ function appendMenu(type){
 				<div id='messageDisplay'><div id='message'></div></div>\
 				<div id='invisibleTextHolder'></div>\
 			</div>");
+			$("#processEmailAddress").val(WBsettings.emailAddress);
+			$("#processEmailAddress").change(function(){
+				WBsettings.emailAddress = $("#processEmailAddress").val();
+			});
+			$("#invisibleTextHolder").text(outputString);
+			$("#menuDiv").fadeIn(250, function(){});
+			menuDisplayed = true;
+			$('#copyButton').zclip({
+				path:'libraries/ZeroClipboard.swf',
+				copy: $('#invisibleTextHolder').text(),
+				afterCopy:function(){
+					$('#message').text("text copied. press ctrl+0 to go back to your blocks.");
+				}
+			});
+			$("#sendButton").click(function(){
+				emailTitle = $('#processEmailTitle').val();
+				emailAddress = $('#processEmailAddress').val();
+			//if there is a title and a valid email address in there
+				$.ajax({
+				   type: "POST",
+				   url: "email.php",
+				   dataType: 'text',
+				   data: { 
+						blockText : outputString,
+						blockEmail : emailAddress,
+						blockTitle : emailTitle
+				   },
+				   success: function(data) {
+					$("#message").text("text sent (always a good idea to backup your backup, though). press ctrl+0 to go back to your blocks.");
+					//setTimeout(function(){clearMenu()},1000);
+				   },
+				   error: function(msg) {
+					$("#message").text("text not sent. maybe my server is having problems? press ctrl+0 to go back to your blocks.");
+					//setTimeout(function(){clearMenu()},5000);
+				   }
+				});	
+			});
+			$("#saveButton").click(function(){
+				outputName = rand(50) + ".txt";
+				console.log(outputName);
+				$.ajax({
+				   type: "POST",
+				   url: "storage/save2.php",
+				   dataType: 'text',
+				   data: { 
+						blockText : outputString,
+						blockName : outputName
+				   },
+				   success: function(data) {
+						console.log(data);
+						var d = new Date();
+						var hours = d.getHours();
+						if (hours > 12){
+							hours-=12;
+						};									
+						dlName = "WB-" + hours + "-" + d.getMinutes() + "__" + (d.getMonth()+1) + "-" + (d.getDate()) + "-" + (d.getFullYear()); 
+						dlMessage = "click <a href='storage/download2.php?name=" + outputName + "&dlName=" + dlName + "'>here</a> to download your file. file will be deleted from the server after your download. press ctrl+0 to go back to your blocks."
+						console.log(dlMessage);
+						$("#message").html(dlMessage);
+					//setTimeout(function(){clearMenu()},1000);
+				   },
+				   error: function(msg) {
+					$("#message").text("link not created. maybe my server is having problems? press ctrl+0 to go back to your blocks.");
+					//setTimeout(function(){clearMenu()},5000);
+				   }
+				});	
+			});
+			$("#viewButton").click(function(){
+				if (outputViewed == false){
+					$("#menuDiv").append("<div id='viewText'></div>");
+					var HTMLOutputString = outputString.replace(/\n/g,'<br/>');
+					$("#viewText").html(HTMLOutputString);
+					$("#message").text("click 'view text' again to close text.  press ctrl+0 to go back to your blocks.");
+					outputViewed = true;
+				} else {
+					$("#viewText").remove();
+					$("#message").text("");
+					outputViewed = false;
+				};
+			});
+		break;	
+		case "sonnet":
+			$.getJSON('sonnets.json', function(data) {
+				console.log(data);
+				var randomSonnet = Math.floor((Math.random()*data.length)+0);
+				var randomLine = Math.floor((Math.random()*13)+0);
+				var sonnetLine = data[randomSonnet].lines[randomLine];
+				$("#menuDiv").append("<div id='sonnetDisplay'></div>");
+				$("#sonnetDisplay").text(sonnetLine);					
+			}); 				
+			$("#menuDiv").fadeIn(250, function(){});
+			menuDisplayed = true;
+		break;
+		case "oblique":
+			var randomOblique = Math.floor((Math.random()*obliqueArray.length)+0);
+			$("#menuDiv").append("<div id='obliqueStrategyDisplay'></div>");
+			$("#obliqueStrategyDisplay").text(obliqueArray[randomOblique]); 				
+			$("#menuDiv").fadeIn(250, function(){});
+			menuDisplayed = true;
+		break;
+		case "timer":
+			if (timerStarted == false){
+				$("#menuDiv").append("\
+				<div id='timerDisplay'>\
+					<div id='timerContainer'><input type='text' size='2' maxlength='2' id='timerInput'> minutes</div>\
+					<div id='timerStartButtonContainer'><div id='timerStartButton'>start</div></div>\
+				</div>");
+				$("#menuDiv").fadeIn(250, function(){});
+				menuDisplayed = true;
+				$("#timerStartButton").click(function(){
+					timerClick();
+				});
+			} else if (timerStarted == true){
+				$("#menuDiv").append("\
+				<div id='timerDisplay'>\
+					<div id='timerContainer'><div id='timerShow'></div></div>\
+					<div id='timerStartButtonContainer'><div id='timerStartButton'>restart</div></div>\
+				</div>");
+				$("#timerShow").text(currentMinutes + ":" + currentSeconds);  
+				$("#menuDiv").fadeIn(250, function(){});
+				menuDisplayed = true;	
+				$("#timerStartButton").click(function(){
+					timerClick();
+				});				
+			};
 		break;	
 	};
+};
+
+function main_menu(){
 };
 
 function clearMenu(){
@@ -468,6 +481,10 @@ function clearMenu(){
 	$("#menuDiv").css('display', 'none');
 	menuDisplayed = false;
 	$("#processSpace").focus();
+};
+
+function switchMenu(){
+	$("#menuDiv").html("");
 };
 
 function check_email(email){  
