@@ -60,7 +60,7 @@ var WBsettings = {
 	$(document).keydown(function(event){
 		var keyPressed = event.keyCode;
 		if ($('#splash').is(':visible') == true){
-			$('#splash').fadeOut('slow', function() {
+			$('#splash').fadeOut(1000, function() {
 				$('#splash').hide();
 			});
 		};
@@ -308,17 +308,17 @@ function appendMenu(type){
 				</div>\
 				<div id='settingsContainer'>\
 					<div id='settingsLabel'>settings</div>\
-					<div id='visibleTextContainer' class='hotKey'>allow use of ctrl+4 to make text visible? <select id='visibleTextSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='typewriterContainer' class='hotKey'>disable backspace key (typewriter mode)? <select id='typewriterSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='wordTargetContainer' class='hotKey'>target word count for session <input type='text' id='wordTargetInput' value='600'></input></div>\
-					<div id='colorContainer' class='hotKey'>block color <input id='blockColorPicker' type='color' class='colorPicker' value='#FFFFFF'></input> text color <input id='textColorPicker' type='color' class='colorPicker' value='#000000'></input> background color <input id='backgroundColorPicker' type='color' class='colorPicker' value='#000000'></input> target background color <input id='targetBackgroundColorPicker' type='color' class='colorPicker' value='#A1FFFF'></input></div>\
-					<div id='wordTargetColorContainer' class='hotKey'>shift background color towards a new color as you progress towards target word count? <select id='progressColorSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='wordTargetSoundContainer' class='hotKey'>play chime sound on reaching 25%, 50%, 75%, and 100% of target word count? <select id='progressSoundSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='wordTargetPopContainer' class='hotKey'>deliver pop-up notification that you've reached target word count? <select id='progressPopSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='visibleTextContainer' class='settings'>allow use of ctrl+4 to make text visible? <select id='visibleTextSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='typewriterContainer' class='settings'>disable backspace key (typewriter mode)? <select id='typewriterSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='wordTargetContainer' class='settings'>target word count for session <input type='text' id='wordTargetInput' value='600'></input></div>\
+					<div id='colorContainer' class='settings'>block color <input id='blockColorPicker' type='color' class='colorPicker' value='#FFFFFF'></input> text color <input id='textColorPicker' type='color' class='colorPicker' value='#000000'></input> background color <input id='backgroundColorPicker' type='color' class='colorPicker' value='#000000'></input> target background color <input id='targetBackgroundColorPicker' type='color' class='colorPicker' value='#A1FFFF'></input></div>\
+					<div id='wordTargetColorContainer' class='settings'>shift background color towards a new color as you progress towards target word count? <select id='progressColorSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='wordTargetSoundContainer' class='settings'>play chime sound on reaching 25%, 50%, 75%, and 100% of target word count? <select id='progressSoundSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='wordTargetPopContainer' class='settings'>deliver pop-up notification that you've reached target word count? <select id='progressPopSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 				</div>\
 				<div id='aboutContainer'>\
 					<div id='aboutLabel'>about</div>\
-					<div id='aboutText' class='hotKey'>made by <a href='mailto:justin.wolfe@gmail.com'>justin wolfe</a> using <a href='http://www.jquery.com/'>jQuery</a>, <a href='http://www.steamdev.com/zclip/'>zClip</a>, <a href='http://www.wordnik.com'>Wordnik</a>, <a href='https://samdutton.wordpress.com/2011/03/09/shakespeares-sonnets-in-json-format/'>JSON Sonnets</a>, and <a href='http://somedrafts.com/yournextsentence/'>your next sentence</a></div>\
+					<div id='aboutText' class='hotKey'>made by <a href='mailto:justin.wolfe@gmail.com'>justin wolfe</a> using <a href='http://www.jquery.com/'>jQuery</a>, <a href='http://www.github.com/justinwolfe'>git</a>, <a href='http://www.steamdev.com/zclip/'>zClip</a>, <a href='http://www.wordnik.com'>Wordnik</a>, <a href='https://samdutton.wordpress.com/2011/03/09/shakespeares-sonnets-in-json-format/'>JSON Sonnets</a>, and <a href='http://www.rtqe.net/ObliqueStrategies/'>oblique strategies</a></div>\
 				</div>\
 			</div>");
 			updateMenu("settings");
