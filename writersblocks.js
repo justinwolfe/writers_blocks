@@ -47,7 +47,7 @@ var WBsettings = {
 		charStr = String.fromCharCode(charCode);
 		console.log("charCode:" + charStr + "=" + charCode);
 		if (menuDisplayed == false){
-			if (charCode != 32 && charCode != 13 && charCode != 8 && charCode != 47 && charCode!= 39 && ctrlPressed == false){
+			if (charCode != 32 && charCode != 13 && charCode != 8 && charCode != 47 && charCode != 39 && charCode != 63 && charCode != 34 && ctrlPressed == false){
 				if (textDisplayed == false){
 					$("#displaySpace").append("<span class='block' style='color:" + WBsettings.blockColor + ";background-color:" + WBsettings.blockColor + "'>" + charStr + "</span>");
 				} else {
@@ -58,6 +58,7 @@ var WBsettings = {
 	});
 	//document keydown listeners for text operations / menus
 	$(document).keydown(function(event){
+		var keyPressed = event.keyCode;
 		if ($('#splash').is(':visible') == true){
 			$('#splash').fadeOut('slow', function() {
 				$('#splash').hide();
@@ -65,21 +66,17 @@ var WBsettings = {
 		};
 		var scrollWindow = $("#displaySpace");
 		scrollWindow.scrollTop(scrollWindow[0].scrollHeight);
-		var keyPressed = event.keyCode;
-		console.log("keyCode:" + keyPressed);
+		//console.log("keyCode:" + keyPressed);
 		if (menuDisplayed == false){
 			if (keyPressed == 32){
-				spacesTyped+=1;
 				$("#displaySpace").append("<span class='space'>&nbsp;</span>");
-				wordTargetPercentage = spacesTyped / wordTarget;
-				if (WBsettings.progressColor = "yes"){
-					$("#gradientDiv").css('opacity', wordTargetPercentage);
-				};	
+				wordCount();
 			};
 			if (keyPressed == 8){
 				if (WBsettings.typewriterMode == "no"){
 					event.preventDefault();
 					$("#displaySpace :last-child").remove();
+					wordCount();
 				} else {
 					event.preventDefault();
 				}
@@ -118,6 +115,10 @@ var WBsettings = {
 					$("#displaySpace").append("<span class='visibleBlock' style='color:" + WBsettings.textColor + ";background-color:" + WBsettings.blockColor + "'>" + fuckFirefox + "</span>");
 				};
 			};			
+		} else if (menuDisplayed == true){
+			if (keyPressed == 27){
+				clearMenu();
+			};
 		};	
 		if (keyPressed == 17){
 			ctrlPressed = true;
@@ -131,7 +132,8 @@ var WBsettings = {
 				if (menuDisplayed == false){
 					appendMenu("settings");
 				} else if (menuDisplayed == true && currentMenu == "settings"){
-					clearMenu();		
+					clearMenu();	
+					saveSettings();
 				} else if (menuDisplayed == true && currentMenu != "settings"){
 					appendMenu("settings");
 				};
@@ -145,7 +147,6 @@ var WBsettings = {
 					fontSize++;
 				}
 				$('#displaySpace').css('font-size', fontSize);
-				$('#processSpace').css('font-size', fontSize);
 			} else if (keyPressed == 52){
 				event.preventDefault();
 				if (WBsettings.visibleText == "yes"){
@@ -541,7 +542,6 @@ function clearMenu(){
 	$("#menuDiv").css('display', 'none');
 	menuDisplayed = false;
 	currentMenu = "";
-	$("#processSpace").focus();
 };
 
 function check_email(email){  
@@ -619,6 +619,17 @@ function shuffle(o){ //v1.0
 };
 
 function loadSettings(){
+};
+
+function saveSettings(){
+};
+
+function wordCount(){
+	spacesTyped = $(".space").length;
+	wordTargetPercentage = spacesTyped / wordTarget;
+	if (WBsettings.progressColor = "yes"){
+		$("#gradientDiv").css('opacity', wordTargetPercentage);
+	};
 };
 
 function parseHTMLtoString(){
