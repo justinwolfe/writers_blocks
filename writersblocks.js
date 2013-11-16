@@ -25,6 +25,7 @@ var WBsettings = {
 	visibleText: "no",
 	typewriterMode: "no",
 	blockColor: "#FFFFFF",
+	textColor: "#000000",
 	backgroundColor: "#000000",
 	targetBackgroundColor: "#A1FFFF",
 	progressColor: "no",
@@ -45,9 +46,9 @@ var WBsettings = {
 		if (menuDisplayed == false){
 			if (charCode != 32 && charCode != 13 && charCode != 8 && ctrlPressed == false){
 				if (textDisplayed == false){
-					$("#displaySpace").append("<span class='block'>" + charStr + "</span>");
+					$("#displaySpace").append("<span class='block' style='color:" + WBsettings.blockColor + ";background-color:" + WBsettings.blockColor + "'>" + charStr + "</span>");
 				} else {
-					$("#displaySpace").append("<span class='visibleBlock'>" + charStr + "</span>");
+					$("#displaySpace").append("<span class='visibleBlock' style='color:" + WBsettings.textColor + ";background-color:" + WBsettings.blockColor + "'>" + charStr + "</span>");
 				};
 			};
 		};	
@@ -113,12 +114,14 @@ var WBsettings = {
 				$('#processSpace').css('font-size', fontSize);
 			} else if (keyPressed == 52){
 				event.preventDefault();
-				if (textDisplayed == false){
-					$(".block").addClass("visibleBlock").removeClass("block");
-					textDisplayed = true;
-				} else {
-					$(".visibleBlock").addClass("block").removeClass("visibleBlock");
-					textDisplayed = false;
+				if (WBsettings.visibleText == "yes"){
+					if (textDisplayed == false){
+						$(".block").addClass("visibleBlock").removeClass("block").css("color", WBsettings.textColor);
+						textDisplayed = true;
+					} else {
+						$(".visibleBlock").addClass("block").removeClass("visibleBlock").css("color", WBsettings.blockColor);
+						textDisplayed = false;
+					};
 				};
 			} else if (keyPressed == 53){
 				event.preventDefault();
@@ -347,6 +350,10 @@ function prepareOblique(){
 function addMenuListeners(){
 	$("#visibleTextSelect").change(function() {
 		WBsettings.visibleText = $("#visibleTextSelect").val();
+		if (WBsettings.visibleText == "yes"){
+			$(".visibleBlock").css('color', WBsettings.textColor);
+		} else {
+		};
 	});
 	$("#typewriterSelect").change(function() {
 		WBsettings.typewriterMode = $("#typewriterSelect").val();
@@ -356,12 +363,20 @@ function addMenuListeners(){
 	});
 	$("#blockColorPicker").change(function() {
 		WBsettings.blockColor = $("#blockColorPicker").val();
+		$(".block").css('background-color', WBsettings.blockColor);
+		$(".block").css('color', WBsettings.blockColor);
+	});
+	$("#textColorPicker").change(function() {
+		WBsettings.textColor = $("#textColorPicker").val();
+		$(".visibleBlock").css('color', WBsettings.textColor);
 	});
 	$("#backgroundColorPicker").change(function() {
 		WBsettings.backgroundColor = $("#backgroundColorPicker").val();
+		$("#bg").css('background-color', WBsettings.backgroundColor);
 	});
 	$("#targetBackgroundColorPicker").change(function() {
 		WBsettings.targetBackgroundColor = $("#targetBackgroundColorPicker").val();
+		$("#gradientDiv").css('background-color', WBsettings.targetBackgroundColor);
 	});
 	$("#progressColorSelect").change(function() {
 		WBsettings.progressColor = $("#progressColorSelect").val();
@@ -382,6 +397,7 @@ function updateMenu(type){
 			$("#typewriterSelect").val(WBsettings.typewriterMode);
 			$("#wordTargetInput").val(wordTarget);
 			$("#blockColorPicker").val(WBsettings.blockColor);
+			$("#textColorPicker").val(WBsettings.textColor);
 			$("#backgroundColorPicker").val(WBsettings.backgroundColor);
 			$("#targetBackgroundColorPicker").val(WBsettings.targetBackgroundColor);
 			$("#progressColorSelect").val(WBsettings.progressColor);
@@ -403,7 +419,7 @@ function appendMenu(type){
 				<div id='hotKeysContainer'>\
 					<div id='hotKeysLabel'>shortcuts</div>\
 					<div id='hotKeysLeft'><p class='hotKey'><span class='keyLabel'>ctrl+1</span>: settings (you are here)</p> <p class='hotKey'><span class='keyLabel'>ctrl+2</span>: make blocks smaller</p> <p class='hotKey'><span class='keyLabel'>ctrl+3</span>: make blocks larger</p> <p class='hotKey'><span class='keyLabel'>ctrl+4</span>: reveal text (disabled by default)</p><p class='hotKey'><span class='keyLabel'>ctrl+5</span>: random word/definition (via Wordnik)</p>  </div>\
-					<div id='hotKeysRight'><p class='hotKey'><span class='keyLabel'>ctrl+6</span>: random Shakespeare couplet</p><p class='hotKey'><span class='keyLabel'>ctrl+7</span>: random oblique strategy</p> <p class='hotKey'><span class='keyLabel'>ctrl+8</span>: timer</p> <p class='hotKey'><span class='keyLabel'>ctrl+0</span>: email/copy text</p> <p class='hotKey'><span class='keyLabel'>f11</span>: fullscreen</p></div>\
+					<div id='hotKeysRight'><p class='hotKey'><span class='keyLabel'>ctrl+6</span>: random Shakespeare couplet</p><p class='hotKey'><span class='keyLabel'>ctrl+7</span>: random oblique strategy</p> <p class='hotKey'><span class='keyLabel'>ctrl+8</span>: timer</p> <p class='hotKey'><span class='keyLabel'>ctrl+0</span>: get your text</p> <p class='hotKey'><span class='keyLabel'>f11</span>: fullscreen</p></div>\
 					<br class='clear' />\
 				</div>\
 				<div id='settingsContainer'>\
@@ -411,7 +427,7 @@ function appendMenu(type){
 					<div id='visibleTextContainer' class='hotKey'>allow use of ctrl+4 to make text visible? <select id='visibleTextSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='typewriterContainer' class='hotKey'>disable backspace key (typewriter mode)? <select id='typewriterSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='wordTargetContainer' class='hotKey'>target word count for session <input type='text' id='wordTargetInput' value='600'></input></div>\
-					<div id='colorContainer' class='hotKey'>block color <input id='blockColorPicker' type='color' class='colorPicker' value='#FFFFFF'></input> background color <input id='backgroundColorPicker' type='color' class='colorPicker' value='#000000'></input> target background color <input id='targetBackgroundColorPicker' type='color' class='colorPicker' value='#A1FFFF'></input></div>\
+					<div id='colorContainer' class='hotKey'>block color <input id='blockColorPicker' type='color' class='colorPicker' value='#FFFFFF'></input> text color <input id='textColorPicker' type='color' class='colorPicker' value='#000000'></input> background color <input id='backgroundColorPicker' type='color' class='colorPicker' value='#000000'></input> target background color <input id='targetBackgroundColorPicker' type='color' class='colorPicker' value='#A1FFFF'></input></div>\
 					<div id='wordTargetColorContainer' class='hotKey'>shift background color towards a new color as you progress towards target word count? <select id='progressColorSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='wordTargetSoundContainer' class='hotKey'>play chime sound on reaching 25%, 50%, 75%, and 100% of target word count? <select id='progressSoundSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='wordTargetPopContainer' class='hotKey'>deliver pop-up notification that you've reached target word count? <select id='progressPopSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
