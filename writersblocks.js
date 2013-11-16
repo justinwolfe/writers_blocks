@@ -249,6 +249,7 @@ function updateMenu(type){
 
 function appendMenu(type){
 	$("#menuDiv").html("");
+	//need to build in fade behavior
 	switch(type)
 	{
 		case "settings":
@@ -489,10 +490,6 @@ function clearMenu(){
 	menuDisplayed = false;
 	currentMenu = "";
 	$("#processSpace").focus();
-};
-
-function switchMenu(){
-
 };
 
 function check_email(email){  
