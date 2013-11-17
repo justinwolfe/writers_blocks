@@ -31,7 +31,6 @@ var WBsettings = {
 	backgroundColor: "#000000",
 	targetBackgroundColor: "#A1FFFF",
 	progressColor: "no",
-	progressSound: "no",
 	progressPop: "no",
 	emailAddress: ""
 };
@@ -292,7 +291,7 @@ function updateMenu(type){
 
 function appendMenu(type){
 	$("#menuDiv").html("");
-	//need to build in fade behavior
+	outputViewed = false;
 	switch(type)
 	{
 		case "settings":
@@ -310,11 +309,11 @@ function appendMenu(type){
 					<div id='settingsLabel'>settings</div>\
 					<div id='visibleTextContainer' class='settings'>allow use of ctrl+4 to make text visible? <select id='visibleTextSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='typewriterContainer' class='settings'>disable backspace key (typewriter mode)? <select id='typewriterSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='wordTargetContainer' class='settings'>target word count for session <input type='text' id='wordTargetInput' value='600'></input></div>\
-					<div id='colorContainer' class='settings'>block color <input id='blockColorPicker' type='color' class='colorPicker' value='#FFFFFF'></input> text color <input id='textColorPicker' type='color' class='colorPicker' value='#000000'></input> background color <input id='backgroundColorPicker' type='color' class='colorPicker' value='#000000'></input> target background color <input id='targetBackgroundColorPicker' type='color' class='colorPicker' value='#A1FFFF'></input></div>\
-					<div id='wordTargetColorContainer' class='settings'>shift background color towards a new color as you progress towards target word count? <select id='progressColorSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='wordTargetSoundContainer' class='settings'>play chime sound on reaching 25%, 50%, 75%, and 100% of target word count? <select id='progressSoundSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='wordTargetPopContainer' class='settings'>deliver pop-up notification that you've reached target word count? <select id='progressPopSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='wordTargetContainer' class='settings'>your target word count for the session <input type='text' id='wordTargetInput' value='600'></input></div>\
+					<div id='colorContainer1' class='settings'>block color <input id='blockColorPicker' class='colorPicker' value='#FFFFFF'> text color <input id='textColorPicker' class='colorPicker' value='#000000'></input> background color <input id='backgroundColorPicker' class='colorPicker' value='#000000'></input> target background color <input id='targetBackgroundColorPicker' class='colorPicker' value='#A1FFFF'></input></div>\
+					<div id='colorContainer2' class='settings'></div>\
+					<div id='wordTargetColorContainer' class='settings'>change background color as you progress toward your target word count? <select id='progressColorSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='wordTargetPopContainer' class='settings'>deliver pop-up notification when you reached your target word count? <select id='progressPopSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 				</div>\
 				<div id='aboutContainer'>\
 					<div id='aboutLabel'>about</div>\
@@ -540,6 +539,7 @@ function appendMenu(type){
 function clearMenu(){
 	$("#menuDiv").html("");
 	$("#menuDiv").css('display', 'none');
+	outputViewed = false;
 	menuDisplayed = false;
 	currentMenu = "";
 };
