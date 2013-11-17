@@ -241,23 +241,76 @@ function addMenuListeners(){
 	$("#wordTargetInput").change(function() {
 		wordTarget = $("#wordTargetInput").val();
 	});
-	$("#blockColorPicker").change(function() {
-		WBsettings.blockColor = $("#blockColorPicker").val();
-		$(".block").css('background-color', WBsettings.blockColor);
-		$(".block").css('color', WBsettings.blockColor);
+	$("#blockColorPicker").css('background-color', WBsettings.blockColor);
+	$("#blockColorPicker").colpick({
+		layout:'hex',
+		submit:true,
+		color: WBsettings.blockColor.substring(1),
+		colorScheme:'dark',
+		onChange:function(hsb,hex,rgb,fromSetColor) {
+			$('#blockColorPicker').css('background-color', '#'+hex);
+			WBsettings.blockColor = '#' + hex;
+			$(".block").css('background-color', WBsettings.blockColor);
+			$(".block").css('color', WBsettings.blockColor);
+		},
+		onSubmit:function(hsb,hex,rgb,fromSetColor) {
+			$('#blockColorPicker').colpickHide();
+			WBsettings.blockColor = '#' + hex;
+			$(".block").css('background-color', WBsettings.blockColor);
+			$(".block").css('color', WBsettings.blockColor);
+		}
+	});		
+	$("#textColorPicker").css('background-color', WBsettings.textColor);
+	$("#textColorPicker").colpick({
+		layout:'hex',
+		submit:true,
+		color: WBsettings.textColor.substring(1),
+		colorScheme:'dark',
+		onChange:function(hsb,hex,rgb,fromSetColor) {
+			$('#textColorPicker').css('background-color', '#'+hex);
+			WBsettings.textColor = '#' + hex;
+			$(".visibleBlock").css('color', WBsettings.textColor);
+		},
+		onSubmit:function(hsb,hex,rgb,fromSetColor) {
+			$('#textColorPicker').colpickHide();
+			WBsettings.textColor = '#' + hex;
+			$(".visibleBlock").css('color', WBsettings.textColor);
+		}
 	});
-	$("#textColorPicker").change(function() {
-		WBsettings.textColor = $("#textColorPicker").val();
-		$(".visibleBlock").css('color', WBsettings.textColor);
-	});
-	$("#backgroundColorPicker").change(function() {
-		WBsettings.backgroundColor = $("#backgroundColorPicker").val();
-		$("#bg").css('background-color', WBsettings.backgroundColor);
-	});
-	$("#targetBackgroundColorPicker").change(function() {
-		WBsettings.targetBackgroundColor = $("#targetBackgroundColorPicker").val();
-		$("#gradientDiv").css('background-color', WBsettings.targetBackgroundColor);
-	});
+	$("#backgroundColorPicker").css('background-color', WBsettings.backgroundColor);
+	$("#backgroundColorPicker").colpick({
+		layout:'hex',
+		submit:true,
+		color: WBsettings.backgroundColor.substring(1),
+		colorScheme:'dark',
+		onChange:function(hsb,hex,rgb,fromSetColor) {
+			$('#backgroundColorPicker').css('background-color', '#'+hex);
+			WBsettings.backgroundColor = '#' + hex;
+			$("#bg").css('background-color', WBsettings.backgroundColor);			
+		},
+		onSubmit:function(hsb,hex,rgb,fromSetColor) {
+			$('#backgroundColorPicker').colpickHide();
+			WBsettings.backgroundColor = '#' + hex;
+			$("#bg").css('background-color', WBsettings.backgroundColor);			
+		}
+	});	
+	$("#targetBackgroundColorPicker").css('background-color', WBsettings.targetBackgroundColor);
+	$("#targetBackgroundColorPicker").colpick({
+		layout:'hex',
+		submit:true,
+		color: WBsettings.targetBackgroundColor.substring(1),
+		colorScheme:'dark',
+		onChange:function(hsb,hex,rgb,fromSetColor) {
+			$('#targetBackgroundColorPicker').css('background-color', '#'+hex);
+			WBsettings.targetBackgroundColor = '#' + hex;
+			$("#gradientDiv").css('background-color', WBsettings.targetBackgroundColor);			
+		},
+		onSubmit:function(hsb,hex,rgb,fromSetColor) {
+			$('#targetBackgroundColorPicker').colpickHide();
+			WBsettings.targetBackgroundColor = '#' + hex;
+			$("#gradientDiv").css('background-color', WBsettings.targetBackgroundColor);
+		}
+	});		
 	$("#progressColorSelect").change(function() {
 		WBsettings.progressColor = $("#progressColorSelect").val();
 	});
@@ -310,7 +363,7 @@ function appendMenu(type){
 					<div id='visibleTextContainer' class='settings'>allow use of ctrl+4 to make text visible? <select id='visibleTextSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='typewriterContainer' class='settings'>disable backspace key (typewriter mode)? <select id='typewriterSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='wordTargetContainer' class='settings'>your target word count for the session <input type='text' id='wordTargetInput' value='600'></input></div>\
-					<div id='colorContainer1' class='settings'>block color <input id='blockColorPicker' class='colorPicker' value='#FFFFFF'> text color <input id='textColorPicker' class='colorPicker' value='#000000'></input> background color <input id='backgroundColorPicker' class='colorPicker' value='#000000'></input> target background color <input id='targetBackgroundColorPicker' class='colorPicker' value='#A1FFFF'></input></div>\
+					<div id='colorContainer1' class='settings'>block color <div id='blockColorPicker' class='colorPicker'></div> text color <div id='textColorPicker' class='colorPicker'></div> background color <div id='backgroundColorPicker' class='colorPicker'></div> target background color <div id='targetBackgroundColorPicker' class='colorPicker'></div></div>\
 					<div id='colorContainer2' class='settings'></div>\
 					<div id='wordTargetColorContainer' class='settings'>change background color as you progress toward your target word count? <select id='progressColorSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='wordTargetPopContainer' class='settings'>deliver pop-up notification when you reached your target word count? <select id='progressPopSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
