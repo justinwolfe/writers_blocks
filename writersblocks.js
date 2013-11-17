@@ -366,11 +366,11 @@ function appendMenu(type){
 					<div id='colorContainer1' class='settings'>block color <div id='blockColorPicker' class='colorPicker'></div> text color <div id='textColorPicker' class='colorPicker'></div> background color <div id='backgroundColorPicker' class='colorPicker'></div> target background color <div id='targetBackgroundColorPicker' class='colorPicker'></div></div>\
 					<div id='colorContainer2' class='settings'></div>\
 					<div id='wordTargetColorContainer' class='settings'>change background color as you progress toward your target word count? <select id='progressColorSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='wordTargetPopContainer' class='settings'>deliver pop-up notification when you reached your target word count? <select id='progressPopSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='wordTargetPopContainer' class='settings'>deliver pop-up notification when you reach your target word count? <select id='progressPopSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 				</div>\
 				<div id='aboutContainer'>\
 					<div id='aboutLabel'>about</div>\
-					<div id='aboutText' class='hotKey'>made by <a href='mailto:justin.wolfe@gmail.com'>justin wolfe</a> using <a href='http://www.jquery.com/'>jQuery</a>, <a href='http://www.github.com/justinwolfe'>git</a>, <a href='http://www.steamdev.com/zclip/'>zClip</a>, <a href='http://www.wordnik.com'>Wordnik</a>, <a href='https://samdutton.wordpress.com/2011/03/09/shakespeares-sonnets-in-json-format/'>JSON Sonnets</a>, and <a href='http://www.rtqe.net/ObliqueStrategies/'>oblique strategies</a></div>\
+					<div id='aboutText' class='hotKey'>made by <a href='mailto:justin.wolfe@gmail.com'>justin wolfe</a> using <a href='http://www.jquery.com/'>jQuery</a>, <a href='http://www.github.com/justinwolfe'>git</a>, <a href='http://www.steamdev.com/zclip/'>zClip</a>, <a href='http://www.wordnik.com'>Wordnik</a>, <a href='http://colpick.com/plugin'>colpick</a>, <a href='https://samdutton.wordpress.com/2011/03/09/shakespeares-sonnets-in-json-format/'>JSON Sonnets</a>, and <a href='http://www.rtqe.net/ObliqueStrategies/'>oblique strategies</a></div>\
 				</div>\
 			</div>");
 			updateMenu("settings");
