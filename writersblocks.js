@@ -39,14 +39,11 @@ var WBsettings = {
 	//setup
 	prepareOblique();
 	getRandomWords();
-	console.log("hi!");
 	loadSettings();
-	console.log("hey!");
 	//textarea keypress listeners for entering text
 	$(document).keypress(function(event){
 		var charCode = event.which || event.keyCode;
 		charStr = String.fromCharCode(charCode);
-		console.log("charCode:" + charStr + "=" + charCode);
 		if (menuDisplayed == false){
 			if (charCode != 32 && charCode != 13 && charCode != 8 && charCode != 47 && charCode != 39 && charCode != 63 && charCode != 34 && ctrlPressed == false){
 				if (textDisplayed == false){
@@ -67,7 +64,6 @@ var WBsettings = {
 		};
 		var scrollWindow = $("#displaySpace");
 		scrollWindow.scrollTop(scrollWindow[0].scrollHeight);
-		//console.log("keyCode:" + keyPressed);
 		if (menuDisplayed == false){
 			if (keyPressed == 32){
 				$("#displaySpace").append("<span class='space'>&nbsp;</span>");
@@ -407,12 +403,10 @@ function appendMenu(type){
 			randomWordCounter++;
 			var randomDefinition;
 			$.getJSON("http://api.wordnik.com/v4/word.json/" + randomWord + "/definitions?limit=50&includeRelated=true&useCanonical=true&sourceDictionaries=all&includeTags=false&api_key=cea8ccbca1550ff63300d059f3607d1f0e1a742c20749a271", function (data){
-				console.log(data);
 				//create array of definitions
 				for (var i=0; i < data.length; i++){
 					randomDefinitions[i] = data[i].text;
 				};
-				console.log(randomDefinitions);
 				$("#wordDisplay").text(randomWord);
 				$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
 				//set up if it's more than 0, the buttons display and if not they don't
@@ -506,7 +500,6 @@ function appendMenu(type){
 			});
 			$("#saveButton").click(function(){
 				outputName = rand(50) + ".txt";
-				console.log(outputName);
 				$.ajax({
 				   type: "POST",
 				   url: "storage/save2.php",
@@ -516,7 +509,6 @@ function appendMenu(type){
 						blockName : outputName
 				   },
 				   success: function(data) {
-						console.log(data);
 						var d = new Date();
 						var hours = d.getHours();
 						if (hours > 12){
@@ -524,7 +516,6 @@ function appendMenu(type){
 						};									
 						dlName = "WB-" + hours + "-" + d.getMinutes() + "__" + (d.getMonth()+1) + "-" + (d.getDate()) + "-" + (d.getFullYear()); 
 						dlMessage = "click <a href='storage/download2.php?name=" + outputName + "&dlName=" + dlName + "'>here</a> to download your file. file will be deleted from the server after your download. press ctrl+0 to go back to your blocks."
-						console.log(dlMessage);
 						$("#message").html(dlMessage);
 					//setTimeout(function(){clearMenu()},1000);
 				   },
@@ -551,13 +542,10 @@ function appendMenu(type){
 		case "sonnet":
 		currentMenu = "sonnet";
 			$.getJSON('sonnets.json', function(data) {
-				console.log(data);
 				var randomSonnet = Math.floor((Math.random()*data.length)+0);
 				var randomLine = Math.floor((Math.random()*12)+0);
 				var sonnetLine = data[randomSonnet].lines[randomLine];
 				var sonnetLine2 = data[randomSonnet].lines[randomLine + 1];
-				console.log(sonnetLine);
-				console.log(sonnetLine2);
 				$("#menuDiv").append("<div id='sonnetDisplay'>\
 					<div id='line1'></div>\
 					<div id='line2'></div>\
@@ -677,7 +665,6 @@ function getRandomWords(){
 			randomWordsProcess[i] = data[i].word;
 		};
 		randomWords = shuffle(randomWordsProcess);
-		console.log(randomWords);
 	});
 };
 
@@ -689,15 +676,11 @@ function shuffle(o){ //v1.0
 };
 
 function loadSettings(){
-	console.log("hola!")
 	if (localStorage.runWB != "yes"){
 	} else {
-		console.log("bonJour!");
 		WBsettingsLoaded = JSON.parse(localStorage.WBsettings);
 		for (var i in WBsettingsLoaded) {
 			if (WBsettingsLoaded.hasOwnProperty(i)) {
-				console.log(i);
-				console.log(WBsettingsLoaded[i]);
 				WBsettings[i] = WBsettingsLoaded[i];
 			};
 		};
@@ -739,7 +722,6 @@ function parseHTMLtoString(){
 			default:			
 		};
 	});
-	console.log(outputString);
 };
 
 function rand(length,current){
