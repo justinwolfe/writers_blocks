@@ -9,7 +9,6 @@ var randomWords = new Array();
 var randomDefinitions = new Array();
 var randomWordCounter = 0;
 var randomDefinitionsCounter = 0;
-var wordTarget = 600;
 var wordTargetPercentage;
 var outputViewed = false;
 var outputString = "";
@@ -32,14 +31,17 @@ var WBsettings = {
 	targetBackgroundColor: "#A1FFFF",
 	progressColor: "no",
 	progressPop: "no",
-	emailAddress: ""
+	emailAddress: "",
+	wordTarget: "600"
 };
 
  $(document).ready(function() {
 	//setup
 	prepareOblique();
 	getRandomWords();
+	console.log("hi!");
 	loadSettings();
+	console.log("hey!");
 	//textarea keypress listeners for entering text
 	$(document).keypress(function(event){
 		var charCode = event.which || event.keyCode;
@@ -234,12 +236,15 @@ function addMenuListeners(){
 			$(".visibleBlock").css('color', WBsettings.textColor);
 		} else {
 		};
+		saveSettings();
 	});
 	$("#typewriterSelect").change(function() {
 		WBsettings.typewriterMode = $("#typewriterSelect").val();
+		saveSettings();
 	});
 	$("#wordTargetInput").change(function() {
-		wordTarget = $("#wordTargetInput").val();
+		WBsettings.wordTarget = $("#wordTargetInput").val();
+		saveSettings();
 	});
 	$("#blockColorPicker").css('background-color', WBsettings.blockColor);
 	$("#blockColorPicker").colpick({
@@ -252,12 +257,14 @@ function addMenuListeners(){
 			WBsettings.blockColor = '#' + hex;
 			$(".block").css('background-color', WBsettings.blockColor);
 			$(".block").css('color', WBsettings.blockColor);
+			saveSettings();
 		},
 		onSubmit:function(hsb,hex,rgb,fromSetColor) {
 			$('#blockColorPicker').colpickHide();
 			WBsettings.blockColor = '#' + hex;
 			$(".block").css('background-color', WBsettings.blockColor);
 			$(".block").css('color', WBsettings.blockColor);
+			saveSettings();
 		}
 	});		
 	$("#textColorPicker").css('background-color', WBsettings.textColor);
@@ -270,11 +277,13 @@ function addMenuListeners(){
 			$('#textColorPicker').css('background-color', '#'+hex);
 			WBsettings.textColor = '#' + hex;
 			$(".visibleBlock").css('color', WBsettings.textColor);
+			saveSettings();
 		},
 		onSubmit:function(hsb,hex,rgb,fromSetColor) {
 			$('#textColorPicker').colpickHide();
 			WBsettings.textColor = '#' + hex;
 			$(".visibleBlock").css('color', WBsettings.textColor);
+			saveSettings();
 		}
 	});
 	$("#backgroundColorPicker").css('background-color', WBsettings.backgroundColor);
@@ -286,12 +295,14 @@ function addMenuListeners(){
 		onChange:function(hsb,hex,rgb,fromSetColor) {
 			$('#backgroundColorPicker').css('background-color', '#'+hex);
 			WBsettings.backgroundColor = '#' + hex;
-			$("#bg").css('background-color', WBsettings.backgroundColor);			
+			$("#bg").css('background-color', WBsettings.backgroundColor);	
+			saveSettings();			
 		},
 		onSubmit:function(hsb,hex,rgb,fromSetColor) {
 			$('#backgroundColorPicker').colpickHide();
 			WBsettings.backgroundColor = '#' + hex;
-			$("#bg").css('background-color', WBsettings.backgroundColor);			
+			$("#bg").css('background-color', WBsettings.backgroundColor);	
+			saveSettings();
 		}
 	});	
 	$("#targetBackgroundColorPicker").css('background-color', WBsettings.targetBackgroundColor);
@@ -303,22 +314,27 @@ function addMenuListeners(){
 		onChange:function(hsb,hex,rgb,fromSetColor) {
 			$('#targetBackgroundColorPicker').css('background-color', '#'+hex);
 			WBsettings.targetBackgroundColor = '#' + hex;
-			$("#gradientDiv").css('background-color', WBsettings.targetBackgroundColor);			
+			$("#gradientDiv").css('background-color', WBsettings.targetBackgroundColor);
+			saveSettings();
 		},
 		onSubmit:function(hsb,hex,rgb,fromSetColor) {
 			$('#targetBackgroundColorPicker').colpickHide();
 			WBsettings.targetBackgroundColor = '#' + hex;
 			$("#gradientDiv").css('background-color', WBsettings.targetBackgroundColor);
+			saveSettings();
 		}
 	});		
 	$("#progressColorSelect").change(function() {
 		WBsettings.progressColor = $("#progressColorSelect").val();
+		saveSettings();
 	});
 	$("#progressSoundSelect").change(function() {
 		WBsettings.progressSound = $("#progressSoundSelect").val();
+		saveSettings();
 	});
 	$("#progressPopSelect").change(function() {
 		WBsettings.progressPop = $("#progressPopSelect").val();
+		saveSettings();
 	});
 };
 
@@ -328,7 +344,7 @@ function updateMenu(type){
 		case "settings":
 			$("#visibleTextSelect").val(WBsettings.visibleText);
 			$("#typewriterSelect").val(WBsettings.typewriterMode);
-			$("#wordTargetInput").val(wordTarget);
+			$("#wordTargetInput").val(WBsettings.wordTarget);
 			$("#blockColorPicker").val(WBsettings.blockColor);
 			$("#textColorPicker").val(WBsettings.textColor);
 			$("#backgroundColorPicker").val(WBsettings.backgroundColor);
@@ -450,6 +466,7 @@ function appendMenu(type){
 			$("#processEmailAddress").val(WBsettings.emailAddress);
 			$("#processEmailAddress").change(function(){
 				WBsettings.emailAddress = $("#processEmailAddress").val();
+				saveSettings();
 			});
 			$("#invisibleTextHolder").text(outputString);
 			$("#menuDiv").fadeIn(250, function(){});
@@ -672,14 +689,31 @@ function shuffle(o){ //v1.0
 };
 
 function loadSettings(){
+	console.log("hola!")
+	if (localStorage.runWB != "yes"){
+	} else {
+		console.log("bonJour!");
+		WBsettingsLoaded = JSON.parse(localStorage.WBsettings);
+		for (var i in WBsettingsLoaded) {
+			if (WBsettingsLoaded.hasOwnProperty(i)) {
+				console.log(i);
+				console.log(WBsettingsLoaded[i]);
+				WBsettings[i] = WBsettingsLoaded[i];
+			};
+		};
+    };   
 };
 
 function saveSettings(){
+	if (localStorage.runWB != "yes"){
+		localStorage.runWB = "yes";
+	};
+	localStorage.WBsettings = JSON.stringify(WBsettings);
 };
 
 function wordCount(){
 	spacesTyped = $(".space").length;
-	wordTargetPercentage = spacesTyped / wordTarget;
+	wordTargetPercentage = spacesTyped / WBsettings.wordTarget;
 	if (WBsettings.progressColor = "yes"){
 		$("#gradientDiv").css('opacity', wordTargetPercentage);
 	};
