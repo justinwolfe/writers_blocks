@@ -597,6 +597,7 @@ function appendMenu(type){
 function clearMenu(){
 	$("#menuDiv").html("");
 	$("#menuDiv").css('display', 'none');
+	saveSettings();
 	outputViewed = false;
 	menuDisplayed = false;
 	currentMenu = "";
@@ -684,7 +685,9 @@ function loadSettings(){
 				WBsettings[i] = WBsettingsLoaded[i];
 			};
 		};
-    };   
+		$("#bg").css('background-color', WBsettings.backgroundColor);	
+		$("#gradientDiv").css('background-color', WBsettings.backgroundColor);	
+    };
 };
 
 function saveSettings(){
