@@ -629,20 +629,25 @@ select {
 }
 
 #progressPop{
-	border: 1px solid black;
 	background-color: white;
 	color: black;
+	font-size: 26px;
+	font-family: monospace;
 	width: 50%;
-	font-size: 24px;
 	left: 25%;
-	height: 42%;
-	top: 30%;
+	top: 35%;
 	overflow: hidden;
 }
 
-.buttonContainer{
-	width: 100%;
+#popMessage{
 	text-align: center;
+	margin-top: 3%;
+	margin-bottom: 2%;
+}
+
+.buttonContainer{
+	text-align: center;
+	padding-top: 2%;
 }
 
 .button{
@@ -651,7 +656,20 @@ select {
 	text-align: center;
 	padding-left: .3%;
 	padding-right: .3%;
-	font-size: .75em;
 	cursor: pointer;
+}
+
+#outputButton{
+	margin-bottom: 3%;
+}
+
+#continueButton:hover, #continueButton.hover{ 
+	background-color: black;
+	color: white;
+}
+
+#outputButton:hover, #continueButton.hover{ 
+	background-color: black;
+	color: white;
 }
 	

@@ -686,7 +686,7 @@ function loadSettings(){
 			};
 		};
 		$("#bg").css('background-color', WBsettings.backgroundColor);	
-		$("#gradientDiv").css('background-color', WBsettings.backgroundColor);	
+		$("#gradientDiv").css('background-color', WBsettings.targetBackgroundColor);	
     };
 };
 
