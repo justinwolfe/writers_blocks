@@ -521,6 +521,8 @@ function appendMenu(type){
 			});
 			$("#viewButton").click(function(){
 				if (outputViewed == false){
+					$("#titleDisplay").css('opacity', 0);
+					$("#addressDisplay").css('opacity', 0);
 					$("#menuDiv").append("<div id='viewText'></div>");
 					var HTMLOutputString = outputString.replace(/\n/g,'<br/>');
 					$("#viewText").html(HTMLOutputString);
@@ -528,6 +530,8 @@ function appendMenu(type){
 					outputViewed = true;
 				} else {
 					$("#viewText").remove();
+					$("#titleDisplay").css('opacity', 1);
+					$("#addressDisplay").css('opacity', 1);
 					$("#message").text("");
 					outputViewed = false;
 				};
