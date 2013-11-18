@@ -58,7 +58,7 @@ select {
 #displaySpace{
 	background-color: transparent;
 	font-size: 2em;
-	font-family: monospace;
+	font-family: "Courier", monospace;
 	color: black;
 	overflow: hidden;
 	width: 100%;
@@ -75,7 +75,7 @@ select {
 
 #splash{
 	background-color: transparent;
-	font-family: monospace;
+	font-family: "Courier", monospace;
 	color: white;
 	overflow: hidden;
 	width: 100%;
@@ -121,7 +121,7 @@ select {
 	background-color: white; 
 	color: black;
 	font-size: 3em;
-	font-family: monospace;
+	font-family: "Courier", monospace;
 	opacity: 1; 
 	cursor: default;
 }
@@ -240,7 +240,7 @@ select {
 	background-color: white; 
 	color: black;
 	font-size: 24px;
-	font-family: monospace;
+	font-family: "Courier", monospace;
 	opacity: 1; 
 	cursor: default; 
 }
@@ -255,7 +255,7 @@ select {
 	background-color: white; 
 	color: black;
 	font-size: 24px;
-	font-family: monospace;
+	font-family: "Courier", monospace;
 	opacity: 1; 
 	cursor: default; 
 }
@@ -270,7 +270,7 @@ select {
 	background-color: white; 
 	color: black;
 	font-size: 3em;
-	font-family: monospace;
+	font-family: "Courier", monospace;
 	opacity: 1; 
 	cursor: default; 
 }
@@ -306,7 +306,7 @@ select {
 	background-color: white; 
 	color: black;
 	font-size: 24px;
-	font-family: monospace;
+	font-family: "Courier", monospace;
 	opacity: 1; 
 	cursor: default;
 	resize: none;	
@@ -371,7 +371,7 @@ select {
 	background-color: white; 
 	color: black;
 	font-size: 3em;
-	font-family: monospace;
+	font-family: "Courier", monospace;
 	opacity: 1; 
 	cursor: default; 
 }
@@ -385,7 +385,7 @@ select {
 	background-color: white; 
 	color: black;
 	font-size: 24px;
-	font-family: monospace;
+	font-family: "Courier", monospace;
 	opacity: 1; 
 	cursor: default;
 	resize: none;	
@@ -632,7 +632,7 @@ select {
 	background-color: white;
 	color: black;
 	font-size: 26px;
-	font-family: monospace;
+	font-family: "Courier", monospace;
 	width: 50%;
 	left: 25%;
 	top: 35%;
