@@ -480,7 +480,7 @@ function appendMenu(type){
 				} else {
 					$.ajax({
 					   type: "POST",
-					   url: "email.php",
+					   url: "storage/email.php",
 					   dataType: 'text',
 					   data: { 
 							blockText : outputString,
@@ -541,7 +541,7 @@ function appendMenu(type){
 		break;	
 		case "sonnet":
 		currentMenu = "sonnet";
-			$.getJSON('sonnets.json', function(data) {
+			$.getJSON('js/sonnets.json', function(data) {
 				var randomSonnet = Math.floor((Math.random()*data.length)+0);
 				var randomLine = Math.floor((Math.random()*12)+0);
 				var sonnetLine = data[randomSonnet].lines[randomLine];
