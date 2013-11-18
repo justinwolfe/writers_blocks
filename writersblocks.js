@@ -29,10 +29,10 @@ var WBsettings = {
 	textColor: "#000000",
 	backgroundColor: "#000000",
 	targetBackgroundColor: "#A1FFFF",
-	progressColor: "no",
-	progressPop: "no",
+	progressColor: "yes",
+	progressPop: "yes",
 	emailAddress: "",
-	wordTarget: "600"
+	wordTarget: 600
 };
 
  $(document).ready(function() {
@@ -590,7 +590,7 @@ function appendMenu(type){
 					timerClick();
 				});				
 			};
-		break;	
+		break;
 	};
 };
 
@@ -699,6 +699,23 @@ function wordCount(){
 	wordTargetPercentage = spacesTyped / WBsettings.wordTarget;
 	if (WBsettings.progressColor = "yes"){
 		$("#gradientDiv").css('opacity', wordTargetPercentage);
+	};
+	if (wordTargetPercentage == 1){
+		if (WBsettings.progressPop = "yes"){
+			$("#popHolder").append("\
+				<div id='progressPop'>\
+					<div id='popMessage'>you reached your target word count for this session!</div>\
+					<div class='buttonContainer'><div id='continueButton' class='button'>i want to keep writing!</div></div>\
+					<div class='buttonContainer'><div id='outputButton' class='button'>okay, let me get my text</div></div>\
+			</div>");
+			$("#continueButton").click(function(){
+				$("#popHolder").html("");
+			});
+			$("#outputButton").click(function(){
+				$("#popHolder").html("");
+				appendMenu("email");
+			});
+		};
 	};
 };
 
