@@ -387,8 +387,6 @@ function appendMenu(type){
 			</div>");
 			updateMenu("settings");
 			addMenuListeners();
-			$("#menuDiv").fadeIn(250, function(){});
-			menuDisplayed = true;	
 		break;
 		case "wordnik":
 			currentMenu = "wordnik";
@@ -435,8 +433,6 @@ function appendMenu(type){
 					$("#forwardButton").css('display', 'none');
 					$("#backButton").css('display', 'none');
 				};	
-				$("#menuDiv").fadeIn(250, function(){});
-				menuDisplayed = true;
 				if (randomWordCounter == 95){
 					getRandomWords();
 					randomWordCounter = 0;
@@ -463,8 +459,6 @@ function appendMenu(type){
 				saveSettings();
 			});
 			$("#invisibleTextHolder").text(outputString);
-			$("#menuDiv").fadeIn(250, function(){});
-			menuDisplayed = true;
 			$('#copyButton').zclip({
 				path:'libraries/ZeroClipboard.swf',
 				copy: $('#invisibleTextHolder').text(),
@@ -553,16 +547,12 @@ function appendMenu(type){
 				$("#line1").text(sonnetLine);	
 				$("#line2").text(sonnetLine2);
 			}); 				
-			$("#menuDiv").fadeIn(250, function(){});
-			menuDisplayed = true;
 		break;
 		case "oblique":
 		currentMenu = "oblique";
 			var randomOblique = Math.floor((Math.random()*obliqueArray.length)+0);
 			$("#menuDiv").append("<div id='obliqueStrategyDisplay'></div>");
 			$("#obliqueStrategyDisplay").text(obliqueArray[randomOblique]); 				
-			$("#menuDiv").fadeIn(250, function(){});
-			menuDisplayed = true;
 		break;
 		case "timer":
 		currentMenu = "timer";
@@ -572,8 +562,6 @@ function appendMenu(type){
 					<div id='timerContainer'><input type='text' size='2' maxlength='2' id='timerInput'> minutes</div>\
 					<div id='timerStartButtonContainer'><div id='timerStartButton'>start</div></div>\
 				</div>");
-				$("#menuDiv").fadeIn(250, function(){});
-				menuDisplayed = true;
 				$("#timerStartButton").click(function(){
 					timerClick();
 				});
@@ -584,14 +572,14 @@ function appendMenu(type){
 					<div id='timerStartButtonContainer'><div id='timerStartButton'>restart</div></div>\
 				</div>");
 				$("#timerShow").text(currentMinutes + ":" + currentSeconds);  
-				$("#menuDiv").fadeIn(250, function(){});
-				menuDisplayed = true;	
 				$("#timerStartButton").click(function(){
 					timerClick();
 				});				
 			};
 		break;
 	};
+	$("#menuDiv").fadeIn(250, function(){});
+	menuDisplayed = true;	
 };
 
 function clearMenu(){
@@ -624,7 +612,20 @@ function countDown() {
 		setTimeout('countDown()',1000);
 	};
 	if (secs == -1 && timerStarted == true){
-		alert("finished!");
+		$("#popHolder").html("");
+		$("#popHolder").append("\
+			<div id='progressPop'>\
+				<div id='popMessage'>your timer has gone off!</div>\
+				<div class='buttonContainer'><div id='continueButton' class='button'>i want to keep writing!</div></div>\
+				<div class='buttonContainer'><div id='outputButton' class='button'>okay, let me get my text</div></div>\
+		</div>");
+		$("#continueButton").click(function(){
+			$("#popHolder").html("");
+		});
+		$("#outputButton").click(function(){
+			$("#popHolder").html("");
+			appendMenu("email");
+		});
 		timerReset();
 	};
 };
@@ -705,6 +706,7 @@ function wordCount(){
 	};
 	if (wordTargetPercentage == 1){
 		if (WBsettings.progressPop = "yes"){
+			$("#popHolder").html("");
 			$("#popHolder").append("\
 				<div id='progressPop'>\
 					<div id='popMessage'>you reached your target word count for this session!</div>\
