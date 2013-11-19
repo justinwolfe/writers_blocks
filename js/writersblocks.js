@@ -1,71 +1,51 @@
 // writer's blocks -- a drafting tool by (and for) justin wolfe
-var spacesTyped = 0;
-var textDisplayed = false;
-var menuDisplayed = false;
-var currentMenu = "";
-var obliqueString = "Abandon normal instruments,Accept advice,Accretion,A line has two sides,Allow an easement (an easement is the abandonment of a stricture),Always first steps,Are there sections?  Consider transitions,Ask people to work against their better judgement,Ask your body,Assemble some of the elements in a group and treat the group,Balance the consistency principle with the inconsistency principle,Be dirty,Be extravagant,Be less critical more often,Breathe more deeply,Bridges -build -burn,Cascades,Change instrument roles,Change nothing and continue with immaculate consistency,Children -speaking -singing,Cluster analysis,Consider different fading systems,Consult other sources -promising -unpromising,Courage!,Cut a vital connection,Decorate,Define an area as 'safe' and use it as an anchor,Destroy -nothing -the most important thing,Discard an axiom,Disciplined self-indulgence,Disconnect from desire,Discover the recipes you are using and abandon them,Distorting time,Do nothing for as long as possible,Don't be afraid of things because they're easy to do,Don't be frightened of cliches,Don't be frightened to display your talents,Don't break the silence,Don't stress one thing more than another,Do something boring,Do the words need changing?,Do we need holes?,Emphasise differences,Emphasise repetitions,Emphasise the flaws,Fill every beat with something,From nothing to more than nothing,Ghost echoes,Give the game away,Give way to your worst impulse,Go outside. Shut the door.,Go slowly all the way round the outside,Go to an extreme,Move back to a more comfortable place,Honor thy error as a hidden intention,How would you have done it?,Humanise something free of error,Idiot glee (?),Imagine the piece as a set of disconnected events,Infinitesimal gradations,Intentions -nobility of -humility of -credibility of,In total darkness,In a very large room,Very quietly,Into the impossible,Is it finished?,Is the intonation correct?,Is there something missing?,It is quite possible (after all),Just carry on,Listen to the quiet voice,Look at the order in which you do things,Look closely at the most embarrassing details and amplify them,Lost in useless territory,Lowest common denominator,Make a blank valuable by putting it in an exquisite frame,Make an exhaustive list of everything you might do and do the last thing on the list,Make a sudden destructive unpredictable action; incorporate,Mechanicalise something idiosyncratic,Mute and continue,Not building a wall but making a brick,Once the search is in progress something will be found,Only a part not the whole,Only one element of each kind,(Organic) machinery,Overtly resist change,Question the heroic approach,Remember those quiet evenings,Remove ambiguities and convert to specifics,Remove specifics and convert to ambiguities,Repetition is a form of change,Retrace your steps,Revaluation (a warm feeling),Reverse,Short circuit (example; a man eating peas with the idea that they will improve his virility shovels them straight into his lap),Simple subtraction,Simply a matter of work,State the problem in words as clearly as possible,Take a break,Take away the elements in order of apparent non-importance,The inconsistency principle,The most important thing is the thing most easily forgotten,The tape is now the music,Think of the radio,Tidy up,Towards the insignificant,Trust in the you of now,Turn it upside down,Use an old idea,Use an unacceptable colour,Use fewer notes,Use filters,Use 'unqualified' people,Water,What are the sections sections of? Imagine a caterpillar moving,What are you really thinking about just now?,What is the reality of the situation?,What mistakes did you make last time?,What wouldn't you do?,What would your closest friend do?,Work at a different speed,Would anybody want it?,You are an engineer,You can only make one dot at a time,You don't have to be ashamed of using your own ideas"
-var obliqueArray = new Array();
-var randomWords = new Array();
-var randomDefinitions = new Array();
-var randomWordCounter = 0;
-var randomDefinitionsCounter = 0;
-var wordTargetPercentage;
-var outputViewed = false;
-var outputString = "";
-var timerStarted = false;
-var mins;
-var secs; 
-var currentSeconds; 
-var currentMinutes; 
-var ctrlPressed = false;
-var shiftPressed = false;
-jQuery.fn.reverse = [].reverse;
 
-var WBruntime = {
-	spacesTyped: 0,
-	textDisplayed: false,
-	menuDisplayed: false,
-	currentMenu: "",
-	outputViewed: false,
-	outputString: "",
-	ctrlPressed: false,
-	shiftPressed: false
-};
-
-var WBtimer = {
-	timerStarted: false,
-	mins: 0,
-	secs: 0,
-	currentSeconds: 0,
-	currentMinutes: 0
-};
-
-var WBsettings = {
-	visibleText: "no",
-	typewriterMode: "no",
-	blockColor: "#FFFFFF",
-	textColor: "#000000",
-	backgroundColor: "#000000",
-	targetBackgroundColor: "#A1FFFF",
-	progressColor: "yes",
-	progressPop: "yes",
-	emailAddress: "",
-	wordTarget: 600,
-	fontSize: 24
-};
-
- $(document).ready(function() {
-	//setup
+$(document).ready(function() {
 	prepareOblique();
 	getRandomWords();
 	loadSettings();
-	//textarea keypress listeners for entering text
+	keyPressListeners();
+	keyDownListeners();
+	keyUpListeners();
+});
+
+function prepareOblique(){
+	var obliqueString = "Abandon normal instruments,Accept advice,Accretion,A line has two sides,Allow an easement (an easement is the abandonment of a stricture),Always first steps,Are there sections?  Consider transitions,Ask people to work against their better judgement,Ask your body,Assemble some of the elements in a group and treat the group,Balance the consistency principle with the inconsistency principle,Be dirty,Be extravagant,Be less critical more often,Breathe more deeply,Bridges -build -burn,Cascades,Change instrument roles,Change nothing and continue with immaculate consistency,Children -speaking -singing,Cluster analysis,Consider different fading systems,Consult other sources -promising -unpromising,Courage!,Cut a vital connection,Decorate,Define an area as 'safe' and use it as an anchor,Destroy -nothing -the most important thing,Discard an axiom,Disciplined self-indulgence,Disconnect from desire,Discover the recipes you are using and abandon them,Distorting time,Do nothing for as long as possible,Don't be afraid of things because they're easy to do,Don't be frightened of cliches,Don't be frightened to display your talents,Don't break the silence,Don't stress one thing more than another,Do something boring,Do the words need changing?,Do we need holes?,Emphasise differences,Emphasise repetitions,Emphasise the flaws,Fill every beat with something,From nothing to more than nothing,Ghost echoes,Give the game away,Give way to your worst impulse,Go outside. Shut the door.,Go slowly all the way round the outside,Go to an extreme,Move back to a more comfortable place,Honor thy error as a hidden intention,How would you have done it?,Humanise something free of error,Idiot glee (?),Imagine the piece as a set of disconnected events,Infinitesimal gradations,Intentions -nobility of -humility of -credibility of,In total darkness,In a very large room,Very quietly,Into the impossible,Is it finished?,Is the intonation correct?,Is there something missing?,It is quite possible (after all),Just carry on,Listen to the quiet voice,Look at the order in which you do things,Look closely at the most embarrassing details and amplify them,Lost in useless territory,Lowest common denominator,Make a blank valuable by putting it in an exquisite frame,Make an exhaustive list of everything you might do and do the last thing on the list,Make a sudden destructive unpredictable action; incorporate,Mechanicalise something idiosyncratic,Mute and continue,Not building a wall but making a brick,Once the search is in progress something will be found,Only a part not the whole,Only one element of each kind,(Organic) machinery,Overtly resist change,Question the heroic approach,Remember those quiet evenings,Remove ambiguities and convert to specifics,Remove specifics and convert to ambiguities,Repetition is a form of change,Retrace your steps,Revaluation (a warm feeling),Reverse,Short circuit (example; a man eating peas with the idea that they will improve his virility shovels them straight into his lap),Simple subtraction,Simply a matter of work,State the problem in words as clearly as possible,Take a break,Take away the elements in order of apparent non-importance,The inconsistency principle,The most important thing is the thing most easily forgotten,The tape is now the music,Think of the radio,Tidy up,Towards the insignificant,Trust in the you of now,Turn it upside down,Use an old idea,Use an unacceptable colour,Use fewer notes,Use filters,Use 'unqualified' people,Water,What are the sections sections of? Imagine a caterpillar moving,What are you really thinking about just now?,What is the reality of the situation?,What mistakes did you make last time?,What wouldn't you do?,What would your closest friend do?,Work at a different speed,Would anybody want it?,You are an engineer,You can only make one dot at a time,You don't have to be ashamed of using your own ideas";
+	WBruntime.obliqueArray = obliqueString.split(",");
+};
+
+function getRandomWords(){
+	var randomWordsProcess = new Array();
+    $.getJSON("http://api.wordnik.com/v4/words.json/randomWords?hasDictionaryDef=true&excludePartOfSpeech=proper-noun&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&limit=100&api_key=cea8ccbca1550ff63300d059f3607d1f0e1a742c20749a271", function (data){
+		for (var i=0; i < data.length; i++){
+			randomWordsProcess[i] = data[i].word;
+		};
+		WBwordnik.randomWords = shuffle(randomWordsProcess);
+	});
+};
+
+function loadSettings(){
+	if (localStorage.runWB != "yes"){
+	} else {
+		WBsettingsLoaded = JSON.parse(localStorage.WBsettings);
+		for (var i in WBsettingsLoaded) {
+			if (WBsettingsLoaded.hasOwnProperty(i)) {
+				WBsettings[i] = WBsettingsLoaded[i];
+			};
+		};
+		$("#bg").css('background-color', WBsettings.backgroundColor);	
+		$("#gradientDiv").css('background-color', WBsettings.targetBackgroundColor);	
+		$('#displaySpace').css('font-size', WBsettings.fontSize);
+    };
+};
+
+function keyPressListeners(){
 	$(document).keypress(function(event){
 		var charCode = event.which || event.keyCode;
 		var charStr = String.fromCharCode(charCode);
-		if (menuDisplayed == false){
-			if (charCode != 32 && charCode != 13 && charCode != 8 && charCode != 47 && charCode != 39 && charCode != 63 && charCode != 34 && ctrlPressed == false){
-				if (textDisplayed == false){
+		if (WBruntime.menuDisplayed == false){
+			if (charCode != 32 && charCode != 13 && charCode != 8 && charCode != 47 && charCode != 39 && charCode != 63 && charCode != 34 && WBruntime.ctrlPressed == false){
+				if (WBruntime.textDisplayed == false){
 					$("#displaySpace").append("<span class='block' style='color:" + WBsettings.blockColor + ";background-color:" + WBsettings.blockColor + "'>" + charStr + "</span>");
 				} else {
 					$("#displaySpace").append("<span class='visibleBlock' style='color:" + WBsettings.textColor + ";background-color:" + WBsettings.blockColor + "'>" + charStr + "</span>");
@@ -73,7 +53,9 @@ var WBsettings = {
 			};
 		};	
 	});
-	//document keydown listeners for text operations / menus
+};
+
+function keyDownListeners(){
 	$(document).keydown(function(event){
 		var keyPressed = event.keyCode;
 		if ($('#splash').is(':visible') == true){
@@ -83,7 +65,7 @@ var WBsettings = {
 		};
 		var scrollWindow = $("#displaySpace");
 		scrollWindow.scrollTop(scrollWindow[0].scrollHeight);
-		if (menuDisplayed == false){
+		if (WBruntime.menuDisplayed == false){
 			if (keyPressed == 32){
 				$("#displaySpace").append("<span class='space'>&nbsp;</span>");
 				wordCount();
@@ -106,12 +88,12 @@ var WBsettings = {
 			if (keyPressed == 191){
 				event.preventDefault();
 				var fuckFirefox;
-				if (shiftPressed == false){
+				if (WBruntime.shiftPressed == false){
 					fuckFirefox = "/";
 				} else {
 					fuckFirefox = "?";
 				};
-				if (textDisplayed == false){
+				if (WBruntime.textDisplayed == false){
 					$("#displaySpace").append("<span class='block' style='color:" + WBsettings.blockColor + ";background-color:" + WBsettings.blockColor + "'>" + fuckFirefox + "</span>");
 				} else {
 					$("#displaySpace").append("<span class='visibleBlock' style='color:" + WBsettings.textColor + ";background-color:" + WBsettings.blockColor + "'>" + fuckFirefox + "</span>");
@@ -120,37 +102,37 @@ var WBsettings = {
 			if (keyPressed == 222){
 				event.preventDefault();
 				var fuckFirefox;
-				if (shiftPressed == false){
+				if (WBruntime.shiftPressed == false){
 					fuckFirefox = "'";
 				} else {
 					fuckFirefox = '"';
 				};
-				if (textDisplayed == false){
+				if (WBruntime.textDisplayed == false){
 					$("#displaySpace").append("<span class='block' style='color:" + WBsettings.blockColor + ";background-color:" + WBsettings.blockColor + "'>" + fuckFirefox + "</span>");
 				} else {
 					$("#displaySpace").append("<span class='visibleBlock' style='color:" + WBsettings.textColor + ";background-color:" + WBsettings.blockColor + "'>" + fuckFirefox + "</span>");
 				};
 			};			
-		} else if (menuDisplayed == true){
+		} else if (WBruntime.menuDisplayed == true){
 			if (keyPressed == 27){
 				clearMenu();
 			};
 		};	
 		if (keyPressed == 17){
-			ctrlPressed = true;
+			WBruntime.ctrlPressed = true;
 		};
 		if (keyPressed == 16){
-			shiftPressed = true;
+			WBruntime.shiftPressed = true;
 		};
-		if (ctrlPressed == true){
+		if (WBruntime.ctrlPressed == true){
 			if (keyPressed == 49){
 				event.preventDefault();
-				if (menuDisplayed == false){
+				if (WBruntime.menuDisplayed == false){
 					appendMenu("settings");
-				} else if (menuDisplayed == true && currentMenu == "settings"){
+				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu == "settings"){
 					clearMenu();	
 					saveSettings();
-				} else if (menuDisplayed == true && currentMenu != "settings"){
+				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu != "settings"){
 					appendMenu("settings");
 				};
 			} else if (keyPressed == 50 || keyPressed == 51){
@@ -168,81 +150,79 @@ var WBsettings = {
 			} else if (keyPressed == 52){
 				event.preventDefault();
 				if (WBsettings.visibleText == "yes"){
-					if (textDisplayed == false){
+					if (WBruntime.textDisplayed == false){
 						$(".block").addClass("visibleBlock").removeClass("block").css("color", WBsettings.textColor);
-						textDisplayed = true;
+						WBruntime.textDisplayed = true;
 					} else {
 						$(".visibleBlock").addClass("block").removeClass("visibleBlock").css("color", WBsettings.blockColor);
-						textDisplayed = false;
+						WBruntime.textDisplayed = false;
 					};
 				};
 			} else if (keyPressed == 53){
 				event.preventDefault();
-				if (menuDisplayed == false){
+				if (WBruntime.menuDisplayed == false){
 					appendMenu("wordnik");
-				} else if (menuDisplayed == true && currentMenu == "wordnik"){
-					randomDefinitions.length = 0;
-					randomDefinitionsCounter = 0;
+				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu == "wordnik"){
+					WBwordnik.randomDefinitions.length = 0;
+					WBwordnik.randomDefinitionsCounter = 0;
 					clearMenu();
-				} else if (menuDisplayed == true && currentMenu != "wordnik"){
+				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu != "wordnik"){
 					appendMenu("wordnik");
 				};
 			} else if (keyPressed == 54){	
 				event.preventDefault();
-				if (menuDisplayed == false){
+				if (WBruntime.menuDisplayed == false){
 					appendMenu("sonnet");
-				} else if (menuDisplayed == true && currentMenu == "sonnet"){
+				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu == "sonnet"){
 					clearMenu();
-				} else if (menuDisplayed == true && currentMenu != "sonnet"){
+				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu != "sonnet"){
 					appendMenu("sonnet");
 				};				
 			} else if (keyPressed == 55){
 				event.preventDefault();
-				if (menuDisplayed == false){
+				if (WBruntime.menuDisplayed == false){
 					appendMenu("oblique");
-				} else if (menuDisplayed == true && currentMenu == "oblique"){
+				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu == "oblique"){
 					clearMenu();
-				} else if (menuDisplayed == true && currentMenu != "oblique"){
+				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu != "oblique"){
 					appendMenu("oblique");
 				};	
 			} else if (keyPressed == 57){
 				event.preventDefault();
 			} else if (keyPressed == 48){
 				event.preventDefault();
-				if (menuDisplayed == false){
+				if (WBruntime.menuDisplayed == false){
 					appendMenu("email");
-				} else if (menuDisplayed == true && currentMenu == "email"){
+				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu == "email"){
 					clearMenu();
-					outputViewed = false;
-				} else if (menuDisplayed == true && currentMenu != "email"){
+					WBruntime.outputViewed = false;
+				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu != "email"){
 					appendMenu("email");
 				};	
 			} else if (keyPressed == 56){
 				event.preventDefault();
-				if (menuDisplayed == false){
+				if (WBruntime.menuDisplayed == false){
 					appendMenu("timer");
-				} else if (menuDisplayed == true && currentMenu == "timer"){
+				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu == "timer"){
 					clearMenu();
-				} else if (menuDisplayed == true && currentMenu != "timer"){
+				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu != "timer"){
 					appendMenu("timer");
 				};			
 			};
 		};	
 	});
+};
+
+function keyUpListeners(){
 	$(document).keyup(function(event){
 		var keyPressed = event.keyCode;
 		if (keyPressed == 17){
-			ctrlPressed = false;
+			WBruntime.ctrlPressed = false;
 		};
 		if (keyPressed == 16){
-			shiftPressed = false;
+			WBruntime.shiftPressed = false;
 		};
 	});
-});
-
-//functions
-function prepareOblique(){
-	obliqueArray = obliqueString.split(",");
 };
 
 // could probably refactor this using a loop and "this" later if i feel like it
@@ -377,11 +357,11 @@ function updateMenu(type){
 
 function appendMenu(type){
 	$("#menuDiv").html("");
-	outputViewed = false;
+	WBruntime.outputViewed = false;
 	switch(type)
 	{
 		case "settings":
-			currentMenu = "settings";
+			WBruntime.currentMenu = "settings";
 			$("#menuDiv").append("\
 			<div id='menuDisplay'>\
 				<div id='titleContainer'><b>writer's blocks</b>: a drafting tool</div>\
@@ -410,7 +390,7 @@ function appendMenu(type){
 			addMenuListeners();
 		break;
 		case "wordnik":
-			currentMenu = "wordnik";
+			WBruntime.currentMenu = "wordnik";
 			$("#menuDiv").append("\
 			<div id='dictionaryDisplay'>\
 				<div id='wordDisplay'></div>\
@@ -418,51 +398,51 @@ function appendMenu(type){
 				<div id='backButton'><</div>\
 				<div id='forwardButton'>></div>\
 			</div>");
-			var randomWord = randomWords[randomWordCounter];
-			randomWordCounter++;
+			var randomWord = WBwordnik.randomWords[WBwordnik.randomWordCounter];
+			WBwordnik.randomWordCounter++;
 			var randomDefinition;
 			$.getJSON("http://api.wordnik.com/v4/word.json/" + randomWord + "/definitions?limit=50&includeRelated=true&useCanonical=true&sourceDictionaries=all&includeTags=false&api_key=cea8ccbca1550ff63300d059f3607d1f0e1a742c20749a271", function (data){
 				//create array of definitions
 				for (var i=0; i < data.length; i++){
-					randomDefinitions[i] = data[i].text;
+					WBwordnik.randomDefinitions[i] = data[i].text;
 				};
 				$("#wordDisplay").text(randomWord);
-				$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
+				$("#definitionDisplay").text(WBwordnik.randomDefinitions[WBwordnik.randomDefinitionsCounter]);
 				//set up if it's more than 0, the buttons display and if not they don't
-				if (randomDefinitions.length > 1){
-				$("#forwardButton").css('display', 'block');
-				$("#backButton").css('display', 'block');
-					$("#forwardButton").click(function(){
-						if (randomDefinitionsCounter <= randomDefinitions.length - 1){
-							randomDefinitionsCounter++;
-							$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
-						} else {
-							randomDefinitionsCounter = 0;
-							$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
-						};
-					});
-					$("#backButton").click(function(){
-						if (randomDefinitionsCounter == 0){
-							randomDefinitionsCounter = randomDefinitions.length;
-							$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
-						} else {
-							randomDefinitionsCounter--;
-							$("#definitionDisplay").text(randomDefinitions[randomDefinitionsCounter]);
-						};
-					});	
+				if (WBwordnik.randomDefinitions.length > 1){
+					$("#forwardButton").css('display', 'block');
+					$("#backButton").css('display', 'block');
+						$("#forwardButton").click(function(){
+							if (WBwordnik.randomDefinitionsCounter <= WBwordnik.randomDefinitions.length - 1){
+								WBwordnik.randomDefinitionsCounter++;
+								$("#definitionDisplay").text(WBwordnik.randomDefinitions[WBwordnik.randomDefinitionsCounter]);
+							} else {
+								WBwordnik.randomDefinitionsCounter = 0;
+								$("#definitionDisplay").text(WBwordnik.randomDefinitions[WBwordnik.randomDefinitionsCounter]);
+							};
+						});
+						$("#backButton").click(function(){
+							if (WBwordnik.randomDefinitionsCounter == 0){
+								WBwordnik.randomDefinitionsCounter = WBwordnik.randomDefinitions.length;
+								$("#definitionDisplay").text(WBwordnik.randomDefinitions[WBwordnik.randomDefinitionsCounter]);
+							} else {
+								WBwordnik.randomDefinitionsCounter--;
+								$("#definitionDisplay").text(WBwordnik.randomDefinitions[WBwordnik.randomDefinitionsCounter]);
+							};
+						});	
 				} else {
 					$("#forwardButton").css('display', 'none');
 					$("#backButton").css('display', 'none');
 				};	
-				if (randomWordCounter == 95){
+				if (WBwordnik.randomWordCounter == 95){
 					getRandomWords();
-					randomWordCounter = 0;
+					WBwordnik.randomWordCounter = 0;
 				};
 			});
 		break;	
 		case "email":
 			parseHTMLtoString();
-			currentMenu = "email";
+			WBruntime.currentMenu = "email";
 			$("#menuDiv").append("\
 			<div id='emailDisplay'>\
 				<div id='titleDisplay'><div id='innerTitle'>title: <input type='text' id='processEmailTitle'></input></div></div>\
@@ -478,7 +458,7 @@ function appendMenu(type){
 				WBsettings.emailAddress = $("#processEmailAddress").val();
 				saveSettings();
 			});
-			$("#invisibleTextHolder").text(outputString);
+			$("#invisibleTextHolder").text(WBruntime.outputString);
 			$("#sendButton").click(function(){
 				emailTitle = $('#processEmailTitle').val();
 				emailAddress = $('#processEmailAddress').val();
@@ -490,7 +470,7 @@ function appendMenu(type){
 					   url: "storage/email.php",
 					   dataType: 'text',
 					   data: { 
-							blockText : outputString,
+							blockText : WBruntime.outputString,
 							blockEmail : emailAddress,
 							blockTitle : emailTitle
 					   },
@@ -512,7 +492,7 @@ function appendMenu(type){
 				   url: "storage/save2.php",
 				   dataType: 'text',
 				   data: { 
-						blockText : outputString,
+						blockText : WBruntime.outputString,
 						blockName : outputName
 				   },
 				   success: function(data) {
@@ -533,25 +513,25 @@ function appendMenu(type){
 				});	
 			});
 			$("#viewButton").click(function(){
-				if (outputViewed == false){
+				if (WBruntime.outputViewed == false){
 					$("#titleDisplay").css('opacity', 0);
 					$("#addressDisplay").css('opacity', 0);
 					$("#menuDiv").append("<div id='viewText'></div>");
-					var HTMLOutputString = outputString.replace(/\n/g,'<br/>');
-					$("#viewText").html(HTMLOutputString);
+					var HTMLoutputString = WBruntime.outputString.replace(/\n/g,'<br/>');
+					$("#viewText").html(HTMLoutputString);
 					$("#message").text("click 'view text' again to close text.  press ctrl+0 to go back to your blocks.");
-					outputViewed = true;
+					WBruntime.outputViewed = true;
 				} else {
 					$("#viewText").remove();
 					$("#titleDisplay").css('opacity', 1);
 					$("#addressDisplay").css('opacity', 1);
 					$("#message").text("");
-					outputViewed = false;
+					WBruntime.outputViewed = false;
 				};
 			});
 		break;	
 		case "sonnet":
-		currentMenu = "sonnet";
+		WBruntime.currentMenu = "sonnet";
 			$.getJSON('js/sonnets.json', function(data) {
 				var randomSonnet = Math.floor((Math.random()*data.length)+0);
 				var randomLine = Math.floor((Math.random()*12)+0);
@@ -566,14 +546,14 @@ function appendMenu(type){
 			}); 				
 		break;
 		case "oblique":
-		currentMenu = "oblique";
-			var randomOblique = Math.floor((Math.random()*obliqueArray.length)+0);
+		WBruntime.currentMenu = "oblique";
+			var randomOblique = Math.floor((Math.random()*WBruntime.obliqueArray.length)+0);
 			$("#menuDiv").append("<div id='obliqueStrategyDisplay'></div>");
-			$("#obliqueStrategyDisplay").text(obliqueArray[randomOblique]); 				
+			$("#obliqueStrategyDisplay").text(WBruntime.obliqueArray[randomOblique]); 				
 		break;
 		case "timer":
-		currentMenu = "timer";
-			if (timerStarted == false){
+		WBruntime.currentMenu = "timer";
+			if (WBtimer.timerStarted == false){
 				$("#menuDiv").append("\
 				<div id='timerDisplay'>\
 					<div id='timerContainer'><input type='text' size='2' maxlength='2' id='timerInput'> minutes</div>\
@@ -582,13 +562,13 @@ function appendMenu(type){
 				$("#timerStartButton").click(function(){
 					timerClick();
 				});
-			} else if (timerStarted == true){
+			} else if (WBtimer.timerStarted == true){
 				$("#menuDiv").append("\
 				<div id='timerDisplay'>\
 					<div id='timerContainer'><div id='timerShow'></div></div>\
 					<div id='timerStartButtonContainer'><div id='timerStartButton'>restart</div></div>\
 				</div>");
-				$("#timerShow").text(currentMinutes + ":" + currentSeconds);  
+				$("#timerShow").text(WBtimer.currentMinutes + ":" + WBtimer.currentSeconds);  
 				$("#timerStartButton").click(function(){
 					timerClick();
 				});				
@@ -596,16 +576,16 @@ function appendMenu(type){
 		break;
 	};
 	$("#menuDiv").fadeIn(250, function(){});
-	menuDisplayed = true;	
+	WBruntime.menuDisplayed = true;	
 };
 
 function clearMenu(){
 	$("#menuDiv").html("");
 	$("#menuDiv").css('display', 'none');
 	saveSettings();
-	outputViewed = false;
-	menuDisplayed = false;
-	currentMenu = "";
+	WBruntime.outputViewed = false;
+	WBruntime.menuDisplayed = false;
+	WBruntime.currentMenu = "";
 };
 
 function check_email(email){  
@@ -618,17 +598,17 @@ function check_email(email){
 } 
 
 function countDown() {
-	currentMinutes = Math.floor(secs / 60);
-	currentSeconds = secs % 60;
-	if (currentSeconds <= 9){
-		currentSeconds = "0" + currentSeconds;
+	WBtimer.currentMinutes = Math.floor(WBtimer.secs / 60);
+	WBtimer.currentSeconds = WBtimer.secs % 60;
+	if (WBtimer.currentSeconds <= 9){
+		WBtimer.currentSeconds = "0" + WBtimer.currentSeconds;
 	};	
-	secs--;
-	$("#timerShow").text(currentMinutes + ":" + currentSeconds);       
-	if (secs !== -1){
+	WBtimer.secs--;
+	$("#timerShow").text(WBtimer.currentMinutes + ":" + WBtimer.currentSeconds);       
+	if (WBtimer.secs !== -1){
 		setTimeout('countDown()',1000);
 	};
-	if (secs == -1 && timerStarted == true){
+	if (WBtimer.secs == -1 && WBtimer.timerStarted == true){
 		$("#popHolder").html("");
 		$("#popHolder").append("\
 			<div id='progressPop'>\
@@ -648,28 +628,28 @@ function countDown() {
 };
 
 function timerReset(){
-	timerStarted = false;
-	mins = 0
-	secs = 0
-	currentMinutes = 0;
-	currentSeconds = 0;
+	WBtimer.timerStarted = false;
+	WBtimer.mins = 0
+	WBtimer.secs = 0
+	WBtimer.currentMinutes = 0;
+	WBtimer.currentSeconds = 0;
 	$("#timerContainer").html("");
 	$("#timerContainer").append("<input type='text' size='2' maxlength='2' id='timerInput'> minutes");
 	$("#timerStartButton").text("start");
 };
 
 function timerClick(){
-	if (timerStarted == false){
-		mins = $("#timerInput").val();
-		if (mins != 0){
-			secs = mins * 60;
-			currentSeconds = 0;
-			currentMinutes = 0; 
+	if (WBtimer.timerStarted == false){
+		WBtimer.mins = $("#timerInput").val();
+		if (WBtimer.mins != 0){
+			WBtimer.secs = WBtimer.mins * 60;
+			WBtimer.currentSeconds = 0;
+			WBtimer.currentMinutes = 0; 
 			$("#timerStartButton").text("restart");
 			$("#timerContainer").html("");
-			$("#timerContainer").append("<div id='timerShow'>" + mins + ":00</div>");
+			$("#timerContainer").append("<div id='timerShow'>" + WBtimer.mins + ":00</div>");
 			setTimeout('countDown()',1000);
-			timerStarted = true;
+			WBtimer.timerStarted = true;
 			clearMenu();
 		};
 	} else {
@@ -677,36 +657,11 @@ function timerClick(){
 	};
 };
 
-function getRandomWords(){
-	var randomWordsProcess = new Array();
-	$.getJSON("http://api.wordnik.com/v4/words.json/randomWords?hasDictionaryDef=true&excludePartOfSpeech=proper-noun&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&limit=100&api_key=cea8ccbca1550ff63300d059f3607d1f0e1a742c20749a271", function (data){
-		for (var i=0; i < data.length; i++){
-			randomWordsProcess[i] = data[i].word;
-		};
-		randomWords = shuffle(randomWordsProcess);
-	});
-};
-
 //+ Jonas Raoni Soares Silva
 //@ http://jsfromhell.com/array/shuffle [v1.0]
 function shuffle(o){ //v1.0
     for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
     return o;
-};
-
-function loadSettings(){
-	if (localStorage.runWB != "yes"){
-	} else {
-		WBsettingsLoaded = JSON.parse(localStorage.WBsettings);
-		for (var i in WBsettingsLoaded) {
-			if (WBsettingsLoaded.hasOwnProperty(i)) {
-				WBsettings[i] = WBsettingsLoaded[i];
-			};
-		};
-		$("#bg").css('background-color', WBsettings.backgroundColor);	
-		$("#gradientDiv").css('background-color', WBsettings.targetBackgroundColor);	
-		$('#displaySpace').css('font-size', WBsettings.fontSize);
-    };
 };
 
 function saveSettings(){
@@ -717,12 +672,12 @@ function saveSettings(){
 };
 
 function wordCount(){
-	spacesTyped = $(".space").length;
-	wordTargetPercentage = spacesTyped / WBsettings.wordTarget;
+	WBruntime.spacesTyped = $(".space").length;
+	WBruntime.wordTargetPercentage = WBruntime.spacesTyped / WBsettings.wordTarget;
 	if (WBsettings.progressColor = "yes"){
-		$("#gradientDiv").css('opacity', wordTargetPercentage);
+		$("#gradientDiv").css('opacity', WBruntime.wordTargetPercentage);
 	};
-	if (wordTargetPercentage == 1){
+	if (WBruntime.wordTargetPercentage == 1){
 		if (WBsettings.progressPop = "yes"){
 			$("#popHolder").html("");
 			$("#popHolder").append("\
@@ -743,21 +698,21 @@ function wordCount(){
 };
 
 function parseHTMLtoString(){
-	outputString = "";
+	WBruntime.outputString = "";
 	$('#displaySpace').children().each(function () {
 		var currentClass = $(this).attr("class"); 
 		switch(currentClass){
 			case 'block':
-				outputString = outputString + $(this).text();
+				WBruntime.outputString = WBruntime.outputString + $(this).text();
 				break;
 			case 'visibleBlock':
-				outputString = outputString + $(this).text();
+				WBruntime.outputString = WBruntime.outputString + $(this).text();
 				break;	
 			case 'space':
-				outputString = outputString + " ";
+				WBruntime.outputString = WBruntime.outputString + " ";
 				break;
 			case 'break':
-				outputString = outputString + "\r\n";
+				WBruntime.outputString = WBruntime.outputString + "\r\n";
 				break;  
 			default:			
 		};
@@ -768,3 +723,5 @@ function rand(length,current){
  current = current ? current : '';
  return length ? rand( --length , "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz".charAt( Math.floor( Math.random() * 60 ) ) + current ) : current;
 }
+
+jQuery.fn.reverse = [].reverse;
