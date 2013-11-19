@@ -12,7 +12,6 @@ var randomDefinitionsCounter = 0;
 var wordTargetPercentage;
 var outputViewed = false;
 var outputString = "";
-var charString;
 var timerStarted = false;
 var mins;
 var secs; 
@@ -21,6 +20,25 @@ var currentMinutes;
 var ctrlPressed = false;
 var shiftPressed = false;
 jQuery.fn.reverse = [].reverse;
+
+var WBruntime = {
+	spacesTyped: 0,
+	textDisplayed: false,
+	menuDisplayed: false,
+	currentMenu: "",
+	outputViewed: false,
+	outputString: "",
+	ctrlPressed: false,
+	shiftPressed: false
+};
+
+var WBtimer = {
+	timerStarted: false,
+	mins: 0,
+	secs: 0,
+	currentSeconds: 0,
+	currentMinutes: 0
+};
 
 var WBsettings = {
 	visibleText: "no",
@@ -32,7 +50,8 @@ var WBsettings = {
 	progressColor: "yes",
 	progressPop: "yes",
 	emailAddress: "",
-	wordTarget: 600
+	wordTarget: 600,
+	fontSize: 24
 };
 
  $(document).ready(function() {
@@ -43,7 +62,7 @@ var WBsettings = {
 	//textarea keypress listeners for entering text
 	$(document).keypress(function(event){
 		var charCode = event.which || event.keyCode;
-		charStr = String.fromCharCode(charCode);
+		var charStr = String.fromCharCode(charCode);
 		if (menuDisplayed == false){
 			if (charCode != 32 && charCode != 13 && charCode != 8 && charCode != 47 && charCode != 39 && charCode != 63 && charCode != 34 && ctrlPressed == false){
 				if (textDisplayed == false){
@@ -143,6 +162,8 @@ var WBsettings = {
 				} else if (keyPressed == 51){
 					fontSize++;
 				}
+				WBsettings.fontSize = fontSize;
+				saveSettings();
 				$('#displaySpace').css('font-size', fontSize);
 			} else if (keyPressed == 52){
 				event.preventDefault();
@@ -366,7 +387,7 @@ function appendMenu(type){
 				<div id='titleContainer'><b>writer's blocks</b>: a drafting tool</div>\
 				<div id='hotKeysContainer'>\
 					<div id='hotKeysLabel'>shortcuts</div>\
-					<div id='hotKeysLeft'><p class='hotKey'><span class='keyLabel'>ctrl+1</span>: settings (you are here)</p> <p class='hotKey'><span class='keyLabel'>ctrl+2</span>: make blocks smaller</p> <p class='hotKey'><span class='keyLabel'>ctrl+3</span>: make blocks larger</p> <p class='hotKey'><span class='keyLabel'>ctrl+4</span>: reveal text (disabled by default)</p><p class='hotKey'><span class='keyLabel'>ctrl+5</span>: random word/definition (via Wordnik)</p>  </div>\
+					<div id='hotKeysLeft'><p class='hotKey'><span class='keyLabel'>ctrl+1</span>: settings (you are here)</p> <p class='hotKey'><span class='keyLabel'>ctrl+2</span>: make blocks smaller</p> <p class='hotKey'><span class='keyLabel'>ctrl+3</span>: make blocks larger</p> <p class='hotKey'><span class='keyLabel'>ctrl+4</span>: reveal text (disabled by default)</p><p class='hotKey'><span class='keyLabel'>ctrl+5</span>: random word/definition (Wordnik)</p>  </div>\
 					<div id='hotKeysRight'><p class='hotKey'><span class='keyLabel'>ctrl+6</span>: random Shakespeare couplet</p><p class='hotKey'><span class='keyLabel'>ctrl+7</span>: random oblique strategy</p> <p class='hotKey'><span class='keyLabel'>ctrl+8</span>: timer</p> <p class='hotKey'><span class='keyLabel'>ctrl+0</span>: get your text</p> <p class='hotKey'><span class='keyLabel'>f11</span>: fullscreen</p></div>\
 					<br class='clear' />\
 				</div>\
@@ -375,10 +396,10 @@ function appendMenu(type){
 					<div id='visibleTextContainer' class='settings'>allow use of ctrl+4 to make text visible? <select id='visibleTextSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='typewriterContainer' class='settings'>disable backspace key (typewriter mode)? <select id='typewriterSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 					<div id='wordTargetContainer' class='settings'>your target word count for the session <input type='text' id='wordTargetInput' value='600'></input></div>\
-					<div id='colorContainer1' class='settings'>block color <div id='blockColorPicker' class='colorPicker'></div> text color <div id='textColorPicker' class='colorPicker'></div> background color <div id='backgroundColorPicker' class='colorPicker'></div> target background color <div id='targetBackgroundColorPicker' class='colorPicker'></div></div>\
+					<div id='colorContainer1' class='settings'>block color <div id='blockColorPicker' class='colorPicker'></div> text color <div id='textColorPicker' class='colorPicker'></div> bg color <div id='backgroundColorPicker' class='colorPicker'></div> target bg color <div id='targetBackgroundColorPicker' class='colorPicker'></div></div>\
 					<div id='colorContainer2' class='settings'></div>\
-					<div id='wordTargetColorContainer' class='settings'>change background color as you progress toward your target word count? <select id='progressColorSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
-					<div id='wordTargetPopContainer' class='settings'>deliver pop-up notification when you reach your target word count? <select id='progressPopSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='wordTargetColorContainer' class='settings'>change bg color as you progress toward your target word count? <select id='progressColorSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
+					<div id='wordTargetPopContainer' class='settings'>pop-up notification when you reach your target word count? <select id='progressPopSelect'><option selected='selected'value='no'>no</option><option value='yes'>yes</select></div>\
 				</div>\
 				<div id='aboutContainer'>\
 					<div id='aboutLabel'>about</div>\
@@ -684,6 +705,7 @@ function loadSettings(){
 		};
 		$("#bg").css('background-color', WBsettings.backgroundColor);	
 		$("#gradientDiv").css('background-color', WBsettings.targetBackgroundColor);	
+		$('#displaySpace').css('font-size', WBsettings.fontSize);
     };
 };
 
