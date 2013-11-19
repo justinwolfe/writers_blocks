@@ -382,7 +382,7 @@ function appendMenu(type){
 				</div>\
 				<div id='aboutContainer'>\
 					<div id='aboutLabel'>about</div>\
-					<div id='aboutText' class='hotKey'>made by <a href='mailto:justin.wolfe@gmail.com'>justin wolfe</a> using <a href='http://www.jquery.com/'>jQuery</a>, <a href='http://www.github.com/justinwolfe'>git</a>, <a href='http://www.steamdev.com/zclip/'>zClip</a>, <a href='http://www.wordnik.com'>Wordnik</a>, <a href='http://colpick.com/plugin'>colpick</a>, <a href='https://samdutton.wordpress.com/2011/03/09/shakespeares-sonnets-in-json-format/'>JSON Sonnets</a>, and <a href='http://www.rtqe.net/ObliqueStrategies/'>oblique strategies</a></div>\
+					<div id='aboutText' class='hotKey'>made by <a href='mailto:justin.wolfe@gmail.com'>justin wolfe</a> using <a href='http://www.jquery.com/'>jQuery</a>, <a href='http://www.github.com/justinwolfe'>git</a>, <a href='http://www.wordnik.com'>Wordnik</a>, <a href='http://colpick.com/plugin'>colpick</a>, <a href='https://samdutton.wordpress.com/2011/03/09/shakespeares-sonnets-in-json-format/'>JSON Sonnets</a>, and <a href='http://www.rtqe.net/ObliqueStrategies/'>oblique strategies</a></div>\
 				</div>\
 			</div>");
 			updateMenu("settings");
@@ -447,7 +447,6 @@ function appendMenu(type){
 				<div id='titleDisplay'><div id='innerTitle'>title: <input type='text' id='processEmailTitle'></input></div></div>\
 				<div id='addressDisplay'><div id='innerAddress'>email: <input type='text' id='processEmailAddress'></input></div></div>\
 				<div id='sendDisplay'><div id='sendButton'>email text</div></div>\
-				<div id='copyDisplay'><div id='copyButton'>copy text (flash)</div></div>\
 				<div id='viewDisplay'><div id='viewButton'>view text</div>\
 				<div id='saveDisplay'><div id='saveButton'>generate download link</div></div>\
 				<div id='messageDisplay'><div id='message'></div></div>\
@@ -459,13 +458,6 @@ function appendMenu(type){
 				saveSettings();
 			});
 			$("#invisibleTextHolder").text(outputString);
-			$('#copyButton').zclip({
-				path:'libraries/ZeroClipboard.swf',
-				copy: $('#invisibleTextHolder').text(),
-				afterCopy:function(){
-					$('#message').text("text copied. press ctrl+0 to go back to your blocks.");
-				}
-			});
 			$("#sendButton").click(function(){
 				emailTitle = $('#processEmailTitle').val();
 				emailAddress = $('#processEmailAddress').val();

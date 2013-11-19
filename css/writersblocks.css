@@ -87,14 +87,14 @@ select {
 }
 
 #splashTitle{
-	font-size: 9em;
+	font-size: 6.5em;
 	text-align: center;
-	top: 35%;
+	top: 40%;
 }
 #splashInfo{
-	font-size: 2em;
+	font-size: 1.5em;
 	text-align: center;
-	top: 37%;
+	top: 42%;
 }
 
 #innerSplashTitle{
@@ -616,7 +616,7 @@ select {
 	width: 50%;
 	font-size: 24px;
 	left: 25%;
-	height: 42%;
+	height: 40%;
 	top: 8%;
 	overflow-x: hidden;
 	overflow-y: auto;
