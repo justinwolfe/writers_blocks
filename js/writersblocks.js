@@ -475,7 +475,7 @@ function appendMenu(type){
 							blockTitle : emailTitle
 					   },
 					   success: function(data) {
-						$("#message").text("text sent (always a good idea to backup your backup, though). press ctrl+0 to go back to your blocks.");
+						$("#message").text("text sent (but both my host and spam filters can be wonky, so check your mail before closing the tab). press ctrl+0 to go back to your blocks.");
 						//setTimeout(function(){clearMenu()},1000);
 					   },
 					   error: function(msg) {
