@@ -1,4 +1,4 @@
-var WBruntime = {
+var wbRuntime = {
 	spacesTyped: 0,
 	wordTargetPercentage: 0,
 	textDisplayed: false,
@@ -11,7 +11,7 @@ var WBruntime = {
 	obliqueArray: []
 };
 
-var WBtimer = {
+var wbTimer = {
 	timerStarted: false,
 	mins: 0,
 	secs: 0,
@@ -19,7 +19,7 @@ var WBtimer = {
 	currentMinutes: 0
 };
 
-var WBsettings = {
+var wbSettings = {
 	visibleText: "no",
 	typewriterMode: "no",
 	blockColor: "#FFFFFF",
@@ -33,7 +33,7 @@ var WBsettings = {
 	fontSize: 24
 };
 
-var WBwordnik = {
+var wbWordnik = {
 	randomWords: [],
 	randomDefinitions: [],
 	randomWordCounter: 0,

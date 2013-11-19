@@ -11,7 +11,7 @@ $(document).ready(function() {
 
 function prepareOblique(){
 	var obliqueString = "Abandon normal instruments,Accept advice,Accretion,A line has two sides,Allow an easement (an easement is the abandonment of a stricture),Always first steps,Are there sections?  Consider transitions,Ask people to work against their better judgement,Ask your body,Assemble some of the elements in a group and treat the group,Balance the consistency principle with the inconsistency principle,Be dirty,Be extravagant,Be less critical more often,Breathe more deeply,Bridges -build -burn,Cascades,Change instrument roles,Change nothing and continue with immaculate consistency,Children -speaking -singing,Cluster analysis,Consider different fading systems,Consult other sources -promising -unpromising,Courage!,Cut a vital connection,Decorate,Define an area as 'safe' and use it as an anchor,Destroy -nothing -the most important thing,Discard an axiom,Disciplined self-indulgence,Disconnect from desire,Discover the recipes you are using and abandon them,Distorting time,Do nothing for as long as possible,Don't be afraid of things because they're easy to do,Don't be frightened of cliches,Don't be frightened to display your talents,Don't break the silence,Don't stress one thing more than another,Do something boring,Do the words need changing?,Do we need holes?,Emphasise differences,Emphasise repetitions,Emphasise the flaws,Fill every beat with something,From nothing to more than nothing,Ghost echoes,Give the game away,Give way to your worst impulse,Go outside. Shut the door.,Go slowly all the way round the outside,Go to an extreme,Move back to a more comfortable place,Honor thy error as a hidden intention,How would you have done it?,Humanise something free of error,Idiot glee (?),Imagine the piece as a set of disconnected events,Infinitesimal gradations,Intentions -nobility of -humility of -credibility of,In total darkness,In a very large room,Very quietly,Into the impossible,Is it finished?,Is the intonation correct?,Is there something missing?,It is quite possible (after all),Just carry on,Listen to the quiet voice,Look at the order in which you do things,Look closely at the most embarrassing details and amplify them,Lost in useless territory,Lowest common denominator,Make a blank valuable by putting it in an exquisite frame,Make an exhaustive list of everything you might do and do the last thing on the list,Make a sudden destructive unpredictable action; incorporate,Mechanicalise something idiosyncratic,Mute and continue,Not building a wall but making a brick,Once the search is in progress something will be found,Only a part not the whole,Only one element of each kind,(Organic) machinery,Overtly resist change,Question the heroic approach,Remember those quiet evenings,Remove ambiguities and convert to specifics,Remove specifics and convert to ambiguities,Repetition is a form of change,Retrace your steps,Revaluation (a warm feeling),Reverse,Short circuit (example; a man eating peas with the idea that they will improve his virility shovels them straight into his lap),Simple subtraction,Simply a matter of work,State the problem in words as clearly as possible,Take a break,Take away the elements in order of apparent non-importance,The inconsistency principle,The most important thing is the thing most easily forgotten,The tape is now the music,Think of the radio,Tidy up,Towards the insignificant,Trust in the you of now,Turn it upside down,Use an old idea,Use an unacceptable colour,Use fewer notes,Use filters,Use 'unqualified' people,Water,What are the sections sections of? Imagine a caterpillar moving,What are you really thinking about just now?,What is the reality of the situation?,What mistakes did you make last time?,What wouldn't you do?,What would your closest friend do?,Work at a different speed,Would anybody want it?,You are an engineer,You can only make one dot at a time,You don't have to be ashamed of using your own ideas";
-	WBruntime.obliqueArray = obliqueString.split(",");
+	wbRuntime.obliqueArray = obliqueString.split(",");
 };
 
 function getRandomWords(){
@@ -20,22 +20,22 @@ function getRandomWords(){
 		for (var i=0; i < data.length; i++){
 			randomWordsProcess[i] = data[i].word;
 		};
-		WBwordnik.randomWords = shuffle(randomWordsProcess);
+		wbWordnik.randomWords = shuffle(randomWordsProcess);
 	});
 };
 
 function loadSettings(){
 	if (localStorage.runWB != "yes"){
 	} else {
-		WBsettingsLoaded = JSON.parse(localStorage.WBsettings);
-		for (var i in WBsettingsLoaded) {
-			if (WBsettingsLoaded.hasOwnProperty(i)) {
-				WBsettings[i] = WBsettingsLoaded[i];
+		wbSettingsLoaded = JSON.parse(localStorage.wbSettings);
+		for (var i in wbSettingsLoaded) {
+			if (wbSettingsLoaded.hasOwnProperty(i)) {
+				wbSettings[i] = wbSettingsLoaded[i];
 			};
 		};
-		$("#bg").css('background-color', WBsettings.backgroundColor);	
-		$("#gradientDiv").css('background-color', WBsettings.targetBackgroundColor);	
-		$('#displaySpace').css('font-size', WBsettings.fontSize);
+		$("#bg").css('background-color', wbSettings.backgroundColor);	
+		$("#gradientDiv").css('background-color', wbSettings.targetBackgroundColor);	
+		$('#displaySpace').css('font-size', wbSettings.fontSize);
     };
 };
 
@@ -43,12 +43,12 @@ function keyPressListeners(){
 	$(document).keypress(function(event){
 		var charCode = event.which || event.keyCode;
 		var charStr = String.fromCharCode(charCode);
-		if (WBruntime.menuDisplayed == false){
-			if (charCode != 32 && charCode != 13 && charCode != 8 && charCode != 47 && charCode != 39 && charCode != 63 && charCode != 34 && WBruntime.ctrlPressed == false){
-				if (WBruntime.textDisplayed == false){
-					$("#displaySpace").append("<span class='block' style='color:" + WBsettings.blockColor + ";background-color:" + WBsettings.blockColor + "'>" + charStr + "</span>");
+		if (wbRuntime.menuDisplayed == false){
+			if (charCode != 32 && charCode != 13 && charCode != 8 && charCode != 47 && charCode != 39 && charCode != 63 && charCode != 34 && wbRuntime.ctrlPressed == false){
+				if (wbRuntime.textDisplayed == false){
+					$("#displaySpace").append("<span class='block' style='color:" + wbSettings.blockColor + ";background-color:" + wbSettings.blockColor + "'>" + charStr + "</span>");
 				} else {
-					$("#displaySpace").append("<span class='visibleBlock' style='color:" + WBsettings.textColor + ";background-color:" + WBsettings.blockColor + "'>" + charStr + "</span>");
+					$("#displaySpace").append("<span class='visibleBlock' style='color:" + wbSettings.textColor + ";background-color:" + wbSettings.blockColor + "'>" + charStr + "</span>");
 				};
 			};
 		};	
@@ -65,13 +65,13 @@ function keyDownListeners(){
 		};
 		var scrollWindow = $("#displaySpace");
 		scrollWindow.scrollTop(scrollWindow[0].scrollHeight);
-		if (WBruntime.menuDisplayed == false){
+		if (wbRuntime.menuDisplayed == false){
 			if (keyPressed == 32){
 				$("#displaySpace").append("<span class='space'>&nbsp;</span>");
 				wordCount();
 			};
 			if (keyPressed == 8){
-				if (WBsettings.typewriterMode == "no"){
+				if (wbSettings.typewriterMode == "no"){
 					event.preventDefault();
 					$("#displaySpace :last-child").remove();
 					wordCount();
@@ -88,51 +88,51 @@ function keyDownListeners(){
 			if (keyPressed == 191){
 				event.preventDefault();
 				var fuckFirefox;
-				if (WBruntime.shiftPressed == false){
+				if (wbRuntime.shiftPressed == false){
 					fuckFirefox = "/";
 				} else {
 					fuckFirefox = "?";
 				};
-				if (WBruntime.textDisplayed == false){
-					$("#displaySpace").append("<span class='block' style='color:" + WBsettings.blockColor + ";background-color:" + WBsettings.blockColor + "'>" + fuckFirefox + "</span>");
+				if (wbRuntime.textDisplayed == false){
+					$("#displaySpace").append("<span class='block' style='color:" + wbSettings.blockColor + ";background-color:" + wbSettings.blockColor + "'>" + fuckFirefox + "</span>");
 				} else {
-					$("#displaySpace").append("<span class='visibleBlock' style='color:" + WBsettings.textColor + ";background-color:" + WBsettings.blockColor + "'>" + fuckFirefox + "</span>");
+					$("#displaySpace").append("<span class='visibleBlock' style='color:" + wbSettings.textColor + ";background-color:" + wbSettings.blockColor + "'>" + fuckFirefox + "</span>");
 				};
 			};
 			if (keyPressed == 222){
 				event.preventDefault();
 				var fuckFirefox;
-				if (WBruntime.shiftPressed == false){
+				if (wbRuntime.shiftPressed == false){
 					fuckFirefox = "'";
 				} else {
 					fuckFirefox = '"';
 				};
-				if (WBruntime.textDisplayed == false){
-					$("#displaySpace").append("<span class='block' style='color:" + WBsettings.blockColor + ";background-color:" + WBsettings.blockColor + "'>" + fuckFirefox + "</span>");
+				if (wbRuntime.textDisplayed == false){
+					$("#displaySpace").append("<span class='block' style='color:" + wbSettings.blockColor + ";background-color:" + wbSettings.blockColor + "'>" + fuckFirefox + "</span>");
 				} else {
-					$("#displaySpace").append("<span class='visibleBlock' style='color:" + WBsettings.textColor + ";background-color:" + WBsettings.blockColor + "'>" + fuckFirefox + "</span>");
+					$("#displaySpace").append("<span class='visibleBlock' style='color:" + wbSettings.textColor + ";background-color:" + wbSettings.blockColor + "'>" + fuckFirefox + "</span>");
 				};
 			};			
-		} else if (WBruntime.menuDisplayed == true){
+		} else if (wbRuntime.menuDisplayed == true){
 			if (keyPressed == 27){
 				clearMenu();
 			};
 		};	
 		if (keyPressed == 17){
-			WBruntime.ctrlPressed = true;
+			wbRuntime.ctrlPressed = true;
 		};
 		if (keyPressed == 16){
-			WBruntime.shiftPressed = true;
+			wbRuntime.shiftPressed = true;
 		};
-		if (WBruntime.ctrlPressed == true){
+		if (wbRuntime.ctrlPressed == true){
 			if (keyPressed == 49){
 				event.preventDefault();
-				if (WBruntime.menuDisplayed == false){
+				if (wbRuntime.menuDisplayed == false){
 					appendMenu("settings");
-				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu == "settings"){
+				} else if (wbRuntime.menuDisplayed == true && wbRuntime.currentMenu == "settings"){
 					clearMenu();	
 					saveSettings();
-				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu != "settings"){
+				} else if (wbRuntime.menuDisplayed == true && wbRuntime.currentMenu != "settings"){
 					appendMenu("settings");
 				};
 			} else if (keyPressed == 50 || keyPressed == 51){
@@ -144,68 +144,68 @@ function keyDownListeners(){
 				} else if (keyPressed == 51){
 					fontSize++;
 				}
-				WBsettings.fontSize = fontSize;
+				wbSettings.fontSize = fontSize;
 				saveSettings();
 				$('#displaySpace').css('font-size', fontSize);
 			} else if (keyPressed == 52){
 				event.preventDefault();
-				if (WBsettings.visibleText == "yes"){
-					if (WBruntime.textDisplayed == false){
-						$(".block").addClass("visibleBlock").removeClass("block").css("color", WBsettings.textColor);
-						WBruntime.textDisplayed = true;
+				if (wbSettings.visibleText == "yes"){
+					if (wbRuntime.textDisplayed == false){
+						$(".block").addClass("visibleBlock").removeClass("block").css("color", wbSettings.textColor);
+						wbRuntime.textDisplayed = true;
 					} else {
-						$(".visibleBlock").addClass("block").removeClass("visibleBlock").css("color", WBsettings.blockColor);
-						WBruntime.textDisplayed = false;
+						$(".visibleBlock").addClass("block").removeClass("visibleBlock").css("color", wbSettings.blockColor);
+						wbRuntime.textDisplayed = false;
 					};
 				};
 			} else if (keyPressed == 53){
 				event.preventDefault();
-				if (WBruntime.menuDisplayed == false){
+				if (wbRuntime.menuDisplayed == false){
 					appendMenu("wordnik");
-				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu == "wordnik"){
-					WBwordnik.randomDefinitions.length = 0;
-					WBwordnik.randomDefinitionsCounter = 0;
+				} else if (wbRuntime.menuDisplayed == true && wbRuntime.currentMenu == "wordnik"){
+					wbWordnik.randomDefinitions.length = 0;
+					wbWordnik.randomDefinitionsCounter = 0;
 					clearMenu();
-				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu != "wordnik"){
+				} else if (wbRuntime.menuDisplayed == true && wbRuntime.currentMenu != "wordnik"){
 					appendMenu("wordnik");
 				};
 			} else if (keyPressed == 54){	
 				event.preventDefault();
-				if (WBruntime.menuDisplayed == false){
+				if (wbRuntime.menuDisplayed == false){
 					appendMenu("sonnet");
-				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu == "sonnet"){
+				} else if (wbRuntime.menuDisplayed == true && wbRuntime.currentMenu == "sonnet"){
 					clearMenu();
-				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu != "sonnet"){
+				} else if (wbRuntime.menuDisplayed == true && wbRuntime.currentMenu != "sonnet"){
 					appendMenu("sonnet");
 				};				
 			} else if (keyPressed == 55){
 				event.preventDefault();
-				if (WBruntime.menuDisplayed == false){
+				if (wbRuntime.menuDisplayed == false){
 					appendMenu("oblique");
-				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu == "oblique"){
+				} else if (wbRuntime.menuDisplayed == true && wbRuntime.currentMenu == "oblique"){
 					clearMenu();
-				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu != "oblique"){
+				} else if (wbRuntime.menuDisplayed == true && wbRuntime.currentMenu != "oblique"){
 					appendMenu("oblique");
 				};	
 			} else if (keyPressed == 57){
 				event.preventDefault();
 			} else if (keyPressed == 48){
 				event.preventDefault();
-				if (WBruntime.menuDisplayed == false){
+				if (wbRuntime.menuDisplayed == false){
 					appendMenu("email");
-				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu == "email"){
+				} else if (wbRuntime.menuDisplayed == true && wbRuntime.currentMenu == "email"){
 					clearMenu();
-					WBruntime.outputViewed = false;
-				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu != "email"){
+					wbRuntime.outputViewed = false;
+				} else if (wbRuntime.menuDisplayed == true && wbRuntime.currentMenu != "email"){
 					appendMenu("email");
 				};	
 			} else if (keyPressed == 56){
 				event.preventDefault();
-				if (WBruntime.menuDisplayed == false){
+				if (wbRuntime.menuDisplayed == false){
 					appendMenu("timer");
-				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu == "timer"){
+				} else if (wbRuntime.menuDisplayed == true && wbRuntime.currentMenu == "timer"){
 					clearMenu();
-				} else if (WBruntime.menuDisplayed == true && WBruntime.currentMenu != "timer"){
+				} else if (wbRuntime.menuDisplayed == true && wbRuntime.currentMenu != "timer"){
 					appendMenu("timer");
 				};			
 			};
@@ -217,10 +217,10 @@ function keyUpListeners(){
 	$(document).keyup(function(event){
 		var keyPressed = event.keyCode;
 		if (keyPressed == 17){
-			WBruntime.ctrlPressed = false;
+			wbRuntime.ctrlPressed = false;
 		};
 		if (keyPressed == 16){
-			WBruntime.shiftPressed = false;
+			wbRuntime.shiftPressed = false;
 		};
 	});
 };
@@ -228,109 +228,109 @@ function keyUpListeners(){
 // could probably refactor this using a loop and "this" later if i feel like it
 function addMenuListeners(){
 	$("#visibleTextSelect").change(function() {
-		WBsettings.visibleText = $("#visibleTextSelect").val();
-		if (WBsettings.visibleText == "yes"){
-			$(".visibleBlock").css('color', WBsettings.textColor);
+		wbSettings.visibleText = $("#visibleTextSelect").val();
+		if (wbSettings.visibleText == "yes"){
+			$(".visibleBlock").css('color', wbSettings.textColor);
 		} else {
 		};
 		saveSettings();
 	});
 	$("#typewriterSelect").change(function() {
-		WBsettings.typewriterMode = $("#typewriterSelect").val();
+		wbSettings.typewriterMode = $("#typewriterSelect").val();
 		saveSettings();
 	});
 	$("#wordTargetInput").change(function() {
-		WBsettings.wordTarget = $("#wordTargetInput").val();
+		wbSettings.wordTarget = $("#wordTargetInput").val();
 		saveSettings();
 	});
-	$("#blockColorPicker").css('background-color', WBsettings.blockColor);
+	$("#blockColorPicker").css('background-color', wbSettings.blockColor);
 	$("#blockColorPicker").colpick({
 		layout:'hex',
 		submit:true,
-		color: WBsettings.blockColor.substring(1),
+		color: wbSettings.blockColor.substring(1),
 		colorScheme:'dark',
 		onChange:function(hsb,hex,rgb,fromSetColor) {
 			$('#blockColorPicker').css('background-color', '#'+hex);
-			WBsettings.blockColor = '#' + hex;
-			$(".block").css('background-color', WBsettings.blockColor);
-			$(".block").css('color', WBsettings.blockColor);
+			wbSettings.blockColor = '#' + hex;
+			$(".block").css('background-color', wbSettings.blockColor);
+			$(".block").css('color', wbSettings.blockColor);
 			saveSettings();
 		},
 		onSubmit:function(hsb,hex,rgb,fromSetColor) {
 			$('#blockColorPicker').colpickHide();
-			WBsettings.blockColor = '#' + hex;
-			$(".block").css('background-color', WBsettings.blockColor);
-			$(".block").css('color', WBsettings.blockColor);
+			wbSettings.blockColor = '#' + hex;
+			$(".block").css('background-color', wbSettings.blockColor);
+			$(".block").css('color', wbSettings.blockColor);
 			saveSettings();
 		}
 	});		
-	$("#textColorPicker").css('background-color', WBsettings.textColor);
+	$("#textColorPicker").css('background-color', wbSettings.textColor);
 	$("#textColorPicker").colpick({
 		layout:'hex',
 		submit:true,
-		color: WBsettings.textColor.substring(1),
+		color: wbSettings.textColor.substring(1),
 		colorScheme:'dark',
 		onChange:function(hsb,hex,rgb,fromSetColor) {
 			$('#textColorPicker').css('background-color', '#'+hex);
-			WBsettings.textColor = '#' + hex;
-			$(".visibleBlock").css('color', WBsettings.textColor);
+			wbSettings.textColor = '#' + hex;
+			$(".visibleBlock").css('color', wbSettings.textColor);
 			saveSettings();
 		},
 		onSubmit:function(hsb,hex,rgb,fromSetColor) {
 			$('#textColorPicker').colpickHide();
-			WBsettings.textColor = '#' + hex;
-			$(".visibleBlock").css('color', WBsettings.textColor);
+			wbSettings.textColor = '#' + hex;
+			$(".visibleBlock").css('color', wbSettings.textColor);
 			saveSettings();
 		}
 	});
-	$("#backgroundColorPicker").css('background-color', WBsettings.backgroundColor);
+	$("#backgroundColorPicker").css('background-color', wbSettings.backgroundColor);
 	$("#backgroundColorPicker").colpick({
 		layout:'hex',
 		submit:true,
-		color: WBsettings.backgroundColor.substring(1),
+		color: wbSettings.backgroundColor.substring(1),
 		colorScheme:'dark',
 		onChange:function(hsb,hex,rgb,fromSetColor) {
 			$('#backgroundColorPicker').css('background-color', '#'+hex);
-			WBsettings.backgroundColor = '#' + hex;
-			$("#bg").css('background-color', WBsettings.backgroundColor);	
+			wbSettings.backgroundColor = '#' + hex;
+			$("#bg").css('background-color', wbSettings.backgroundColor);	
 			saveSettings();			
 		},
 		onSubmit:function(hsb,hex,rgb,fromSetColor) {
 			$('#backgroundColorPicker').colpickHide();
-			WBsettings.backgroundColor = '#' + hex;
-			$("#bg").css('background-color', WBsettings.backgroundColor);	
+			wbSettings.backgroundColor = '#' + hex;
+			$("#bg").css('background-color', wbSettings.backgroundColor);	
 			saveSettings();
 		}
 	});	
-	$("#targetBackgroundColorPicker").css('background-color', WBsettings.targetBackgroundColor);
+	$("#targetBackgroundColorPicker").css('background-color', wbSettings.targetBackgroundColor);
 	$("#targetBackgroundColorPicker").colpick({
 		layout:'hex',
 		submit:true,
-		color: WBsettings.targetBackgroundColor.substring(1),
+		color: wbSettings.targetBackgroundColor.substring(1),
 		colorScheme:'dark',
 		onChange:function(hsb,hex,rgb,fromSetColor) {
 			$('#targetBackgroundColorPicker').css('background-color', '#'+hex);
-			WBsettings.targetBackgroundColor = '#' + hex;
-			$("#gradientDiv").css('background-color', WBsettings.targetBackgroundColor);
+			wbSettings.targetBackgroundColor = '#' + hex;
+			$("#gradientDiv").css('background-color', wbSettings.targetBackgroundColor);
 			saveSettings();
 		},
 		onSubmit:function(hsb,hex,rgb,fromSetColor) {
 			$('#targetBackgroundColorPicker').colpickHide();
-			WBsettings.targetBackgroundColor = '#' + hex;
-			$("#gradientDiv").css('background-color', WBsettings.targetBackgroundColor);
+			wbSettings.targetBackgroundColor = '#' + hex;
+			$("#gradientDiv").css('background-color', wbSettings.targetBackgroundColor);
 			saveSettings();
 		}
 	});		
 	$("#progressColorSelect").change(function() {
-		WBsettings.progressColor = $("#progressColorSelect").val();
+		wbSettings.progressColor = $("#progressColorSelect").val();
 		saveSettings();
 	});
 	$("#progressSoundSelect").change(function() {
-		WBsettings.progressSound = $("#progressSoundSelect").val();
+		wbSettings.progressSound = $("#progressSoundSelect").val();
 		saveSettings();
 	});
 	$("#progressPopSelect").change(function() {
-		WBsettings.progressPop = $("#progressPopSelect").val();
+		wbSettings.progressPop = $("#progressPopSelect").val();
 		saveSettings();
 	});
 };
@@ -339,16 +339,16 @@ function updateMenu(type){
 	switch(type)
 	{
 		case "settings":
-			$("#visibleTextSelect").val(WBsettings.visibleText);
-			$("#typewriterSelect").val(WBsettings.typewriterMode);
-			$("#wordTargetInput").val(WBsettings.wordTarget);
-			$("#blockColorPicker").val(WBsettings.blockColor);
-			$("#textColorPicker").val(WBsettings.textColor);
-			$("#backgroundColorPicker").val(WBsettings.backgroundColor);
-			$("#targetBackgroundColorPicker").val(WBsettings.targetBackgroundColor);
-			$("#progressColorSelect").val(WBsettings.progressColor);
-			$("#progressSoundSelect").val(WBsettings.progressSound);
-			$("#progressPopSelect").val(WBsettings.progressPop);
+			$("#visibleTextSelect").val(wbSettings.visibleText);
+			$("#typewriterSelect").val(wbSettings.typewriterMode);
+			$("#wordTargetInput").val(wbSettings.wordTarget);
+			$("#blockColorPicker").val(wbSettings.blockColor);
+			$("#textColorPicker").val(wbSettings.textColor);
+			$("#backgroundColorPicker").val(wbSettings.backgroundColor);
+			$("#targetBackgroundColorPicker").val(wbSettings.targetBackgroundColor);
+			$("#progressColorSelect").val(wbSettings.progressColor);
+			$("#progressSoundSelect").val(wbSettings.progressSound);
+			$("#progressPopSelect").val(wbSettings.progressPop);
 		break;
 		case "email":
 		break;
@@ -357,11 +357,11 @@ function updateMenu(type){
 
 function appendMenu(type){
 	$("#menuDiv").html("");
-	WBruntime.outputViewed = false;
+	wbRuntime.outputViewed = false;
 	switch(type)
 	{
 		case "settings":
-			WBruntime.currentMenu = "settings";
+			wbRuntime.currentMenu = "settings";
 			$("#menuDiv").append("\
 			<div id='menuDisplay'>\
 				<div id='titleContainer'><b>writer's blocks</b>: a drafting tool</div>\
@@ -390,7 +390,7 @@ function appendMenu(type){
 			addMenuListeners();
 		break;
 		case "wordnik":
-			WBruntime.currentMenu = "wordnik";
+			wbRuntime.currentMenu = "wordnik";
 			$("#menuDiv").append("\
 			<div id='dictionaryDisplay'>\
 				<div id='wordDisplay'></div>\
@@ -398,51 +398,51 @@ function appendMenu(type){
 				<div id='backButton'><</div>\
 				<div id='forwardButton'>></div>\
 			</div>");
-			var randomWord = WBwordnik.randomWords[WBwordnik.randomWordCounter];
-			WBwordnik.randomWordCounter++;
+			var randomWord = wbWordnik.randomWords[wbWordnik.randomWordCounter];
+			wbWordnik.randomWordCounter++;
 			var randomDefinition;
 			$.getJSON("http://api.wordnik.com/v4/word.json/" + randomWord + "/definitions?limit=50&includeRelated=true&useCanonical=true&sourceDictionaries=all&includeTags=false&api_key=cea8ccbca1550ff63300d059f3607d1f0e1a742c20749a271", function (data){
 				//create array of definitions
 				for (var i=0; i < data.length; i++){
-					WBwordnik.randomDefinitions[i] = data[i].text;
+					wbWordnik.randomDefinitions[i] = data[i].text;
 				};
 				$("#wordDisplay").text(randomWord);
-				$("#definitionDisplay").text(WBwordnik.randomDefinitions[WBwordnik.randomDefinitionsCounter]);
+				$("#definitionDisplay").text(wbWordnik.randomDefinitions[wbWordnik.randomDefinitionsCounter]);
 				//set up if it's more than 0, the buttons display and if not they don't
-				if (WBwordnik.randomDefinitions.length > 1){
+				if (wbWordnik.randomDefinitions.length > 1){
 					$("#forwardButton").css('display', 'block');
 					$("#backButton").css('display', 'block');
 						$("#forwardButton").click(function(){
-							if (WBwordnik.randomDefinitionsCounter <= WBwordnik.randomDefinitions.length - 1){
-								WBwordnik.randomDefinitionsCounter++;
-								$("#definitionDisplay").text(WBwordnik.randomDefinitions[WBwordnik.randomDefinitionsCounter]);
+							if (wbWordnik.randomDefinitionsCounter <= wbWordnik.randomDefinitions.length - 1){
+								wbWordnik.randomDefinitionsCounter++;
+								$("#definitionDisplay").text(wbWordnik.randomDefinitions[wbWordnik.randomDefinitionsCounter]);
 							} else {
-								WBwordnik.randomDefinitionsCounter = 0;
-								$("#definitionDisplay").text(WBwordnik.randomDefinitions[WBwordnik.randomDefinitionsCounter]);
+								wbWordnik.randomDefinitionsCounter = 0;
+								$("#definitionDisplay").text(wbWordnik.randomDefinitions[wbWordnik.randomDefinitionsCounter]);
 							};
 						});
 						$("#backButton").click(function(){
-							if (WBwordnik.randomDefinitionsCounter == 0){
-								WBwordnik.randomDefinitionsCounter = WBwordnik.randomDefinitions.length;
-								$("#definitionDisplay").text(WBwordnik.randomDefinitions[WBwordnik.randomDefinitionsCounter]);
+							if (wbWordnik.randomDefinitionsCounter == 0){
+								wbWordnik.randomDefinitionsCounter = wbWordnik.randomDefinitions.length;
+								$("#definitionDisplay").text(wbWordnik.randomDefinitions[wbWordnik.randomDefinitionsCounter]);
 							} else {
-								WBwordnik.randomDefinitionsCounter--;
-								$("#definitionDisplay").text(WBwordnik.randomDefinitions[WBwordnik.randomDefinitionsCounter]);
+								wbWordnik.randomDefinitionsCounter--;
+								$("#definitionDisplay").text(wbWordnik.randomDefinitions[wbWordnik.randomDefinitionsCounter]);
 							};
 						});	
 				} else {
 					$("#forwardButton").css('display', 'none');
 					$("#backButton").css('display', 'none');
 				};	
-				if (WBwordnik.randomWordCounter == 95){
+				if (wbWordnik.randomWordCounter == 95){
 					getRandomWords();
-					WBwordnik.randomWordCounter = 0;
+					wbWordnik.randomWordCounter = 0;
 				};
 			});
 		break;	
 		case "email":
 			parseHTMLtoString();
-			WBruntime.currentMenu = "email";
+			wbRuntime.currentMenu = "email";
 			$("#menuDiv").append("\
 			<div id='emailDisplay'>\
 				<div id='titleDisplay'><div id='innerTitle'>title: <input type='text' id='processEmailTitle'></input></div></div>\
@@ -453,12 +453,12 @@ function appendMenu(type){
 				<div id='messageDisplay'><div id='message'></div></div>\
 				<div id='invisibleTextHolder'></div>\
 			</div>");
-			$("#processEmailAddress").val(WBsettings.emailAddress);
+			$("#processEmailAddress").val(wbSettings.emailAddress);
 			$("#processEmailAddress").change(function(){
-				WBsettings.emailAddress = $("#processEmailAddress").val();
+				wbSettings.emailAddress = $("#processEmailAddress").val();
 				saveSettings();
 			});
-			$("#invisibleTextHolder").text(WBruntime.outputString);
+			$("#invisibleTextHolder").text(wbRuntime.outputString);
 			$("#sendButton").click(function(){
 				emailTitle = $('#processEmailTitle').val();
 				emailAddress = $('#processEmailAddress').val();
@@ -470,7 +470,7 @@ function appendMenu(type){
 					   url: "storage/email.php",
 					   dataType: 'text',
 					   data: { 
-							blockText : WBruntime.outputString,
+							blockText : wbRuntime.outputString,
 							blockEmail : emailAddress,
 							blockTitle : emailTitle
 					   },
@@ -492,7 +492,7 @@ function appendMenu(type){
 				   url: "storage/save2.php",
 				   dataType: 'text',
 				   data: { 
-						blockText : WBruntime.outputString,
+						blockText : wbRuntime.outputString,
 						blockName : outputName
 				   },
 				   success: function(data) {
@@ -513,25 +513,25 @@ function appendMenu(type){
 				});	
 			});
 			$("#viewButton").click(function(){
-				if (WBruntime.outputViewed == false){
+				if (wbRuntime.outputViewed == false){
 					$("#titleDisplay").css('opacity', 0);
 					$("#addressDisplay").css('opacity', 0);
 					$("#menuDiv").append("<div id='viewText'></div>");
-					var HTMLoutputString = WBruntime.outputString.replace(/\n/g,'<br/>');
+					var HTMLoutputString = wbRuntime.outputString.replace(/\n/g,'<br/>');
 					$("#viewText").html(HTMLoutputString);
 					$("#message").text("click 'view text' again to close text.  press ctrl+0 to go back to your blocks.");
-					WBruntime.outputViewed = true;
+					wbRuntime.outputViewed = true;
 				} else {
 					$("#viewText").remove();
 					$("#titleDisplay").css('opacity', 1);
 					$("#addressDisplay").css('opacity', 1);
 					$("#message").text("");
-					WBruntime.outputViewed = false;
+					wbRuntime.outputViewed = false;
 				};
 			});
 		break;	
 		case "sonnet":
-		WBruntime.currentMenu = "sonnet";
+		wbRuntime.currentMenu = "sonnet";
 			$.getJSON('js/sonnets.json', function(data) {
 				var randomSonnet = Math.floor((Math.random()*data.length)+0);
 				var randomLine = Math.floor((Math.random()*12)+0);
@@ -546,14 +546,14 @@ function appendMenu(type){
 			}); 				
 		break;
 		case "oblique":
-		WBruntime.currentMenu = "oblique";
-			var randomOblique = Math.floor((Math.random()*WBruntime.obliqueArray.length)+0);
+		wbRuntime.currentMenu = "oblique";
+			var randomOblique = Math.floor((Math.random()*wbRuntime.obliqueArray.length)+0);
 			$("#menuDiv").append("<div id='obliqueStrategyDisplay'></div>");
-			$("#obliqueStrategyDisplay").text(WBruntime.obliqueArray[randomOblique]); 				
+			$("#obliqueStrategyDisplay").text(wbRuntime.obliqueArray[randomOblique]); 				
 		break;
 		case "timer":
-		WBruntime.currentMenu = "timer";
-			if (WBtimer.timerStarted == false){
+		wbRuntime.currentMenu = "timer";
+			if (wbTimer.timerStarted == false){
 				$("#menuDiv").append("\
 				<div id='timerDisplay'>\
 					<div id='timerContainer'><input type='text' size='2' maxlength='2' id='timerInput'> minutes</div>\
@@ -562,13 +562,13 @@ function appendMenu(type){
 				$("#timerStartButton").click(function(){
 					timerClick();
 				});
-			} else if (WBtimer.timerStarted == true){
+			} else if (wbTimer.timerStarted == true){
 				$("#menuDiv").append("\
 				<div id='timerDisplay'>\
 					<div id='timerContainer'><div id='timerShow'></div></div>\
 					<div id='timerStartButtonContainer'><div id='timerStartButton'>restart</div></div>\
 				</div>");
-				$("#timerShow").text(WBtimer.currentMinutes + ":" + WBtimer.currentSeconds);  
+				$("#timerShow").text(wbTimer.currentMinutes + ":" + wbTimer.currentSeconds);  
 				$("#timerStartButton").click(function(){
 					timerClick();
 				});				
@@ -576,16 +576,16 @@ function appendMenu(type){
 		break;
 	};
 	$("#menuDiv").fadeIn(250, function(){});
-	WBruntime.menuDisplayed = true;	
+	wbRuntime.menuDisplayed = true;	
 };
 
 function clearMenu(){
 	$("#menuDiv").html("");
 	$("#menuDiv").css('display', 'none');
 	saveSettings();
-	WBruntime.outputViewed = false;
-	WBruntime.menuDisplayed = false;
-	WBruntime.currentMenu = "";
+	wbRuntime.outputViewed = false;
+	wbRuntime.menuDisplayed = false;
+	wbRuntime.currentMenu = "";
 };
 
 function check_email(email){  
@@ -598,17 +598,17 @@ function check_email(email){
 } 
 
 function countDown() {
-	WBtimer.currentMinutes = Math.floor(WBtimer.secs / 60);
-	WBtimer.currentSeconds = WBtimer.secs % 60;
-	if (WBtimer.currentSeconds <= 9){
-		WBtimer.currentSeconds = "0" + WBtimer.currentSeconds;
+	wbTimer.currentMinutes = Math.floor(wbTimer.secs / 60);
+	wbTimer.currentSeconds = wbTimer.secs % 60;
+	if (wbTimer.currentSeconds <= 9){
+		wbTimer.currentSeconds = "0" + wbTimer.currentSeconds;
 	};	
-	WBtimer.secs--;
-	$("#timerShow").text(WBtimer.currentMinutes + ":" + WBtimer.currentSeconds);       
-	if (WBtimer.secs !== -1){
+	wbTimer.secs--;
+	$("#timerShow").text(wbTimer.currentMinutes + ":" + wbTimer.currentSeconds);       
+	if (wbTimer.secs !== -1){
 		setTimeout('countDown()',1000);
 	};
-	if (WBtimer.secs == -1 && WBtimer.timerStarted == true){
+	if (wbTimer.secs == -1 && wbTimer.timerStarted == true){
 		$("#popHolder").html("");
 		$("#popHolder").append("\
 			<div id='progressPop'>\
@@ -628,28 +628,28 @@ function countDown() {
 };
 
 function timerReset(){
-	WBtimer.timerStarted = false;
-	WBtimer.mins = 0
-	WBtimer.secs = 0
-	WBtimer.currentMinutes = 0;
-	WBtimer.currentSeconds = 0;
+	wbTimer.timerStarted = false;
+	wbTimer.mins = 0
+	wbTimer.secs = 0
+	wbTimer.currentMinutes = 0;
+	wbTimer.currentSeconds = 0;
 	$("#timerContainer").html("");
 	$("#timerContainer").append("<input type='text' size='2' maxlength='2' id='timerInput'> minutes");
 	$("#timerStartButton").text("start");
 };
 
 function timerClick(){
-	if (WBtimer.timerStarted == false){
-		WBtimer.mins = $("#timerInput").val();
-		if (WBtimer.mins != 0){
-			WBtimer.secs = WBtimer.mins * 60;
-			WBtimer.currentSeconds = 0;
-			WBtimer.currentMinutes = 0; 
+	if (wbTimer.timerStarted == false){
+		wbTimer.mins = $("#timerInput").val();
+		if (wbTimer.mins != 0){
+			wbTimer.secs = wbTimer.mins * 60;
+			wbTimer.currentSeconds = 0;
+			wbTimer.currentMinutes = 0; 
 			$("#timerStartButton").text("restart");
 			$("#timerContainer").html("");
-			$("#timerContainer").append("<div id='timerShow'>" + WBtimer.mins + ":00</div>");
+			$("#timerContainer").append("<div id='timerShow'>" + wbTimer.mins + ":00</div>");
 			setTimeout('countDown()',1000);
-			WBtimer.timerStarted = true;
+			wbTimer.timerStarted = true;
 			clearMenu();
 		};
 	} else {
@@ -668,17 +668,17 @@ function saveSettings(){
 	if (localStorage.runWB != "yes"){
 		localStorage.runWB = "yes";
 	};
-	localStorage.WBsettings = JSON.stringify(WBsettings);
+	localStorage.wbSettings = JSON.stringify(wbSettings);
 };
 
 function wordCount(){
-	WBruntime.spacesTyped = $(".space").length;
-	WBruntime.wordTargetPercentage = WBruntime.spacesTyped / WBsettings.wordTarget;
-	if (WBsettings.progressColor = "yes"){
-		$("#gradientDiv").css('opacity', WBruntime.wordTargetPercentage);
+	wbRuntime.spacesTyped = $(".space").length;
+	wbRuntime.wordTargetPercentage = wbRuntime.spacesTyped / wbSettings.wordTarget;
+	if (wbSettings.progressColor = "yes"){
+		$("#gradientDiv").css('opacity', wbRuntime.wordTargetPercentage);
 	};
-	if (WBruntime.wordTargetPercentage == 1){
-		if (WBsettings.progressPop = "yes"){
+	if (wbRuntime.wordTargetPercentage == 1){
+		if (wbSettings.progressPop = "yes"){
 			$("#popHolder").html("");
 			$("#popHolder").append("\
 				<div id='progressPop'>\
@@ -698,21 +698,21 @@ function wordCount(){
 };
 
 function parseHTMLtoString(){
-	WBruntime.outputString = "";
+	wbRuntime.outputString = "";
 	$('#displaySpace').children().each(function () {
 		var currentClass = $(this).attr("class"); 
 		switch(currentClass){
 			case 'block':
-				WBruntime.outputString = WBruntime.outputString + $(this).text();
+				wbRuntime.outputString = wbRuntime.outputString + $(this).text();
 				break;
 			case 'visibleBlock':
-				WBruntime.outputString = WBruntime.outputString + $(this).text();
+				wbRuntime.outputString = wbRuntime.outputString + $(this).text();
 				break;	
 			case 'space':
-				WBruntime.outputString = WBruntime.outputString + " ";
+				wbRuntime.outputString = wbRuntime.outputString + " ";
 				break;
 			case 'break':
-				WBruntime.outputString = WBruntime.outputString + "\r\n";
+				wbRuntime.outputString = wbRuntime.outputString + "\r\n";
 				break;  
 			default:			
 		};
