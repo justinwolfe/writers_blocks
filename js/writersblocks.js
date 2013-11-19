@@ -364,7 +364,7 @@ function appendMenu(type){
 			wbRuntime.currentMenu = "settings";
 			$("#menuDiv").append("\
 			<div id='menuDisplay'>\
-				<div id='titleContainer'><b>writer's blocks</b>: a drafting tool</div>\
+				<div id='titleContainer'><b>writing blocks</b>: a drafting tool</div>\
 				<div id='hotKeysContainer'>\
 					<div id='hotKeysLabel'>shortcuts</div>\
 					<div id='hotKeysLeft'><p class='hotKey'><span class='keyLabel'>ctrl+1</span>: settings (you are here)</p> <p class='hotKey'><span class='keyLabel'>ctrl+2</span>: make blocks smaller</p> <p class='hotKey'><span class='keyLabel'>ctrl+3</span>: make blocks larger</p> <p class='hotKey'><span class='keyLabel'>ctrl+4</span>: reveal text (disabled by default)</p><p class='hotKey'><span class='keyLabel'>ctrl+5</span>: random word/definition (Wordnik)</p>  </div>\
